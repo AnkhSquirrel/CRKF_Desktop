@@ -1,12 +1,19 @@
 package fr.kyo.crkf.Entity;
 
-public class Sous_Type_Instrument {
+public class SousTypeInstrument {
+    private int id;
     private String sousType;
 
-    public Sous_Type_Instrument(String sousType) {
+    public SousTypeInstrument(int id, String sousType) {
+        this.id = id;
         this.sousType = sousType;
     }
-
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
+    }
     public String getSousType() {
         return sousType;
     }
