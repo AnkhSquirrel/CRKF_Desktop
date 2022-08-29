@@ -3,7 +3,7 @@ package fr.kyo.crkf.Entity;
 import java.util.ArrayList;
 
 public class Personne {
-    private int id;
+    private int id_personne;
     private String nom;
     private String prenom;
     private int vehiculeCv;
@@ -14,8 +14,8 @@ public class Personne {
     private ArrayList<Instrument> instruments;
     private ArrayList<Diplome> diplomes;
 
-    public Personne(int id,String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole embauche, Ecole travaille) {
-        this.id = id;
+    public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole embauche, Ecole travaille) {
+        this.id_personne = id_personne;
         this.nom = nom;
         this.prenom = prenom;
         this.vehiculeCv = vehiculeCv;
@@ -25,11 +25,11 @@ public class Personne {
         instruments = new ArrayList<>();
         diplomes = new ArrayList<>();
     }
-    public int getId() {
-        return id;
+    public int getId_personne() {
+        return id_personne;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId_personne(int id_personne) {
+        this.id_personne = id_personne;
     }
     public String getNom() {
         return nom;

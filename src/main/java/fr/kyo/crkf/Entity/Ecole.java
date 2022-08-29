@@ -1,18 +1,18 @@
 package fr.kyo.crkf.Entity;
 
 public class Ecole {
-    private int id;
+    private int id_ecole;
     private Adresse adresse;
 
-    public Ecole(int id,Adresse adresse) {
-        this.id = id;
+    public Ecole(int id_ecole, Adresse adresse) {
+        this.id_ecole = id_ecole;
         this.adresse = adresse;
     }
-    public int getId() {
-        return id;
+    public int getId_ecole() {
+        return id_ecole;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId_ecole(int id_ecole) {
+        this.id_ecole = id_ecole;
     }
     public Adresse getAdresse() {
         return adresse;

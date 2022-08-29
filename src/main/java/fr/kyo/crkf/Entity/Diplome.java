@@ -1,18 +1,18 @@
 package fr.kyo.crkf.Entity;
 
 public class Diplome {
-    private int id;
+    private int id_diplome;
     private String libelle;
 
-    public Diplome(int id,String libelle) {
-        this.id = id;
+    public Diplome(int id_diplome, String libelle) {
+        this.id_diplome = id_diplome;
         this.libelle = libelle;
     }
-    public int getId() {
-        return id;
+    public int getId_diplome() {
+        return id_diplome;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId_diplome(int id_diplome) {
+        this.id_diplome = id_diplome;
     }
     public String getLibelle() {
         return libelle;

@@ -1,20 +1,22 @@
 package fr.kyo.crkf.Entity;
 
-public class Instrument {
-    private int id;
-    private String nom;
-    private TypeInstrument typeInstrument;
+import java.util.ArrayList;
 
-    public Instrument(int id,String nom, TypeInstrument typeInstrument) {
-        this.id = id;
+public class Instrument {
+    private int id_instrument;
+    private String nom;
+    private ArrayList<Famille> familles;
+
+    public Instrument(int id_instrument, String nom, Famille famille) {
+        this.id_instrument = id_instrument;
         this.nom = nom;
-        this.typeInstrument = typeInstrument;
+        familles = new ArrayList<>();
     }
-    public int getId() {
-        return id;
+    public int getId_instrument() {
+        return id_instrument;
     }
-    public void setId(int id) {
-        this.id = id;
+    public void setId_instrument(int id_instrument) {
+        this.id_instrument = id_instrument;
     }
     public String getNom() {
         return nom;
@@ -22,10 +24,10 @@ public class Instrument {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public TypeInstrument getTypeInstrument() {
-        return typeInstrument;
+    public ArrayList<Famille> getFamilles() {
+        return familles;
     }
-    public void setTypeInstrument(TypeInstrument typeInstrument) {
-        this.typeInstrument = typeInstrument;
+    public void setFamilles(ArrayList<Famille> familles) {
+        this.familles = familles;
     }
 }
