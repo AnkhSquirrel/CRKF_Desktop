@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+
+<MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+  <menus>
+    <Menu mnemonicParsing="false" text="Rechercher">
+      <items>
+        <MenuItem mnemonicParsing="false" text="Professeur" />
+            <MenuItem mnemonicParsing="false" text="École" />
+            <MenuItem mnemonicParsing="false" text="Instrument" />
+      </items>
+    </Menu>
+    <Menu mnemonicParsing="false" text="Aide">
+      <items>
+        <MenuItem mnemonicParsing="false" text="À propos" />
+      </items>
+    </Menu>
+  </menus>
+</MenuBar>
