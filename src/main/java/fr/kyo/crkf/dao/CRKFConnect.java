@@ -11,7 +11,7 @@ public class CRKFConnect {
     public static Connection getInstance() {
         if (connexion == null) {
             try {
-                String dbURL = "jdbc:sqlserver://127.0.0.1:1433;databaseName=CRKF;encrypt=false";
+                String dbURL = "jdbc:sqlserver://127.0.0.1:1433;DatabaseName=CRKF;encrypt=false";
                 String user = "sa";
                 String pass = "azerty@123456";
                 connexion = DriverManager.getConnection(dbURL, user, pass);

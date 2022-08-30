@@ -30,4 +30,7 @@ public class DAOFactory {
     public static CycleDAO getCycleDAO() {
         return new CycleDAO(connexion);
     }
+    public static PersonneDAO getPersonneDAO() {
+        return new PersonneDAO(connexion);
+    }
 }

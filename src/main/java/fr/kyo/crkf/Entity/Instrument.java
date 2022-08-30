@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.util.ArrayList;
 
 public class Instrument {
@@ -32,5 +35,8 @@ public class Instrument {
     }
     public void addFamille(Famille famille){
         familles.add(famille);
+    }
+    public ObservableValue<String> getNomStringProperty(){
+        return new SimpleStringProperty(nom);
     }
 }
