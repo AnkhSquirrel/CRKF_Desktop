@@ -4,13 +4,13 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/18">
+<MenuBar xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.NavbarController">
   <menus>
     <Menu mnemonicParsing="false" text="Rechercher">
       <items>
-        <MenuItem mnemonicParsing="false" text="Professeur" />
-            <MenuItem mnemonicParsing="false" text="École" />
-            <MenuItem mnemonicParsing="false" text="Instrument" />
+        <MenuItem mnemonicParsing="false" onAction="#openProfesseurList" text="Professeur" />
+            <MenuItem mnemonicParsing="false" onAction="#openEcoleList" text="École" />
+            <MenuItem mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" />
       </items>
     </Menu>
     <Menu mnemonicParsing="false" text="Aide">

@@ -3,7 +3,7 @@ package fr.kyo.crkf.Controller;
 import fr.kyo.crkf.ApplicationCRKF;
 import javafx.fxml.FXML;
 
-public class AccueilController {
+public class NavbarController {
 
     @FXML
     private ApplicationCRKF application;
