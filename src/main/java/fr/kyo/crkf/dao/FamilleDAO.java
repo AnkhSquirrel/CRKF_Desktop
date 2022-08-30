@@ -1,9 +1,7 @@
-package fr.kyo.crkf.DAO;
+package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +18,7 @@ public class FamilleDAO extends DAO<Famille> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id, famille, id_classification,(select classification from Classification where id = f.id_classification) from Famille as f where id = ?";
+            String strCmd = "SELECT id_famille, famille, id_classification,(select classification from Classification where id_classification = f.id_classification) from Famille as f where id_famille = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery(strCmd);
@@ -45,7 +43,7 @@ public class FamilleDAO extends DAO<Famille> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id, famille, id_classification,(select classification from Classification where id = f.id_classification) from Famille as f order by famille";
+            String strCmd = "SELECT id_famille, famille, id_classification,(select classification from Classification where id_classification = f.id_classification) from Famille as f order by famille";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
@@ -78,7 +76,7 @@ public class FamilleDAO extends DAO<Famille> {
     @Override
     public boolean update(Famille object) {
         try {
-            String requete = "UPDATE Famille SET famille = ?, id_classification = ? WHERE id = ?";
+            String requete = "UPDATE Famille SET famille = ?, id_classification = ? WHERE id_famille = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setString(1, object.getfamille());
             preparedStatement.setInt(2, object.getclassification().getId_classification());
@@ -94,7 +92,7 @@ public class FamilleDAO extends DAO<Famille> {
     @Override
     public boolean delete(Famille object) {
         try {
-            String requete = "DELETE FROM Famille WHERE id=?";
+            String requete = "DELETE FROM Famille WHERE id_famille=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setInt(1, object.getId_famille());
             preparedStatement.executeUpdate();

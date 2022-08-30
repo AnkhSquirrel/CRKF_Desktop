@@ -1,13 +1,19 @@
 package fr.kyo.crkf.Entity;
 
+import java.math.BigDecimal;
+
 public class Ville {
     private int id_ville;
     private String ville;
+    private float longitude;
+    private float latitude;
     private Departement departement;
 
-    public Ville(int id_ville, String ville, Departement departement) {
+    public Ville(int id_ville, String ville,float longitude, float latitude ,Departement departement) {
         this.id_ville = id_ville;
         this.ville = ville;
+        this.longitude = longitude;
+        this.latitude = latitude;
         this.departement = departement;
     }
     public int getId_ville() {
@@ -21,6 +27,18 @@ public class Ville {
     }
     public void setVille(String ville) {
         this.ville = ville;
+    }
+    public float getLongitude() {
+        return longitude;
+    }
+    public void setLongitude(float longitude) {
+        this.longitude = longitude;
+    }
+    public float getLatitude() {
+        return latitude;
+    }
+    public void setLatitude(float latitude) {
+        this.latitude = latitude;
     }
     public Departement getDepartement() {
         return departement;

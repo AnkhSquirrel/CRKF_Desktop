@@ -1,56 +1,49 @@
-package fr.kyo.crkf.DAO;
+package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.Entity.Classification;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class DepartementDAO extends DAO<Departement> {
-
-    protected DepartementDAO(Connection connexion) {
+public class ClassificationDAO extends DAO<Classification> {
+    protected ClassificationDAO(Connection connexion) {
         super(connexion);
     }
 
     @Override
-    public Departement getByID(int id) {
-        try {
+    public Classification getByID(int id) {
+        Classification classification= null;
+        try{
 
-            // Determine the column set column
-
-            String strCmd = "SELECT id, departement from Departement as v where id = ?";
+            String strCmd = "SELECT id_classifiaction, classification from Classification where id_classifiaction = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery(strCmd);
 
             rs.next();
-            Departement departement = new Departement(rs.getInt(1), rs.getString(2));
+
+            classification = new Classification(rs.getInt(1),rs.getString(2));
 
             rs.close();
-
-            return departement;
         }
-        // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
-            return null;
         }
+        return classification;
     }
 
     @Override
-    public ArrayList<Departement> getAll() {
-        ArrayList<Departement> liste = new ArrayList<>();
+    public ArrayList<Classification> getAll() {
+        ArrayList<Classification> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
-
 
             // Determine the column set column
 
-            String strCmd = "SELECT id, departement from Departement order by departement";
+            String strCmd = "SELECT id_classifiaction, classification from Classification order by classification";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
-                //TO DO Add Ville
-                //new Ville(rs.getInt(1), rs.getString(2))
-                liste.add(new Departement(rs.getInt(1), rs.getString(2)));
+                liste.add(new Classification(rs.getInt(1), rs.getString(2)));
             }
             rs.close();
         }
@@ -62,11 +55,11 @@ public class DepartementDAO extends DAO<Departement> {
     }
 
     @Override
-    public boolean insert(Departement objet) {
+    public boolean insert(Classification objet) {
         try {
-            String requete = "INSERT INTO Departement (departement) VALUES (?)";
+            String requete = "INSERT INTO Classification (classification) VALUES (?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getDepartement());
+            preparedStatement.setString( 1 , objet.getclassification());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -76,12 +69,12 @@ public class DepartementDAO extends DAO<Departement> {
     }
 
     @Override
-    public boolean update(Departement object) {
+    public boolean update(Classification object) {
         try {
-            String requete = "UPDATE Departement SET departement = ? WHERE id = ?";
+            String requete = "UPDATE Classification SET classification = ? WHERE id_classifiaction = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getDepartement());
-            preparedStatement.setInt(3, object.getId_departement());
+            preparedStatement.setString(1, object.getclassification());
+            preparedStatement.setInt(3, object.getId_classification());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -91,11 +84,11 @@ public class DepartementDAO extends DAO<Departement> {
     }
 
     @Override
-    public boolean delete(Departement object) {
+    public boolean delete(Classification object) {
         try {
-            String requete = "DELETE FROM Departement WHERE id=?";
+            String requete = "DELETE FROM Classification WHERE id_classifiaction=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_departement());
+            preparedStatement.setInt(1, object.getId_classification());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

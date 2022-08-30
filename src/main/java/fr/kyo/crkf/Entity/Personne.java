@@ -8,21 +8,17 @@ public class Personne {
     private String prenom;
     private int vehiculeCv;
     private Adresse adresse;
-    private Ecole embauche;
-    private Ecole travaille;
+    private Ecole ecole;
 
-    private ArrayList<Instrument> instruments;
     private ArrayList<Diplome> diplomes;
 
-    public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole embauche, Ecole travaille) {
+    public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole ecole) {
         this.id_personne = id_personne;
         this.nom = nom;
         this.prenom = prenom;
         this.vehiculeCv = vehiculeCv;
         this.adresse = adresse;
-        this.embauche = embauche;
-        this.travaille = travaille;
-        instruments = new ArrayList<>();
+        this.ecole = ecole;
         diplomes = new ArrayList<>();
     }
     public int getId_personne() {
@@ -55,23 +51,11 @@ public class Personne {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse;
     }
-    public Ecole getEmbauche() {
-        return embauche;
+    public Ecole getEcole() {
+        return ecole;
     }
-    public void setEmbauche(Ecole embauche) {
-        this.embauche = embauche;
-    }
-    public Ecole getTravaille() {
-        return travaille;
-    }
-    public void setTravaille(Ecole travaille) {
-        this.travaille = travaille;
-    }
-    public ArrayList<Instrument> getInstruments() {
-        return instruments;
-    }
-    public void setInstruments(ArrayList<Instrument> instruments) {
-        this.instruments = instruments;
+    public void setEcole(Ecole ecole) {
+        this.ecole = ecole;
     }
     public ArrayList<Diplome> getDiplomes() {
         return diplomes;
@@ -79,4 +63,5 @@ public class Personne {
     public void setDiplomes(ArrayList<Diplome> diplomes) {
         this.diplomes = diplomes;
     }
+    public void addDiplome(Diplome diplome){diplomes.add(diplome);}
 }

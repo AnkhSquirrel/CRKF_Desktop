@@ -1,23 +1,23 @@
 package fr.kyo.crkf.Entity;
 
 public class Diplome {
-    private int id_diplome;
-    private String libelle;
+    private Cycle cycle;
+    private Instrument instrument;
 
-    public Diplome(int id_diplome, String libelle) {
-        this.id_diplome = id_diplome;
-        this.libelle = libelle;
+    public Diplome(Cycle cycle, Instrument instrument) {
+        this.cycle = cycle;
+        this.instrument = instrument;
     }
-    public int getId_diplome() {
-        return id_diplome;
+    public Cycle getCycle() {
+        return cycle;
     }
-    public void setId_diplome(int id_diplome) {
-        this.id_diplome = id_diplome;
+    public void setCycle(Cycle cycle) {
+        this.cycle = cycle;
     }
-    public String getLibelle() {
-        return libelle;
+    public Instrument getInstrument() {
+        return instrument;
     }
-    public void setLibelle(String libelle) {
-        this.libelle = libelle;
+    public void setInstrument(Instrument instrument) {
+        this.instrument = instrument;
     }
 }

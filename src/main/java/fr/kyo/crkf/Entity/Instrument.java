@@ -7,7 +7,7 @@ public class Instrument {
     private String nom;
     private ArrayList<Famille> familles;
 
-    public Instrument(int id_instrument, String nom, Famille famille) {
+    public Instrument(int id_instrument, String nom) {
         this.id_instrument = id_instrument;
         this.nom = nom;
         familles = new ArrayList<>();
@@ -29,5 +29,8 @@ public class Instrument {
     }
     public void setFamilles(ArrayList<Famille> familles) {
         this.familles = familles;
+    }
+    public void addFamille(Famille famille){
+        familles.add(famille);
     }
 }

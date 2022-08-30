@@ -1,4 +1,4 @@
-package fr.kyo.crkf.DAO;
+package fr.kyo.crkf.dao;
 
 import java.sql.Connection;
 import java.util.ArrayList;

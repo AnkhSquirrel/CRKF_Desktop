@@ -1,52 +1,52 @@
-package fr.kyo.crkf.DAO;
+package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Adresse;
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.Entity.Cycle;
 
 import java.sql.*;
 import java.util.ArrayList;
 
-public class ClassificationDAO extends DAO<Classification> {
-    protected ClassificationDAO(Connection connexion) {
+public class CycleDAO extends DAO<Cycle> {
+    protected CycleDAO(Connection connexion) {
         super(connexion);
     }
 
     @Override
-    public Classification getByID(int id) {
-        Classification classification= null;
-        try{
+    public Cycle getByID(int id) {
+        Cycle cycle = null;
+        try {
 
-            String strCmd = "SELECT id, classification from Classification where id = ?";
+            // Determine the column set column
+
+            String strCmd = "SELECT id_cycle, libelle, cycle from Cycle where id_cycle = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery(strCmd);
 
             rs.next();
-
-            classification = new Classification(rs.getInt(1),rs.getString(2));
+            cycle =  new Cycle(rs.getInt(1), rs.getString(2), rs.getInt(3));
 
             rs.close();
+
         }
+        // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
-        return classification;
+        return cycle;
     }
 
     @Override
-    public ArrayList<Classification> getAll() {
-        ArrayList<Classification> liste = new ArrayList<>();
+    public ArrayList<Cycle> getAll() {
+        ArrayList<Cycle> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id, classification from Classification order by classification";
+            String strCmd = "SELECT id_cycle, libelle, cycle from Cycle order by cycle";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
-                liste.add(new Classification(rs.getInt(1), rs.getString(2)));
+                liste.add(new Cycle(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             }
             rs.close();
         }
@@ -58,11 +58,12 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     @Override
-    public boolean insert(Classification objet) {
+    public boolean insert(Cycle objet) {
         try {
-            String requete = "INSERT INTO Classification (classification) VALUES (?)";
+            String requete = "INSERT INTO Cycle (libelle,cycle) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getclassification());
+            preparedStatement.setString( 1 , objet.getLibelle());
+            preparedStatement.setInt(2, objet.getCycle());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -72,12 +73,13 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     @Override
-    public boolean update(Classification object) {
+    public boolean update(Cycle object) {
         try {
-            String requete = "UPDATE Classification SET classification = ? WHERE id = ?";
+            String requete = "UPDATE Cycle SET libelle = ?, cycle = ? WHERE id_cycle = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getclassification());
-            preparedStatement.setInt(3, object.getId_classification());
+            preparedStatement.setString(1, object.getLibelle());
+            preparedStatement.setInt(2, object.getCycle());
+            preparedStatement.setInt(3, object.getId_cycle());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -87,11 +89,11 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     @Override
-    public boolean delete(Classification object) {
+    public boolean delete(Cycle object) {
         try {
-            String requete = "DELETE FROM Classification WHERE id=?";
+            String requete = "DELETE FROM Cycle WHERE id_cycle=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_classification());
+            preparedStatement.setInt(1, object.getId_cycle());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
