@@ -1,20 +1,20 @@
 package fr.kyo.crkf.Entity;
 
 public class Adresse {
-    private int id_adresse;
+    private int id;
     private String adresse;
     private Ville ville;
 
-    public Adresse(int id_adresse, String adresse, Ville ville) {
-        this.id_adresse = id_adresse;
+    public Adresse(int id,String adresse, Ville ville) {
+        this.id = id;
         this.adresse = adresse;
         this.ville = ville;
     }
-    public int getId_adresse() {
-        return id_adresse;
+    public int getId() {
+        return id;
     }
-    public void setId_adresse(int id_adresse) {
-        this.id_adresse = id_adresse;
+    public void setId(int id) {
+        this.id = id;
     }
     public String getAdresse() {
         return adresse;
