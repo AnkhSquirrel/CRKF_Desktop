@@ -18,13 +18,13 @@ public class FamilleDAO extends DAO<Famille> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_famille, famille, id_classification,(select classification from Classification where id_classification = f.id_classification) from Famille as f where id_famille = ?";
+            String strCmd = "SELECT id_famille, famille, id_classification from Famille where id_famille = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
-            famille =  new Famille(rs.getInt(1),rs.getString(2),new Classification(rs.getInt(3),rs.getString(4)));
+            famille =  new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3)));
 
             rs.close();
 

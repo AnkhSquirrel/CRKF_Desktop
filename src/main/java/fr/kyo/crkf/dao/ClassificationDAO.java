@@ -15,10 +15,10 @@ public class ClassificationDAO extends DAO<Classification> {
         Classification classification= null;
         try{
 
-            String strCmd = "SELECT id_classifiaction, classification from Classification where id_classifiaction = ?";
+            String strCmd = "SELECT id_classification, classification from Classification where id_classification = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
 
@@ -39,7 +39,7 @@ public class ClassificationDAO extends DAO<Classification> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_classifiaction, classification from Classification order by classification";
+            String strCmd = "SELECT id_classification, classification from Classification order by classification";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
@@ -71,7 +71,7 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public boolean update(Classification object) {
         try {
-            String requete = "UPDATE Classification SET classification = ? WHERE id_classifiaction = ?";
+            String requete = "UPDATE Classification SET classification = ? WHERE id_classification = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setString(1, object.getclassification());
             preparedStatement.setInt(3, object.getId_classification());
@@ -86,7 +86,7 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public boolean delete(Classification object) {
         try {
-            String requete = "DELETE FROM Classification WHERE id_classifiaction=?";
+            String requete = "DELETE FROM Classification WHERE id_classification=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setInt(1, object.getId_classification());
             preparedStatement.executeUpdate();

@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class Famille {
     private int id_famille;
     private String famille;
@@ -27,5 +30,8 @@ public class Famille {
     }
     public void setclassification(Classification classification) {
         this.classification = classification;
+    }
+    public ObservableValue<String> getFamilleStringProperty(){
+        return new SimpleStringProperty(famille);
     }
 }
