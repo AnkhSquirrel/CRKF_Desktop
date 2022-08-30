@@ -52,7 +52,7 @@ public class InstrumentDAO extends DAO<Instrument> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id, famille, id_classification,(select classification from Classification where id = f.id_classification) from Famille as f order by famille";
+            String strCmd = "SELECT id_instrument, Nom from Instrument order by Nom";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
@@ -63,7 +63,7 @@ public class InstrumentDAO extends DAO<Instrument> {
                 String strCmd2 = "select id_famille from Instrument_Famille where id_instrument = ?";
                 PreparedStatement s2 = connexion.prepareStatement(strCmd2);
                 s2.setInt(1,id);
-                ResultSet rs2 = s2.executeQuery(strCmd);
+                ResultSet rs2 = s2.executeQuery();
 
                 while (rs2.next()){
                     instrument.addFamille(DAOFactory.getFamilleDAO().getByID(rs2.getInt(1)));
