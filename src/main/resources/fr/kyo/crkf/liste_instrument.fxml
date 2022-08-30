@@ -24,7 +24,8 @@
       </VBox>
       <TableView fx:id="instrumentTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
         <columns>
-            <TableColumn fx:id="libelle" prefWidth="75.0" text="Libellé" />
+            <TableColumn fx:id="libelle" prefWidth="130.0" text="Libellé" />
+            <TableColumn fx:id="classification" prefWidth="157.0" text="Classification" />
         </columns>
       </TableView>
    </children>
