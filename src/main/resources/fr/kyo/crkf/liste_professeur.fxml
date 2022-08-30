@@ -25,8 +25,9 @@
       <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
         <columns>
             <TableColumn prefWidth="75.0" text="Nom" />
-            <TableColumn prefWidth="75.0" text="Ville" />
-            <TableColumn prefWidth="75.0" text="Département" />
+            <TableColumn prefWidth="75.0" text="Prénom" />
+            <TableColumn prefWidth="88.0" text="CV Véhicule" />
+            <TableColumn prefWidth="144.0" text="Ville d'embauche?" />
         </columns>
       </TableView>
    </children>
