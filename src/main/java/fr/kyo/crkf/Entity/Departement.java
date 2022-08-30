@@ -1,18 +1,18 @@
 package fr.kyo.crkf.Entity;
 
 public class Departement {
-    private int id_departement;
+    private int id;
     private String departement;
 
-    public Departement(int id_departement, String departement) {
-        this.id_departement = id_departement;
+    public Departement(int id,String departement) {
+        this.id = id;
         this.departement = departement;
     }
-    public int getId_departement() {
-        return id_departement;
+    public int getId() {
+        return id;
     }
-    public void setId_departement(int id_departement) {
-        this.id_departement = id_departement;
+    public void setId(int id) {
+        this.id = id;
     }
     public String getDepartement() {
         return departement;
