@@ -21,7 +21,7 @@ public class EcoleDAO extends DAO<Ecole> {
             String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole where id_ecole = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
             ecole =  new Ecole(rs.getInt(1), rs.getString(2),DAOFactory.getAdresseDAO().getByID(rs.getInt(3)));

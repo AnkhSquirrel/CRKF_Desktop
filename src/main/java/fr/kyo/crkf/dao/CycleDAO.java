@@ -20,7 +20,7 @@ public class CycleDAO extends DAO<Cycle> {
             String strCmd = "SELECT id_cycle, libelle, cycle from Cycle where id_cycle = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
             cycle =  new Cycle(rs.getInt(1), rs.getString(2), rs.getInt(3));
