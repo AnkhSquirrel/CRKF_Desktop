@@ -37,7 +37,7 @@ public class FamilleDAO extends DAO<Famille> {
     }
 
     @Override
-    public ArrayList<Famille> getAll() {
+    public ArrayList<Famille> getAll(int page) {
         ArrayList<Famille> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
@@ -59,17 +59,21 @@ public class FamilleDAO extends DAO<Famille> {
     }
 
     @Override
-    public boolean insert(Famille objet) {
+    public int insert(Famille objet) {
         try {
             String requete = "INSERT INTO Famille (famille,id_classification) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getfamille());
             preparedStatement.setInt(2, objet.getclassification().getId_classification());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-            return true;
+            return id;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 

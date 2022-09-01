@@ -39,7 +39,7 @@ public class InstrumentController {
          classificationColumn.setCellValueFactory(cellData ->cellData.getValue().getFamilles().get(0).getclassification().getClassificationStringProperty());
 
          // Initialisation des comboBox
-         classification.setItems(FXCollections.observableArrayList(filter.getClassifications()));
+         classification.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getAll(1)));
          classification.valueProperty().addListener(observable -> filter());
 
          famille.setItems(FXCollections.observableArrayList(filter.getFamilles()));
