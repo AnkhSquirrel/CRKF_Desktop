@@ -8,6 +8,6 @@ public class ProfesseurController {
      TableView profTable;
 
      private void initialize(){
-         profTable.setItems((ObservableList) DAOFactory.getPersonneDAO().getAll());
+         profTable.setItems((ObservableList) DAOFactory.getPersonneDAO().getAll(1));
      }
 }

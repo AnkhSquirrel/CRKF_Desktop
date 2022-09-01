@@ -33,7 +33,7 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     @Override
-    public ArrayList<Classification> getAll() {
+    public ArrayList<Classification> getAll(int page) {
         ArrayList<Classification> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
@@ -55,16 +55,20 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     @Override
-    public boolean insert(Classification objet) {
+    public int insert(Classification objet) {
         try {
             String requete = "INSERT INTO Classification (classification) VALUES (?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getclassification());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-            return true;
+            return id;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 

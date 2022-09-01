@@ -4,6 +4,7 @@ import java.sql.Connection;
 import java.util.ArrayList;
 
 abstract class DAO<T> {
+
     protected Connection connexion;
 
     protected DAO(Connection connexion)
@@ -16,8 +17,8 @@ abstract class DAO<T> {
     }
 
     public abstract T getByID(int id);
-    public abstract ArrayList<T> getAll();
-    public abstract boolean insert(T objet);
+    public abstract ArrayList<T> getAll(int page);
+    public abstract int insert(T objet);
     public abstract boolean update(T object);
     public abstract boolean delete( T object);
 }

@@ -35,7 +35,7 @@ public class InstrumentController {
          //instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getAll()));
 
          // Initialisation des comboBox
-         classification.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getAll()));
+         classification.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getAll(1)));
          classification.valueProperty().addListener(observable -> filter());
 
          libelle.textProperty().addListener(observable -> filter());

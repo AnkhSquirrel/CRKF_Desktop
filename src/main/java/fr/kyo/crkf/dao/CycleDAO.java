@@ -36,7 +36,7 @@ public class CycleDAO extends DAO<Cycle> {
     }
 
     @Override
-    public ArrayList<Cycle> getAll() {
+    public ArrayList<Cycle> getAll(int page) {
         ArrayList<Cycle> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
@@ -58,7 +58,7 @@ public class CycleDAO extends DAO<Cycle> {
     }
 
     @Override
-    public boolean insert(Cycle objet) {
+    public int insert(Cycle objet) {
         try {
             String requete = "INSERT INTO Cycle (libelle,cycle) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
@@ -66,9 +66,9 @@ public class CycleDAO extends DAO<Cycle> {
             preparedStatement.setInt(2, objet.getCycle());
             preparedStatement.executeUpdate();
             preparedStatement.close();
-            return true;
+            return 0;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 
