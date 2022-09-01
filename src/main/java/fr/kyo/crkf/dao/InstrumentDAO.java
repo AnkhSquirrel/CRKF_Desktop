@@ -2,6 +2,7 @@ package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
+import fr.kyo.crkf.Searchable.SearchableInstrument;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -20,7 +21,7 @@ public class InstrumentDAO extends DAO<Instrument> {
             String strCmd = "select id_instrument,Nom from Instrument where id_instrument = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
             instrument =  new Instrument(rs.getInt(1), rs.getString(2));
@@ -30,7 +31,7 @@ public class InstrumentDAO extends DAO<Instrument> {
             String strCmd2 = "select id_famille from Instrument_Famille where id_instrument = ?";
             PreparedStatement s2 = connexion.prepareStatement(strCmd2);
             s2.setInt(1,id);
-            ResultSet rs2 = s2.executeQuery(strCmd);
+            ResultSet rs2 = s2.executeQuery();
 
             while (rs2.next()){
                 instrument.addFamille(DAOFactory.getFamilleDAO().getByID(rs2.getInt(1)));
@@ -54,6 +55,44 @@ public class InstrumentDAO extends DAO<Instrument> {
 
             String strCmd = "SELECT id_instrument, Nom from Instrument order by Nom";
             ResultSet rs = stmt.executeQuery(strCmd);
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                Instrument instrument = (new Instrument(id,rs.getString(2)));
+
+                //Search the affiliate Famille
+                String strCmd2 = "select id_famille from Instrument_Famille where id_instrument = ?";
+                PreparedStatement s2 = connexion.prepareStatement(strCmd2);
+                s2.setInt(1,id);
+                ResultSet rs2 = s2.executeQuery();
+
+                while (rs2.next()){
+                    instrument.addFamille(DAOFactory.getFamilleDAO().getByID(rs2.getInt(1)));
+                }
+                rs2.close();
+                liste.add(instrument);
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    public ArrayList<Instrument> getLike(SearchableInstrument searchableInstrument) {
+        ArrayList<Instrument> liste = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableInstrument.getNom());
+            s.setInt(2,searchableInstrument.getFamille().getId_famille());
+            s.setInt(3,searchableInstrument.getFamille().getclassification().getId_classification());
+            ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
                 int id = rs.getInt(1);

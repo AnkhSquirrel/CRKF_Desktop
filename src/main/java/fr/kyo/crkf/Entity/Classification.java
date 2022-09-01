@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class Classification {
     private int id_classification;
     private String classification;
@@ -19,5 +22,12 @@ public class Classification {
     }
     public void setclassification(String classification) {
         this.classification = classification;
+    }
+    public ObservableValue<String> getClassificationStringProperty(){
+        return new SimpleStringProperty(classification);
+    }
+    @Override
+    public String toString() {
+        return classification;
     }
 }
