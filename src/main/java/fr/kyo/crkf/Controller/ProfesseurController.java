@@ -38,8 +38,8 @@ public class ProfesseurController {
      }
 
     private void filter() {
-        if(!nomEtPrenom.getText().isEmpty() || !nomEtPrenom.getText().equals(searchableProfesseur.getNom())){
-            searchableProfesseur.setNom(nomEtPrenom.getText());
+        if(!nomEtPrenom.getText().isEmpty() || !nomEtPrenom.getText().equals(searchableProfesseur.getNomEtPrenom())){
+            searchableProfesseur.setNomEtPrenom(nomEtPrenom.getText());
         }
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur)));
     }

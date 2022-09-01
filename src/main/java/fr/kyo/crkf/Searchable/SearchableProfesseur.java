@@ -2,28 +2,23 @@ package fr.kyo.crkf.Searchable;
 
 public class SearchableProfesseur {
     private int id_professeur;
-    private String nom;
-    private String prenom;
+    private String nomEtPrenom;
     private int vehiculeCV;
 
     public SearchableProfesseur() {
         this.id_professeur = id_professeur;
-        this.nom = nom;
-        this.prenom = prenom;
+        this.nomEtPrenom = nomEtPrenom;
         this.vehiculeCV = vehiculeCV;
     }
 
-    public String getNom() {
-        return nom;
+    public String getNomEtPrenom() {
+        return nomEtPrenom;
     }
 
-    public void setNom(String nom) {
-        this.nom = nom;
+    public void setNomEtPrenom(String nomEtPrenom) {
+        this.nomEtPrenom = nomEtPrenom;
     }
 
-    public String getPrenom() {
-        return prenom;
-    }
     public Integer getVehiculeCV() {
         return vehiculeCV;
     }

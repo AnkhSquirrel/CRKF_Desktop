@@ -1,10 +1,7 @@
 package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Searchable.SearchableInstrument;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
 
 import java.sql.*;
@@ -90,8 +87,7 @@ public class PersonneDAO extends DAO<Personne> {
         try {
             String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
-            s.setString(1,searchableProfesseur.getNom());
-            //.concat(" ").concat(searchableProfesseur.getPrenom())
+            s.setString(1,searchableProfesseur.getNomEtPrenom());
             s.setInt(2,searchableProfesseur.getVehiculeCV());
             ResultSet rs = s.executeQuery();
 
