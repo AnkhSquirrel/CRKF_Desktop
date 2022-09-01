@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class Departement {
     private int id_departement;
     private String departement;
@@ -19,5 +22,9 @@ public class Departement {
     }
     public void setDepartement(String departement) {
         this.departement = departement;
+    }
+
+    public ObservableValue<String> getDepartementStringProperty(){
+        return new SimpleStringProperty(departement);
     }
 }
