@@ -21,7 +21,7 @@ public class VilleDAO extends DAO<Ville> {
             String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville as v where id_ville = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
             ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5)));

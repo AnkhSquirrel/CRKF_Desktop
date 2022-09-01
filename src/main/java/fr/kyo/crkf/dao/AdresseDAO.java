@@ -20,7 +20,7 @@ public class AdresseDAO extends DAO<Adresse> {
             String strCmd = "SELECT id_adresse, adresse, id_ville from Adresse as a where id_adresse = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
 
