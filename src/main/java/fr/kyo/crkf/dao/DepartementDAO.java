@@ -20,7 +20,7 @@ public class DepartementDAO extends DAO<Departement> {
             String strCmd = "SELECT id_departement, departement from Departement as v where id_departement = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
             Departement departement = new Departement(rs.getInt(1), rs.getString(2));
