@@ -52,18 +52,19 @@ public class PersonneDAO extends DAO<Personne> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_personne,Nom,Prenom,VehiculeCV,id_adresse,id_ecole from Personne order by Nom";
+            String strCmd = "SELECT id_personne,Nom,Prenom,VehiculeCV,id_adresse,id_ecole from Personne order by nom, prenom asc";
             ResultSet rs = stmt.executeQuery(strCmd);
+
 
             while (rs.next()) {
                 int id = rs.getInt(1);
                 Personne personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),DAOFactory.getAdresseDAO().getByID(rs.getInt(5)), DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
 
                 //Search the affiliate Diplome
-                String strCmd2 = "select id_cycle,id_instrument from Personne_Diplome where id_personne = ?";
+                String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
                 PreparedStatement s2 = connexion.prepareStatement(strCmd2);
                 s2.setInt(1,id);
-                ResultSet rs2 = s2.executeQuery(strCmd);
+                ResultSet rs2 = s2.executeQuery();
 
                 while (rs2.next()){
                     personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs.getInt(2))));

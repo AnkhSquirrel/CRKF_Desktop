@@ -34,4 +34,9 @@ public class Famille {
     public ObservableValue<String> getFamilleStringProperty(){
         return new SimpleStringProperty(famille);
     }
+
+    @Override
+    public String toString() {
+        return famille;
+    }
 }

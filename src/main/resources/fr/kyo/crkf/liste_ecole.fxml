@@ -1,14 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
-<?import javafx.scene.layout.VBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.EcoleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -17,16 +16,13 @@
     <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <VBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0">
-         <children>
-            <Label text="TO DO : filtres, pages, etc." />
-         </children>
-      </VBox>
-      <TableView prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <HBox prefHeight="100.0" prefWidth="200.0" />
+      <TableView fx:id="ecoleTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
         <columns>
-            <TableColumn prefWidth="75.0" text="Nom" />
-            <TableColumn prefWidth="75.0" text="Ville" />
-            <TableColumn prefWidth="75.0" text="Département" />
+            <TableColumn fx:id="nomColumn" prefWidth="100.0" text="Nom" />
+            <TableColumn fx:id="adresseColumn" prefWidth="150.0" text="Adresse" />
+            <TableColumn fx:id="villeColumn" prefWidth="126.0" text="Ville" />
+            <TableColumn fx:id="departementColumn" prefWidth="223.0" text="Département" />
         </columns>
       </TableView>
    </children>

@@ -24,6 +24,7 @@ public class VilleDAO extends DAO<Ville> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
+
             ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5)));
 
             rs.close();
