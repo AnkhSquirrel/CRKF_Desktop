@@ -74,7 +74,7 @@ public class ClassificationDAO extends DAO<Classification> {
             String requete = "UPDATE Classification SET classification = ? WHERE id_classification = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setString(1, object.getclassification());
-            preparedStatement.setInt(3, object.getId_classification());
+            preparedStatement.setInt(2, object.getId_classification());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
