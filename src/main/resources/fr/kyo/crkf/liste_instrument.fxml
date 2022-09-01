@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.InstrumentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.InstrumentController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,15 +21,16 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="libelle" layoutX="66.0" layoutY="37.0" />
-            <SearchableComboBox fx:id="classification" layoutX="267.0" layoutY="37.0" />
-            <Button fx:id="reset" layoutX="479.0" layoutY="37.0" mnemonicParsing="false" text="reset" />
+            <TextField fx:id="libelle" layoutX="72.0" layoutY="37.0" />
+            <SearchableComboBox fx:id="classification" layoutX="361.0" layoutY="37.0" />
+            <Button layoutX="982.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
+            <SearchableComboBox fx:id="famille" layoutX="702.0" layoutY="37.0" />
          </children>
       </Pane>
-      <TableView fx:id="instrumentTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <TableView fx:id="instrumentTable" prefHeight="517.0" prefWidth="1054.0" GridPane.rowIndex="1">
         <columns>
-            <TableColumn fx:id="libelleColumn" prefWidth="305.0" text="Libellé" />
-            <TableColumn fx:id="classificationColumn" prefWidth="294.0" text="Classification" />
+            <TableColumn fx:id="libelleColumn" prefWidth="554.0" text="Libellé" />
+            <TableColumn fx:id="classificationColumn" prefWidth="499.0" text="Classification" />
         </columns>
       </TableView>
    </children>
