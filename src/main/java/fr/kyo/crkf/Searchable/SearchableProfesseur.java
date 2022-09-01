@@ -13,4 +13,19 @@ public class SearchableProfesseur {
         this.vehiculeCV = vehiculeCV;
     }
 
+    public String getNom() {
+        return nom;
+    }
+
+    public void setNom(String nom) {
+        this.nom = nom;
+    }
+
+    public String getPrenom() {
+        return prenom;
+    }
+    public Integer getVehiculeCV() {
+        return vehiculeCV;
+    }
+
 }

@@ -2,6 +2,7 @@
 
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
@@ -19,7 +20,10 @@
    <children>
       <VBox alignment="CENTER" prefHeight="65.0" prefWidth="600.0">
          <children>
-            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" />
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <TextField fx:id="nomEtPrenom" />
+               </children></HBox>
          </children>
       </VBox>
       <TableView fx:id="professeurTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">

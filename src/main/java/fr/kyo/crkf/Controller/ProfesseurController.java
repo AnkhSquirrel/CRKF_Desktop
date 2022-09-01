@@ -19,14 +19,30 @@ public class ProfesseurController {
     private TableColumn<Personne, String> prenomColumn;
     @FXML
     private TableColumn<Personne, Integer> vehiculeCVColumn;
+    @FXML
+    private TextField nomEtPrenom;
+
+    private SearchableProfesseur searchableProfesseur;
 
     @FXML
      private void initialize(){
+        searchableProfesseur = new SearchableProfesseur();
+
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
         vehiculeCVColumn.setCellValueFactory(cellData -> cellData.getValue().getVehiculeCVIntegerProperty().asObject());
+
+        nomEtPrenom.textProperty().addListener(observable -> filter());
         
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll()));
      }
+
+    private void filter() {
+        if(!nomEtPrenom.getText().isEmpty() || !nomEtPrenom.getText().equals(searchableProfesseur.getNom())){
+            searchableProfesseur.setNom(nomEtPrenom.getText());
+        }
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur)));
+    }
+
 
 }

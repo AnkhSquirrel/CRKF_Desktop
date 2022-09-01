@@ -4,6 +4,8 @@ import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
+import fr.kyo.crkf.Searchable.SearchableInstrument;
+import fr.kyo.crkf.Searchable.SearchableProfesseur;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -72,6 +74,33 @@ public class PersonneDAO extends DAO<Personne> {
                     personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs.getInt(2))));
                 }
                 rs2.close();
+                liste.add(personne);
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    public ArrayList<Personne> getLike(SearchableProfesseur searchableProfesseur) {
+        ArrayList<Personne> liste = new ArrayList<>();
+        try {
+            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableProfesseur.getNom());
+            //.concat(" ").concat(searchableProfesseur.getPrenom())
+            s.setInt(2,searchableProfesseur.getVehiculeCV());
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Personne personne = new Personne();
+                personne.setId_personne(rs.getInt(1));
+                personne.setNom(rs.getString(2));
+                personne.setPrenom(rs.getString(3));
+                personne.setVehiculeCv(rs.getInt(4));
                 liste.add(personne);
             }
             rs.close();
