@@ -1,5 +1,10 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 import java.util.ArrayList;
 
 public class Personne {
@@ -63,5 +68,16 @@ public class Personne {
     public void setDiplomes(ArrayList<Diplome> diplomes) {
         this.diplomes = diplomes;
     }
-    public void addDiplome(Diplome diplome){diplomes.add(diplome);}
+    public void addDiplome(Diplome diplome){
+        diplomes.add(diplome);
+    }
+    public ObservableValue<String> getNomStringProperty(){
+        return new SimpleStringProperty(nom);
+    }
+    public ObservableValue<String> getPrenomStringProperty(){
+        return new SimpleStringProperty(prenom);
+    }
+    public IntegerProperty getVehiculeCVIntegerProperty(){
+        return new SimpleIntegerProperty(vehiculeCv);
+    }
 }
