@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class Adresse {
     private int id;
     private String adresse;
@@ -27,5 +30,8 @@ public class Adresse {
     }
     public void setVille(Ville ville) {
         this.ville = ville;
+    }
+    public ObservableValue<String> getAdresseStringProperty(){
+        return new SimpleStringProperty(adresse);
     }
 }
