@@ -26,7 +26,7 @@ public class ProfesseurController {
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
         vehiculeCVColumn.setCellValueFactory(cellData -> cellData.getValue().getVehiculeCVIntegerProperty().asObject());
         
-        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll()));
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll(1)));
      }
 
 }
