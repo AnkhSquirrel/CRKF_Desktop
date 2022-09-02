@@ -26,4 +26,9 @@ public class NavbarController {
     protected void openInstrumentList() {
         application.openInstrumentList();
     }
+
+    @FXML
+    protected void openAboutModal(){
+        application.openAboutModal();
+    }
 }
