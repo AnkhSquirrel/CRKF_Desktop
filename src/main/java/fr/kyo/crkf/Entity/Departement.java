@@ -6,6 +6,7 @@ import javafx.beans.value.ObservableValue;
 public class Departement {
     private int id_departement;
     private String departement;
+    private Ville ville;
 
     public Departement(int id_departement, String departement) {
         this.id_departement = id_departement;
@@ -22,6 +23,9 @@ public class Departement {
     }
     public void setDepartement(String departement) {
         this.departement = departement;
+    }
+    public Ville getVille(){
+        return ville;
     }
     @Override
     public String toString(){

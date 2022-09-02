@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.EcoleController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.EcoleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -20,21 +20,21 @@
     <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="600.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="650.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <children>
             <TextField fx:id="nomEcole">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </TextField>
-            <SearchableComboBox fx:id="ville" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+            <SearchableComboBox fx:id="ville" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="162.0">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </SearchableComboBox>
-            <SearchableComboBox fx:id="departement" layoutX="159.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity">
+            <SearchableComboBox fx:id="departement" layoutX="159.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="153.0">
                <HBox.margin>
-                  <Insets right="10.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </SearchableComboBox>
             <Button fx:id="reset" mnemonicParsing="false" onAction="#reset" text="Reset">
@@ -46,12 +46,12 @@
          <padding>
             <Insets left="10.0" right="10.0" />
          </padding></HBox>
-      <TableView fx:id="ecoleTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="1">
+      <TableView fx:id="ecoleTable" prefHeight="315.0" GridPane.rowIndex="1">
         <columns>
             <TableColumn fx:id="nomColumn" prefWidth="100.0" text="Nom" />
             <TableColumn fx:id="adresseColumn" prefWidth="150.0" text="Adresse" />
             <TableColumn fx:id="villeColumn" prefWidth="126.0" text="Ville" />
-            <TableColumn fx:id="departementColumn" prefWidth="223.0" text="Département" />
+            <TableColumn fx:id="departementColumn" prefWidth="271.99993896484375" text="Département" />
         </columns>
       </TableView>
    </children>

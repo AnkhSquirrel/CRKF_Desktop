@@ -85,10 +85,12 @@ public class EcoleController {
 
                 if(ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
                         searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
+                        departement.getSelectionModel().select(ville.getSelectionModel().getSelectedItem().getDepartement());
                 }
 
                 if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getVille().getDepartement() ){
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
+                        ville.getSelectionModel().select(departement.getSelectionModel().getSelectedItem().getVille());
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));

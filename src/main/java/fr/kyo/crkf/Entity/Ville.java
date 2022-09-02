@@ -3,7 +3,6 @@ package fr.kyo.crkf.Entity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
-import java.math.BigDecimal;
 
 public class Ville {
     private int id_ville;
