@@ -4,6 +4,8 @@ import fr.kyo.crkf.Controller.AccueilController;
 import fr.kyo.crkf.Controller.NavbarController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -83,6 +85,14 @@ public class ApplicationCRKF extends javafx.application.Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void openAboutModal(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A Propos");
+        alert.setHeaderText("CRKF est un outil de gestion pour conservatoire");
+        alert.setContentText("K.Y.O");
+        alert.showAndWait();
     }
 
     public static void main(String[] args) {
