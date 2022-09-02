@@ -1,7 +1,11 @@
 package fr.kyo.crkf.Controller;
 
 import fr.kyo.crkf.Entity.Classification;
+import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
+import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.Searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -29,22 +33,65 @@ public class EcoleController {
         private TableColumn<Ecole, String> departementColumn;
 
         @FXML
-        private SearchableComboBox<Classification> classification;
+        private SearchableComboBox<Ville> ville;
 
         @FXML
-        private TextField libelle;
+        private SearchableComboBox<Departement> departement;
 
         @FXML
         private Button reset;
 
-
+        @FXML
+        private TextField nomEcole;
+        private SearchableEcole searchableEcole;
         @FXML
         private void initialize(){
+                Filter filter = new Filter();
+
+                searchableEcole = new SearchableEcole();
+
+                // Intialisation des colomnes
                 nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
                 villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
                 adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getAdresseStringProperty());
                 departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
+
+                // Intialisation des comboBox
+                ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+                ville.valueProperty().addListener(observable -> filter());
+
+                departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
+                departement.valueProperty().addListener(observable -> filter());
+
+
+                nomEcole.textProperty().addListener(observable -> filter());
+
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getAll()));
+
+        }
+
+        @FXML
+        private void reset(){
+                nomEcole.setText("");
+                ville.getSelectionModel().selectFirst();
+                departement.getSelectionModel().selectFirst();
+        }
+
+        @FXML
+        private void filter(){
+                if(!nomEcole.getText().isEmpty() || !nomEcole.getText().equals(searchableEcole.getNom())) {
+                        searchableEcole.setNom(nomEcole.getText());
+                }
+
+                if(ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
+                        searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
+                }
+
+                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getVille().getDepartement() ){
+                        searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
+                }
+
+                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
         }
 
 

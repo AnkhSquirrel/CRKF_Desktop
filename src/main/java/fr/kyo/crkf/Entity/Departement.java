@@ -23,7 +23,10 @@ public class Departement {
     public void setDepartement(String departement) {
         this.departement = departement;
     }
-
+    @Override
+    public String toString(){
+        return departement;
+    }
     public ObservableValue<String> getDepartementStringProperty(){
         return new SimpleStringProperty(departement);
     }

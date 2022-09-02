@@ -49,6 +49,10 @@ public class Ville {
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
+    @Override
+    public String toString(){
+        return ville;
+    }
     public ObservableValue<String> getVilleStringProperty(){
         return new SimpleStringProperty(ville);
     }

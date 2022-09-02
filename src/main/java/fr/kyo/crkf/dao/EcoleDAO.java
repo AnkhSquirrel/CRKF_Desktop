@@ -1,7 +1,11 @@
 package fr.kyo.crkf.dao;
 
+import fr.kyo.crkf.Entity.Adresse;
 import fr.kyo.crkf.Entity.Cycle;
 import fr.kyo.crkf.Entity.Ecole;
+import fr.kyo.crkf.Entity.Instrument;
+import fr.kyo.crkf.Searchable.SearchableEcole;
+import fr.kyo.crkf.Searchable.SearchableInstrument;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -48,6 +52,33 @@ public class EcoleDAO extends DAO<Ecole> {
 
             while (rs.next()) {
                 liste.add(new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    public ArrayList<Ecole> getLike(SearchableEcole searchableEcole) {
+        ArrayList<Ecole> liste = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableEcole.getNom());
+            s.setInt(2,searchableEcole.getVille().getId_ville());
+            s.setInt(3, searchableEcole.getDepartement().getId_departement());
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Ecole ecole = (new Ecole(rs.getInt(1),rs.getString(2),DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+
+                liste.add(ecole);
             }
             rs.close();
         }
