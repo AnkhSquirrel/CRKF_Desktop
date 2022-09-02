@@ -85,23 +85,27 @@ public class PersonneDAO extends DAO<Personne> {
     public ArrayList<Personne> getLike(SearchableProfesseur searchableProfesseur) {
         ArrayList<Personne> liste = new ArrayList<>();
         try {
-            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?";
+            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableProfesseur.getNomEtPrenom());
             s.setInt(2,searchableProfesseur.getVehiculeCV());
+            s.setInt(3,searchableProfesseur.getVille().getId_ville());
+            s.setInt(4,searchableProfesseur.getVille().getDepartement().getId_departement());
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
                 Personne personne = new Personne();
-                personne.setId_personne(rs.getInt(1));
+                int id = rs.getInt(1);
+                personne.setId_personne(id);
                 personne.setNom(rs.getString(2));
                 personne.setPrenom(rs.getString(3));
                 personne.setVehiculeCv(rs.getInt(4));
+                personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+
                 liste.add(personne);
             }
             rs.close();
         }
-        // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
