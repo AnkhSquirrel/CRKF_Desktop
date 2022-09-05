@@ -23,6 +23,7 @@
    <children>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="650.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
          <children>
+            <Button mnemonicParsing="false" onAction="#pageMoin" text="-" />
             <TextField fx:id="nomEcole">
                <HBox.margin>
                   <Insets right="20.0" />
@@ -43,6 +44,7 @@
                   <Insets />
                </HBox.margin>
             </Button>
+            <Button mnemonicParsing="false" onAction="#pagePlus" text="+" />
          </children>
          <padding>
             <Insets left="10.0" right="10.0" />

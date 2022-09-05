@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -24,9 +25,11 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#pageMoin" text="-" />
                   <TextField fx:id="nomEtPrenomFiltre" />
                   <ComboBox fx:id="villeFiltre" prefWidth="150.0" />
                   <SearchableComboBox fx:id="departementFiltre" />
+                  <Button mnemonicParsing="false" onAction="#pagePlus" text="+" />
                </children></HBox>
          </children>
       </VBox>

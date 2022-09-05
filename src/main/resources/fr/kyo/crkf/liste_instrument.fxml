@@ -25,6 +25,8 @@
             <SearchableComboBox fx:id="classification" layoutX="361.0" layoutY="37.0" />
             <Button layoutX="982.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
             <SearchableComboBox fx:id="famille" layoutX="702.0" layoutY="37.0" />
+            <Button layoutX="21.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
+            <Button layoutX="990.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
          </children>
       </Pane>
       <TableView fx:id="instrumentTable" prefHeight="517.0" prefWidth="1054.0" GridPane.rowIndex="1">
