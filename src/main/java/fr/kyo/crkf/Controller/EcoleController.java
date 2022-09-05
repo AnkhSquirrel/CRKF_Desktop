@@ -38,6 +38,8 @@ public class EcoleController {
         @FXML
         private SearchableComboBox<Departement> departement;
 
+        private Filter filter;
+
         @FXML
         private Button reset;
 
@@ -46,7 +48,7 @@ public class EcoleController {
         private SearchableEcole searchableEcole;
         @FXML
         private void initialize(){
-                Filter filter = new Filter();
+                 filter = new Filter();
 
                 searchableEcole = new SearchableEcole();
 
@@ -61,7 +63,7 @@ public class EcoleController {
                 ville.valueProperty().addListener(observable -> filter());
 
                 departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
-                departement.valueProperty().addListener(observable -> filter());
+                departement.valueProperty().addListener(observable -> filterByDepartement());
 
 
                 nomEcole.textProperty().addListener(observable -> filter());
@@ -73,8 +75,8 @@ public class EcoleController {
         @FXML
         private void reset(){
                 nomEcole.setText("");
-                ville.getSelectionModel().selectFirst();
                 departement.getSelectionModel().selectFirst();
+                ville.getSelectionModel().selectFirst();
         }
 
         @FXML
@@ -85,15 +87,26 @@ public class EcoleController {
 
                 if(ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
                         searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
-                        departement.getSelectionModel().select(ville.getSelectionModel().getSelectedItem().getDepartement());
+                        departement.getSelectionModel().select(ville.getSelectionModel().getSelectedItem().getDepartement().getId_departement());
                 }
 
                 if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getVille().getDepartement() ){
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
-                        ville.getSelectionModel().select(departement.getSelectionModel().getSelectedItem().getVille());
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
+        }
+
+        private void filterByDepartement() {
+                if (departement.getSelectionModel().getSelectedItem() != null && (departement.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
+                        int id = ville.getSelectionModel().getSelectedItem().getId_ville();
+                        ville.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().gettByDepartementID(departement.getSelectionModel().getSelectedItem().getId_departement())));
+                        ville.getSelectionModel().select(id);
+                } else {
+                        ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+                        ville.getSelectionModel().select(0);
+                }
+                filter();
         }
 
 

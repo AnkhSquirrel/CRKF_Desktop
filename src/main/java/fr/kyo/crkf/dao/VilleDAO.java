@@ -1,6 +1,5 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ville;
 
 import java.sql.*;
@@ -34,6 +33,24 @@ public class VilleDAO extends DAO<Ville> {
             e.printStackTrace();
         }
         return ville;
+    }
+
+    public ArrayList<Ville> gettByDepartementID(int id) {
+        ArrayList<Ville> liste = new ArrayList<>();
+        try {
+            PreparedStatement ps = connexion.prepareStatement("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_departement = ? ");
+            ps.setInt(1,id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5))));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
     }
 
     @Override
