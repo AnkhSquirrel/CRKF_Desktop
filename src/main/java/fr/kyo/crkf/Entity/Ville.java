@@ -3,7 +3,8 @@ package fr.kyo.crkf.Entity;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
-import java.math.BigDecimal;
+import java.util.ArrayList;
+
 
 public class Ville {
     private int id_ville;
@@ -48,6 +49,10 @@ public class Ville {
     }
     public void setDepartement(Departement departement) {
         this.departement = departement;
+    }
+    @Override
+    public String toString(){
+        return ville;
     }
     public ObservableValue<String> getVilleStringProperty(){
         return new SimpleStringProperty(ville);

@@ -32,8 +32,6 @@ public class VilleDAO extends DAO<Ville> {
         return ville;
     }
 
-
-
     public ArrayList<Ville> gettByDepartementID(int id) {
         ArrayList<Ville> liste = new ArrayList<>();
         try {
@@ -51,7 +49,8 @@ public class VilleDAO extends DAO<Ville> {
         }
         return liste;
     }
-    
+
+
     @Override
     public ArrayList<Ville> getAll(int page) {
         ArrayList<Ville> liste = new ArrayList<>();

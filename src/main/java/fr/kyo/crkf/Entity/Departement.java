@@ -41,7 +41,13 @@ public class Departement {
     public void setDepartement(String departement) {
         this.departement = departement;
     }
-
+    public ArrayList<Ville> getVille(){
+        return villes;
+    }
+    @Override
+    public String toString(){
+        return departement;
+    }
     public ObservableValue<String> getDepartementStringProperty(){
         return new SimpleStringProperty(departement);
     }
