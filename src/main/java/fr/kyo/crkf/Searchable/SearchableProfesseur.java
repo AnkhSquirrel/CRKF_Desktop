@@ -13,7 +13,7 @@ public class SearchableProfesseur {
         this.id_professeur = 0;
         this.nomEtPrenom = "";
         this.vehiculeCV = 0;
-        ville = new Ville(0, "", 0f, 0f, new Departement(0, ""));
+        ville = new Ville(0, "", 0f, 0f, new Departement(0, "", ""));
 
     }
 
