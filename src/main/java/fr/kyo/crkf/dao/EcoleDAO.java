@@ -7,6 +7,7 @@ import java.sql.*;
 import java.util.ArrayList;
 
 public class EcoleDAO extends DAO<Ecole> {
+    private final int lgpage = 25;
     protected EcoleDAO(Connection connexion) {
         super(connexion);
     }
@@ -37,14 +38,16 @@ public class EcoleDAO extends DAO<Ecole> {
     }
 
     @Override
-    public ArrayList<Ecole> getAll() {
+    public ArrayList<Ecole> getAll(int page) {
         ArrayList<Ecole> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole order by Nom";
-            ResultSet rs = stmt.executeQuery(strCmd);
+            String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole order by Nom OFFSET " + lgpage + " * (? -1)  ROWS FETCH NEXT " + lgpage + " ROWS ONLY";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1,page);
+            ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
                 liste.add(new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
@@ -86,17 +89,21 @@ public class EcoleDAO extends DAO<Ecole> {
     }
 
     @Override
-    public boolean insert(Ecole objet) {
+    public int insert(Ecole objet) {
         try {
             String requete = "INSERT INTO Ecole (Nom,id_adresse) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getNom());
             preparedStatement.setInt(2, objet.getAdresse().getId_adresse());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-            return true;
+            return id;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 

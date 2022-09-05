@@ -1,6 +1,6 @@
 package fr.kyo.crkf.Controller;
 
-import fr.kyo.crkf.Entity.Classification;
+
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Ville;
@@ -60,6 +60,7 @@ public class EcoleController {
                 adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getAdresseStringProperty());
                 departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
 
+
                 // Intialisation des comboBox
                 ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
                 ville.valueProperty().addListener(observable -> filter());
@@ -70,6 +71,7 @@ public class EcoleController {
                 nomEcole.textProperty().addListener(observable -> filter());
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
+
 
         }
 
@@ -99,7 +101,7 @@ public class EcoleController {
         private void filterByDepartement() {
                 if (departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getId_departement() != 0) {
                         ArrayList<Ville> villes = DAOFactory.getVilleDAO().gettByDepartementID(departement.getSelectionModel().getSelectedItem().getId_departement());
-                        villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"")));
+                        villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"", "")));
                         ville.setItems(FXCollections.observableArrayList(villes));
                 } else {
                         System.out.println("fail");

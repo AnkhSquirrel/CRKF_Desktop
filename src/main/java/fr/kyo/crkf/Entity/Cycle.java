@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ObservableValue;
+
 public class Cycle {
     private int id_cycle;
     private String libelle;
@@ -33,5 +36,8 @@ public class Cycle {
 
     public void setCycle(int cycle) {
         this.cycle = cycle;
+    }
+    public ObservableValue<String> getCycleStringProperty(){
+        return new SimpleStringProperty(String.valueOf(libelle));
     }
 }

@@ -1,10 +1,14 @@
 package fr.kyo.crkf;
 
-import fr.kyo.crkf.Controller.AccueilController;
-import fr.kyo.crkf.Controller.NavbarController;
+import fr.kyo.crkf.Controller.*;
+import fr.kyo.crkf.Entity.Instrument;
+import fr.kyo.crkf.Entity.Personne;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
@@ -54,6 +58,8 @@ public class ApplicationCRKF extends javafx.application.Application {
             FXMLLoader fxmlLoaderListeProfesseur = new FXMLLoader();
             fxmlLoaderListeProfesseur.setLocation(ApplicationCRKF.class.getResource("liste_professeur.fxml"));
             GridPane listeProfesseur = fxmlLoaderListeProfesseur.load();
+            ProfesseurController professeurController = fxmlLoaderListeProfesseur.getController();
+            professeurController.setApplicationCRKF(this);
 
             mainWindow.setCenter(listeProfesseur);
         } catch (IOException e) {
@@ -78,8 +84,46 @@ public class ApplicationCRKF extends javafx.application.Application {
             FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
             fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("liste_instrument.fxml"));
             GridPane listeInstrument = fxmlLoaderListeInstrument.load();
+            InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
+            instrumentController.setApplicationCRKF(this);
 
             mainWindow.setCenter(listeInstrument);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAboutModal(){
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("A Propos");
+        alert.setHeaderText("CRKF est un outil de gestion pour conservatoire");
+        alert.setContentText("K.Y.O");
+        alert.showAndWait();
+    }
+    public void openDetailInstrument(Instrument instrument){
+        try {
+            FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
+            fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("detail_instrument.fxml"));
+            AnchorPane detailInstrument = fxmlLoaderListeInstrument.load();
+            DetailInstrumentController detailInstrumentController = fxmlLoaderListeInstrument.getController();
+            detailInstrumentController.setApplicationCRKF(this);
+            detailInstrumentController.setInstrument(instrument);
+
+            mainWindow.setCenter(detailInstrument);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openDetailProfesseur(Personne personne){
+        try {
+            FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
+            fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("detail_professeur.fxml"));
+            VBox detailProfesseur = fxmlLoaderListeInstrument.load();
+            DetailProfesseurController detailProfesseurController = fxmlLoaderListeInstrument.getController();
+            detailProfesseurController.setApplicationCRKF(this);
+            detailProfesseurController.setPersonne(personne);
+
+            mainWindow.setCenter(detailProfesseur);
         } catch (IOException e) {
             e.printStackTrace();
         }

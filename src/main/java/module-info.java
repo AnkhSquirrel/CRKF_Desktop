@@ -7,8 +7,7 @@ module fr.kyo.crkf {
 
     opens fr.kyo.crkf to javafx.fxml;
     exports fr.kyo.crkf;
-    exports fr.kyo.crkf.dao;
-    opens fr.kyo.crkf.dao to javafx.fxml;
-    exports fr.kyo.crkf.Controller;
+
     opens fr.kyo.crkf.Controller to javafx.fxml;
+    exports fr.kyo.crkf.Controller;
 }
