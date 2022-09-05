@@ -17,6 +17,12 @@ public class Personne {
 
     private ArrayList<Diplome> diplomes;
 
+    public Personne() {
+        this.id_personne = id_personne;
+        this.nom = nom;
+        this.prenom = prenom;
+    }
+
     public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole ecole) {
         this.id_personne = id_personne;
         this.nom = nom;

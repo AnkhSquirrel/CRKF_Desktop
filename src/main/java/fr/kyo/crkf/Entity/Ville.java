@@ -52,4 +52,9 @@ public class Ville {
     public ObservableValue<String> getVilleStringProperty(){
         return new SimpleStringProperty(ville);
     }
+
+    @Override
+    public String toString(){
+        return ville;
+    }
 }

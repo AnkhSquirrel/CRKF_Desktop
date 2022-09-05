@@ -16,25 +16,42 @@ public class VilleDAO extends DAO<Ville> {
         Ville ville = null;
         try {
 
-            // Determine the column set column
-
             String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_ville = ?";
+
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery();
 
             rs.next();
-
             ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5)));
-
             rs.close();
         }
-        // Handle any errors that may have occurred.
         catch (Exception e) {
             e.printStackTrace();
         }
         return ville;
     }
+
+
+
+    public ArrayList<Ville> gettByDepartementID(int id) {
+        ArrayList<Ville> liste = new ArrayList<>();
+        try {
+            PreparedStatement ps = connexion.prepareStatement("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_departement = ? ");
+            ps.setInt(1,id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5))));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+    
     @Override
     public ArrayList<Ville> getAll(int page) {
         ArrayList<Ville> liste = new ArrayList<>();
@@ -58,6 +75,7 @@ public class VilleDAO extends DAO<Ville> {
         }
         return liste;
     }
+
     @Override
     public int insert(Ville objet) {
         try {
