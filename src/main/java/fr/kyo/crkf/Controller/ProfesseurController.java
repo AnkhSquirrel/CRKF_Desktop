@@ -9,6 +9,7 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,7 +32,7 @@ public class ProfesseurController {
     @FXML
     private TextField nomEtPrenomFiltre;
     @FXML
-    private SearchableComboBox<Ville> villeFiltre;
+    private ComboBox<Ville> villeFiltre;
     @FXML
     private SearchableComboBox<Departement> departementFiltre;
     private SearchableProfesseur searchableProfesseur;
@@ -56,10 +57,16 @@ public class ProfesseurController {
 
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        villeFiltre.setEditable(true);
+        villeFiltre.getEditor().textProperty().addListener(observable -> villeFilter());
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll(1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
      }
+
+    private void villeFilter() {
+        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText())));
+    }
 
     private void filter() {
         if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom()))

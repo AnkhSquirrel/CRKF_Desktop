@@ -44,4 +44,10 @@ public class Filter {
     public ArrayList<Famille> getFamilles() {
         return familles;
     }
+
+    public ArrayList<Ville> getVilleLike(String text){
+        ArrayList<Ville> villes = DAOFactory.getVilleDAO().getLike(text);
+        villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
+        return villes;
+    }
 }

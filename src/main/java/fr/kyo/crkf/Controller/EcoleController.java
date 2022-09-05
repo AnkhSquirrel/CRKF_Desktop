@@ -7,12 +7,11 @@ import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
 
 import java.util.ArrayList;
@@ -35,7 +34,7 @@ public class EcoleController {
         private TableColumn<Ecole, String> departementColumn;
 
         @FXML
-        private SearchableComboBox<Ville> ville;
+        private ComboBox<Ville> ville;
 
         @FXML
         private SearchableComboBox<Departement> departement;
@@ -64,6 +63,8 @@ public class EcoleController {
                 // Intialisation des comboBox
                 ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
                 ville.valueProperty().addListener(observable -> filter());
+                ville.setEditable(true);
+                ville.getEditor().textProperty().addListener(observable -> villeFilter());
 
                 departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
                 departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterByDepartement());
@@ -73,6 +74,10 @@ public class EcoleController {
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
 
 
+        }
+
+        private void villeFilter() {
+                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText())));
         }
 
         @FXML
@@ -104,7 +109,6 @@ public class EcoleController {
                         villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"", "")));
                         ville.setItems(FXCollections.observableArrayList(villes));
                 } else {
-                        System.out.println("fail");
                         ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
                 }
                 ville.getSelectionModel().select(0);
