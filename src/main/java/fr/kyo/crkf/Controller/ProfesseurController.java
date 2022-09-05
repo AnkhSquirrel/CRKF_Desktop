@@ -48,11 +48,11 @@ public class ProfesseurController {
 
         nomEtPrenomFiltre.textProperty().addListener(observable -> filter());
 
-        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
-        villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
-
         departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filterByDepartement());
+
+        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
+        villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll()));
      }
@@ -73,7 +73,7 @@ public class ProfesseurController {
 
     private void filterByDepartement() {
         if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
-            villeFiltre.setItems(FXCollections.observableArrayList(departementFiltre.getSelectionModel().getSelectedItem().getVilles()));
+            villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().gettByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
         } else {
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         }
