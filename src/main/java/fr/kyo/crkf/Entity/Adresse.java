@@ -7,6 +7,7 @@ public class Adresse {
     private int id_adresse;
     private String adresse;
     private Ville ville;
+    private Departement departement;
 
     public Adresse(int id_adresse, String adresse, Ville ville) {
         this.id_adresse = id_adresse;
@@ -33,5 +34,9 @@ public class Adresse {
     }
     public ObservableValue<String> getAdresseStringProperty(){
         return new SimpleStringProperty(adresse);
+    }
+    @Override
+    public String toString(){
+        return adresse;
     }
 }

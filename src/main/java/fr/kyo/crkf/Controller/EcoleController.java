@@ -1,6 +1,7 @@
 package fr.kyo.crkf.Controller;
 
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Ville;
@@ -20,34 +21,28 @@ import java.util.ArrayList;
 public class EcoleController {
 
         @FXML
-        private TableView<Object> ecoleTable;
-
+        private TableView<Ecole> ecoleTable;
         @FXML
         private TableColumn<Ecole, String> nomColumn;
-
         @FXML
         private TableColumn<Ecole, String> adresseColumn;
-
         @FXML
         private TableColumn<Ecole, String> villeColumn;
-
         @FXML
         private TableColumn<Ecole, String> departementColumn;
-
         @FXML
         private SearchableComboBox<Ville> ville;
-
         @FXML
         private SearchableComboBox<Departement> departement;
-
-        private Filter filter;
-
         @FXML
         private Button reset;
-
         @FXML
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
+        private Filter filter;
+        private ApplicationCRKF applicationCRKF;
+
+
         @FXML
         private void initialize(){
                  filter = new Filter();
@@ -69,6 +64,8 @@ public class EcoleController {
                 departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterByDepartement());
 
                 nomEcole.textProperty().addListener(observable -> filter());
+
+                ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
 
@@ -96,6 +93,7 @@ public class EcoleController {
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
+                ecoleTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailEcole());
         }
 
         private void filterByDepartement() {
@@ -104,11 +102,17 @@ public class EcoleController {
                         villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"", "")));
                         ville.setItems(FXCollections.observableArrayList(villes));
                 } else {
-                        System.out.println("fail");
                         ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
                 }
                 ville.getSelectionModel().select(0);
                 filter();
+        }
+
+        private void openDetailEcole(){
+                applicationCRKF.openDetailEcole(ecoleTable.getSelectionModel().getSelectedItem());
+        }
+        public void setApplicationCRKF (ApplicationCRKF applicationCRKF){
+                this.applicationCRKF = applicationCRKF;
         }
 
 }
