@@ -81,17 +81,18 @@ public class InstrumentDAO extends DAO<Instrument> {
         return liste;
     }
 
-    public ArrayList<Instrument> getLike(SearchableInstrument searchableInstrument) {
+    public ArrayList<Instrument> getLike(SearchableInstrument searchableInstrument, int page) {
         ArrayList<Instrument> liste = new ArrayList<>();
         try {
 
             // Determine the column set column
 
-            String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?";
+            String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?, @lgpage = 25, @page = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableInstrument.getNom());
             s.setInt(2,searchableInstrument.getFamille().getId_famille());
             s.setInt(3,searchableInstrument.getFamille().getclassification().getId_classification());
+            s.setInt(4, page);
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {

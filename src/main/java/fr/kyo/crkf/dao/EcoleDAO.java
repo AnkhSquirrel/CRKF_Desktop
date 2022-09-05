@@ -61,17 +61,18 @@ public class EcoleDAO extends DAO<Ecole> {
         return liste;
     }
 
-    public ArrayList<Ecole> getLike(SearchableEcole searchableEcole) {
+    public ArrayList<Ecole> getLike(SearchableEcole searchableEcole, int page) {
         ArrayList<Ecole> liste = new ArrayList<>();
         try {
 
             // Determine the column set column
 
-            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25";
+            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25, @page = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableEcole.getNom());
             s.setInt(2,searchableEcole.getVille().getId_ville());
             s.setInt(3, searchableEcole.getDepartement().getId_departement());
+            s.setInt(4, page);
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {

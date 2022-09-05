@@ -47,8 +47,10 @@ public class EcoleController {
         @FXML
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
+        private int page;
         @FXML
         private void initialize(){
+                page = 1;
                  filter = new Filter();
 
                 searchableEcole = new SearchableEcole();
@@ -71,7 +73,7 @@ public class EcoleController {
 
                 nomEcole.textProperty().addListener(observable -> filter());
 
-                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
+                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
 
         }
@@ -100,7 +102,7 @@ public class EcoleController {
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
                 }
 
-                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole)));
+                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
         }
 
         private void filterByDepartement() {
@@ -113,6 +115,23 @@ public class EcoleController {
                 }
                 ville.getSelectionModel().select(0);
                 filter();
+        }
+
+        @FXML
+        private void pagePlus(){
+                if(ecoleTable.getItems().size() > 0){
+                        page++;
+                        filter();
+                }
+
+        }
+        @FXML
+        private void pageMoin(){
+                if (page > 1){
+                        page--;
+                        filter();
+                }
+
         }
 
 }

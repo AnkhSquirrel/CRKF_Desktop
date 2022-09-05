@@ -38,9 +38,11 @@ public class ProfesseurController {
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
+    private int page;
 
     @FXML
      private void initialize(){
+        page = 1;
         searchableProfesseur = new SearchableProfesseur();
         filter = new Filter();
 
@@ -69,15 +71,38 @@ public class ProfesseurController {
     }
 
     private void filter() {
-        if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom()))
+        if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null)
+            page = 1;
+        }
+
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null){
             searchableProfesseur.getVille().setDepartement(departementFiltre.getSelectionModel().getSelectedItem());
+            page = 1;
+        }
+
         if (villeFiltre.getSelectionModel().getSelectedItem() != null){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
-           // departementFiltre.getSelectionModel().select(villeFiltre.getSelectionModel().getSelectedItem().getDepartement());
+            page = 1;
         }
-        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur)));
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
+    }
+
+    @FXML
+    private void pagePlus(){
+        if(professeurTable.getItems().size() > 0){
+            page++;
+            filter();
+        }
+
+    }
+    @FXML
+    private void pageMoin(){
+        if (page > 1){
+            page--;
+            filter();
+        }
+
     }
 
     private void filterByDepartement() {
