@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -24,7 +25,7 @@
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
                   <TextField fx:id="nomEtPrenomFiltre" />
-                  <SearchableComboBox fx:id="villeFiltre" />
+                  <ComboBox fx:id="villeFiltre" prefWidth="150.0" />
                   <SearchableComboBox fx:id="departementFiltre" />
                </children></HBox>
          </children>

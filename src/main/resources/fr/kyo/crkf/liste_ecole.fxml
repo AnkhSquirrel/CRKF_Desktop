@@ -2,6 +2,7 @@
 
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
@@ -27,11 +28,11 @@
                   <Insets right="20.0" />
                </HBox.margin>
             </TextField>
-            <SearchableComboBox fx:id="ville" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="162.0">
-               <HBox.margin>
-                  <Insets right="20.0" />
-               </HBox.margin>
-            </SearchableComboBox>
+            <ComboBox fx:id="ville" prefWidth="150.0">
+               <opaqueInsets>
+                  <Insets />
+               </opaqueInsets>
+            </ComboBox>
             <SearchableComboBox fx:id="departement" layoutX="159.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="153.0">
                <HBox.margin>
                   <Insets right="20.0" />

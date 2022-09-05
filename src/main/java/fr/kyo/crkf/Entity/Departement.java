@@ -56,8 +56,4 @@ public class Departement {
         return villes;
     }
 
-    @Override
-    public String toString(){
-        return departement;
-    }
 }

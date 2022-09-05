@@ -58,8 +58,4 @@ public class Ville {
         return new SimpleStringProperty(ville);
     }
 
-    @Override
-    public String toString(){
-        return ville;
-    }
 }
