@@ -5,18 +5,19 @@ import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
-
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import org.controlsfx.control.SearchableComboBox;
 
+
 public class ProfesseurController {
     @FXML
-    private TableView<Object> professeurTable;
+    private TableView<Personne> professeurTable;
     @FXML
     private TableColumn<Personne, String> nomColumn;
     @FXML
@@ -35,6 +36,7 @@ public class ProfesseurController {
     private SearchableComboBox<Departement> departementFiltre;
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
+    private ApplicationCRKF applicationCRKF;
 
     @FXML
      private void initialize(){
@@ -43,6 +45,7 @@ public class ProfesseurController {
 
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
+
         villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
 
@@ -54,7 +57,8 @@ public class ProfesseurController {
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
 
-        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll()));
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll(1)));
+        professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
      }
 
     private void filter() {
@@ -81,5 +85,13 @@ public class ProfesseurController {
         filter();
     }
 
+
+    private void openDetailPage() {
+        applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
+    }
+
+    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
+        this.applicationCRKF = applicationCRKF;
+    }
 
 }

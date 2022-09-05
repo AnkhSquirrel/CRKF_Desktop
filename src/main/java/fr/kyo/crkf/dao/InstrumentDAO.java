@@ -47,7 +47,7 @@ public class InstrumentDAO extends DAO<Instrument> {
     }
 
     @Override
-    public ArrayList<Instrument> getAll() {
+    public ArrayList<Instrument> getAll(int page) {
         ArrayList<Instrument> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
@@ -120,21 +120,18 @@ public class InstrumentDAO extends DAO<Instrument> {
     }
 
     @Override
-    public boolean insert(Instrument objet) {
+    public int insert(Instrument objet) {
         try {
             String requete = "INSERT INTO Instrument (Nom) VALUES (?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getNom());
             preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-
-            String strCmd = "SELECT SCOPE_IDENTITY()";
-            PreparedStatement s = connexion.prepareStatement(strCmd);
-            ResultSet rs = s.executeQuery(strCmd);
-
-            rs.next();
-            int id = rs.getInt(1);
-            rs.close();
 
             for(Famille famille : objet.getFamilles()){
                 String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
@@ -144,9 +141,9 @@ public class InstrumentDAO extends DAO<Instrument> {
                 preparedStatement2.executeUpdate();
                 preparedStatement2.close();
             }
-            return true;
+            return id;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 
@@ -168,15 +165,15 @@ public class InstrumentDAO extends DAO<Instrument> {
     @Override
     public boolean delete(Instrument object) {
         try {
-            String requete = "DELETE FROM Instrument WHERE id_instrument=?";
-            PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_instrument());
-            preparedStatement.executeUpdate();
-
             String requete2 = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
             PreparedStatement preparedStatement2 = connexion().prepareStatement(requete2);
             preparedStatement2.setInt(1, object.getId_instrument());
             preparedStatement2.executeUpdate();
+
+            String requete = "DELETE FROM Instrument WHERE id_instrument=?";
+            PreparedStatement preparedStatement = connexion().prepareStatement(requete);
+            preparedStatement.setInt(1, object.getId_instrument());
+            preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
             return false;

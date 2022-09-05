@@ -13,10 +13,10 @@ public class Filter {
     private ArrayList<Ville> villes;
 
     public Filter(){
-        classifications = DAOFactory.getClassificationDAO().getAll();
+        classifications = DAOFactory.getClassificationDAO().getAll(1);
         classifications.add(0,new Classification(0,"Classification"));
 
-        familles = DAOFactory.getFamilleDAO().getAll();
+        familles = DAOFactory.getFamilleDAO().getAll(1);
         familles.add(0,new Famille(0,"Famille",new Classification(0,"Classification")));
 
         villes = DAOFactory.getVilleDAO().getAll();

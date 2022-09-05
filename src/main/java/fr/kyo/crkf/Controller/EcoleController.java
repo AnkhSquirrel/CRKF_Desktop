@@ -44,7 +44,7 @@ public class EcoleController {
                 villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
                 adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getAdresseStringProperty());
                 departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
-                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getAll()));
+                ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getAll(1)));
         }
 
 

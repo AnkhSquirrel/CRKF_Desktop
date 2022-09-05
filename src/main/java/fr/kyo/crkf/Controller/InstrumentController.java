@@ -1,5 +1,6 @@
 package fr.kyo.crkf.Controller;
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
@@ -25,9 +26,11 @@ public class InstrumentController {
     @FXML
     private TextField libelle;
     @FXML
-    private TableView<Object> instrumentTable;
+    private TableView<Instrument> instrumentTable;
 
     private SearchableInstrument searchableInstrument;
+
+    private ApplicationCRKF applicationCRKF;
 
      @FXML
      private void initialize(){
@@ -38,8 +41,10 @@ public class InstrumentController {
          libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
          classificationColumn.setCellValueFactory(cellData ->cellData.getValue().getFamilles().get(0).getclassification().getClassificationStringProperty());
 
+         instrumentTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailInstrument());
+
          // Initialisation des comboBox
-         classification.setItems(FXCollections.observableArrayList(filter.getClassifications()));
+         classification.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getAll(1)));
          classification.valueProperty().addListener(observable -> filter());
 
          famille.setItems(FXCollections.observableArrayList(filter.getFamilles()));
@@ -49,6 +54,14 @@ public class InstrumentController {
 
          reset();
          filter();
+     }
+
+     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
+         this.applicationCRKF = applicationCRKF;
+     }
+
+     private void openDetailInstrument(){
+         applicationCRKF.openDetailInstrument(instrumentTable.getSelectionModel().getSelectedItem());
      }
 
     private void filter() {
