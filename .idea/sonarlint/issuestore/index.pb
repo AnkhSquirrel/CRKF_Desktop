@@ -13,5 +13,3 @@ k
 0src/main/java/fr/kyo/crkf/dao/InstrumentDAO.java,6\8\68d7e5e272ca3952f857c4b05be862ef354a0f07
 n
 >src/main/java/fr/kyo/crkf/Searchable/SearchableInstrument.java,0\2\02324ad98bc0f4cf8f7b0479f42252c4dbbd8f44
-n
->src/main/java/fr/kyo/crkf/Controller/InstrumentController.java,4\6\4649783a9523d85bd8d753a66ecebb2d5d8ec576
