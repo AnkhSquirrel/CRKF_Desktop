@@ -17,7 +17,7 @@ public class CycleDAO extends DAO<Cycle> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_cycle, libelle, cycle from Cycle where id_cycle = ?";
+            String strCmd = "SELECT id_libelle, libelle, cycle from Cycle where id_libelle = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery();
@@ -42,7 +42,7 @@ public class CycleDAO extends DAO<Cycle> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_cycle, libelle, cycle from Cycle order by cycle";
+            String strCmd = "SELECT id_libelle, libelle, cycle from Cycle order by cycle";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
@@ -75,7 +75,7 @@ public class CycleDAO extends DAO<Cycle> {
     @Override
     public boolean update(Cycle object) {
         try {
-            String requete = "UPDATE Cycle SET libelle = ?, cycle = ? WHERE id_cycle = ?";
+            String requete = "UPDATE Cycle SET libelle = ?, cycle = ? WHERE id_libelle = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setString(1, object.getLibelle());
             preparedStatement.setInt(2, object.getCycle());
@@ -91,7 +91,7 @@ public class CycleDAO extends DAO<Cycle> {
     @Override
     public boolean delete(Cycle object) {
         try {
-            String requete = "DELETE FROM Cycle WHERE id_cycle=?";
+            String requete = "DELETE FROM Cycle WHERE id_libelle=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setInt(1, object.getId_cycle());
             preparedStatement.executeUpdate();

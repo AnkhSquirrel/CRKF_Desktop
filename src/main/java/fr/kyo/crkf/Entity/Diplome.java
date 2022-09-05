@@ -1,5 +1,7 @@
 package fr.kyo.crkf.Entity;
 
+import javafx.beans.value.ObservableValue;
+
 public class Diplome {
     private Cycle cycle;
     private Instrument instrument;
