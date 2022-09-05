@@ -1,11 +1,7 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Adresse;
-import fr.kyo.crkf.Entity.Cycle;
 import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Searchable.SearchableEcole;
-import fr.kyo.crkf.Searchable.SearchableInstrument;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -68,7 +64,7 @@ public class EcoleDAO extends DAO<Ecole> {
 
             // Determine the column set column
 
-            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
+            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableEcole.getNom());
             s.setInt(2,searchableEcole.getVille().getId_ville());
