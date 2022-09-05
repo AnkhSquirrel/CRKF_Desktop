@@ -6,7 +6,6 @@ import fr.kyo.crkf.Entity.Personne;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -124,6 +123,20 @@ public class ApplicationCRKF extends javafx.application.Application {
             detailProfesseurController.setPersonne(personne);
 
             mainWindow.setCenter(detailProfesseur);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openEcoleAroundPage(Personne personne){
+        try {
+            FXMLLoader fxmlLoaderEcoleAroundPage = new FXMLLoader();
+            fxmlLoaderEcoleAroundPage.setLocation(ApplicationCRKF.class.getResource("ecole_around_page.fxml"));
+            VBox ecoleAroundProf = fxmlLoaderEcoleAroundPage.load();
+            EcoleAroundProfesseurController ecoleAroundProfesseurController = fxmlLoaderEcoleAroundPage.getController();
+            ecoleAroundProfesseurController.setApplicationCRKF(this);
+            ecoleAroundProfesseurController.setPersonne(personne);
+            mainWindow.setCenter(ecoleAroundProf);
         } catch (IOException e) {
             e.printStackTrace();
         }
