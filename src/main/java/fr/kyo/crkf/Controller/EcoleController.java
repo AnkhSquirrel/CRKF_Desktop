@@ -1,6 +1,7 @@
 package fr.kyo.crkf.Controller;
 
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Ville;
@@ -48,6 +49,7 @@ public class EcoleController {
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
         private int page;
+        private ApplicationCRKF applicationCRKF;
         @FXML
         private void initialize(){
                 page = 1;
@@ -76,6 +78,9 @@ public class EcoleController {
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
 
+        }
+        public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
+                this.applicationCRKF = applicationCRKF;
         }
 
         private void villeFilter() {
@@ -132,6 +137,10 @@ public class EcoleController {
                         filter();
                 }
 
+        }
+        @FXML
+        private void openMainMenu(){
+                applicationCRKF.openMainMenu();
         }
 
 }

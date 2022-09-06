@@ -123,5 +123,9 @@ public class ProfesseurController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+    @FXML
+    private void openMainMenu(){
+        applicationCRKF.openMainMenu();
+    }
 
 }

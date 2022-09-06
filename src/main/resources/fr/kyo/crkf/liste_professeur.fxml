@@ -25,6 +25,7 @@
          <children>
             <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
                <children>
+                  <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
                   <Button mnemonicParsing="false" onAction="#pageMoin" text="-" />
                   <TextField fx:id="nomEtPrenomFiltre" />
                   <ComboBox fx:id="villeFiltre" prefWidth="150.0" />

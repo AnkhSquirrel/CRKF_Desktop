@@ -103,4 +103,8 @@ public class InstrumentController {
         }
 
     }
+    @FXML
+    private void openMainMenu(){
+        applicationCRKF.openMainMenu();
+    }
 }
