@@ -46,7 +46,7 @@ public class EcoleController {
         @FXML
         private void initialize(){
                 page = 1;
-                 filter = new Filter();
+                filter = new Filter();
 
                 searchableEcole = new SearchableEcole();
 
