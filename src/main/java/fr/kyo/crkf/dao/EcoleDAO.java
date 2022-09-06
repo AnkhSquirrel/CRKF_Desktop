@@ -6,6 +6,7 @@ import fr.kyo.crkf.Searchable.SearchableEcole;
 
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class EcoleDAO extends DAO<Ecole> {
     private final int lgpage = 25;
@@ -118,6 +119,7 @@ public class EcoleDAO extends DAO<Ecole> {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        ecolesEtDistances.sort(Comparator.comparingDouble(Pair<Ecole,Double>::getSecond));
         return ecolesEtDistances;
     }
 

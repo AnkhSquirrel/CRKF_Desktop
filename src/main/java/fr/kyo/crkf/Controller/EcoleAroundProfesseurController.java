@@ -13,6 +13,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 
 public class EcoleAroundProfesseurController {
 
@@ -31,6 +32,7 @@ public class EcoleAroundProfesseurController {
     private Personne personne;
     private ApplicationCRKF applicationCRKF;
     private ArrayList<Pair<Ecole, Double>> ecolesEtDistance;
+
 
     @FXML
     private void initialize(){
