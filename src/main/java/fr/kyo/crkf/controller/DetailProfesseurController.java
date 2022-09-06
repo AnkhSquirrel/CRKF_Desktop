@@ -1,10 +1,8 @@
-package fr.kyo.crkf.Controller;
+package fr.kyo.crkf.controller;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;

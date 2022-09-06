@@ -1,17 +1,17 @@
 package fr.kyo.crkf;
 
-import fr.kyo.crkf.Controller.*;
+import fr.kyo.crkf.controller.*;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -143,5 +143,26 @@ public class ApplicationCRKF extends javafx.application.Application {
 
     public static void main(String[] args) {
         launch();
+    }
+
+    public void openCreateInstrumentModal() {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            CreateInstrumentModalController createInstrumentModalController = fxmlLoader.getController();
+
+            createInstrumentModalController.setModal(modal);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un instrument");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }

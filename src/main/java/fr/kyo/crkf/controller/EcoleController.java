@@ -1,4 +1,4 @@
-package fr.kyo.crkf.Controller;
+package fr.kyo.crkf.controller;
 
 
 import fr.kyo.crkf.ApplicationCRKF;
@@ -8,8 +8,6 @@ import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
