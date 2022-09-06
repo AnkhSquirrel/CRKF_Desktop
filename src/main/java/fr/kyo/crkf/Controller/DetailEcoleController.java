@@ -35,10 +35,6 @@ public class DetailEcoleController {
     private TableColumn<Personne, String> profEmbauchePrenom;
     @FXML
     private TableColumn<Personne, String> profEmbaucheNom;
-    @FXML
-    private TableColumn<Personne, String> profTravailPrenom;
-    @FXML
-    private TableColumn<Personne, String> profTravailNom;
 
     private Ecole ecole;
     private Personne personne;
@@ -47,8 +43,6 @@ public class DetailEcoleController {
     private void initialize(){
         profEmbaucheNom.setCellValueFactory(CellData -> CellData.getValue().getNomStringProperty());
         profEmbauchePrenom.setCellValueFactory(CellData -> CellData.getValue().getPrenomStringProperty());
-        profTravailNom.setCellValueFactory(CellData -> CellData.getValue().getNomStringProperty());
-        profTravailPrenom.setCellValueFactory(CellData -> CellData.getValue().getPrenomStringProperty());
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="700.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.DetailEcoleController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.DetailEcoleController">
    <children>
       <Label fx:id="labelNomEcole" text="École" textAlignment="CENTER">
          <font>
@@ -24,63 +24,66 @@
       </Label>
       <Button fx:id="retour" alignment="CENTER" mnemonicParsing="false" onAction="#openEcoleList" text="Retour">
          <VBox.margin>
-            <Insets right="450.0" />
+            <Insets bottom="30.0" right="300.0" />
          </VBox.margin>
       </Button>
-      <GridPane>
-        <columnConstraints>
-          <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="120.0" prefWidth="150.0" />
-          <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-        </columnConstraints>
-        <rowConstraints>
-          <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="41.0" vgrow="SOMETIMES" />
-          <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
-            <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
-        </rowConstraints>
-         <children>
-            <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="311.0" text="Adresse">
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-               <padding>
-                  <Insets right="15.0" />
-               </padding>
-            </Label>
-            <Label fx:id="labelAdresse" prefHeight="53.0" prefWidth="450.0" wrapText="true" GridPane.columnIndex="1">
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-            </Label>
-            <Label text="Ville" GridPane.rowIndex="1">
-               <padding>
-                  <Insets right="15.0" />
-               </padding>
-            </Label>
-            <Label fx:id="labelVille" prefHeight="17.0" prefWidth="226.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-            </Label>
-            <Label text="Département" GridPane.rowIndex="2">
-               <padding>
-                  <Insets right="15.0" />
-               </padding>
-               <font>
-                  <Font name="System Italic" size="12.0" />
-               </font>
-            </Label>
-            <Label fx:id="labelDepartement" prefHeight="17.0" prefWidth="252.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
-               <padding>
-                  <Insets left="15.0" />
-               </padding>
-            </Label>
-         </children>
-      </GridPane>
       <HBox alignment="CENTER" prefHeight="295.0" prefWidth="700.0">
          <children>
+            <GridPane maxHeight="150.0" maxWidth="500.0" prefHeight="150.0" prefWidth="250.0">
+              <columnConstraints>
+                <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="13.0" prefWidth="86.0" />
+                <ColumnConstraints hgrow="SOMETIMES" maxWidth="314.0" minWidth="10.0" prefWidth="164.0" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints maxHeight="60.0" minHeight="30.0" prefHeight="41.0" vgrow="SOMETIMES" />
+                <RowConstraints maxHeight="56.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+                  <RowConstraints maxHeight="47.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+              </rowConstraints>
+               <children>
+                  <Label alignment="CENTER_RIGHT" prefHeight="17.0" prefWidth="311.0" text="Adresse">
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelAdresse" prefHeight="43.0" prefWidth="175.0" wrapText="true" GridPane.columnIndex="1">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <Label text="Ville" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                  </Label>
+                  <Label fx:id="labelVille" prefHeight="39.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+                  <Label prefHeight="17.0" prefWidth="95.0" text="Département" GridPane.rowIndex="2">
+                     <padding>
+                        <Insets right="15.0" />
+                     </padding>
+                     <font>
+                        <Font name="System Italic" size="12.0" />
+                     </font>
+                  </Label>
+                  <Label fx:id="labelDepartement" prefHeight="35.0" prefWidth="175.0" GridPane.columnIndex="1" GridPane.rowIndex="2">
+                     <padding>
+                        <Insets left="15.0" />
+                     </padding>
+                  </Label>
+               </children>
+               <HBox.margin>
+                  <Insets right="40.0" />
+               </HBox.margin>
+            </GridPane>
             <VBox alignment="TOP_CENTER" minWidth="200.0" prefHeight="200.0" prefWidth="100.0">
                <children>
-                  <Label text="Profs embauchés" textAlignment="CENTER">
+                  <Label text="Professeurs" textAlignment="CENTER">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -93,28 +96,13 @@
                       <TableColumn fx:id="profEmbaucheNom" prefWidth="97.0" text="Nom" />
                       <TableColumn fx:id="profEmbauchePrenom" prefWidth="102.0" text="Prenom" />
                     </columns>
-                  </TableView>
-               </children>
-            </VBox>
-            <VBox alignment="TOP_CENTER" minWidth="200.0" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Label text="Profs travail">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
                      <VBox.margin>
-                        <Insets bottom="10.0" top="10.0" />
+                        <Insets />
                      </VBox.margin>
-                  </Label>
-                  <TableView fx:id="profTravail" prefHeight="236.0" prefWidth="200.0">
-                    <columns>
-                      <TableColumn fx:id="profTravailNom" prefWidth="99.0" text="Nom" />
-                      <TableColumn fx:id="profTravailPrenom" prefWidth="99.0" text="Prenom" />
-                    </columns>
                   </TableView>
                </children>
                <HBox.margin>
-                  <Insets left="30.0" />
+                  <Insets right="20.0" />
                </HBox.margin>
             </VBox>
          </children>
