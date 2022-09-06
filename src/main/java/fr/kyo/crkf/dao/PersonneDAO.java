@@ -101,6 +101,8 @@ public class PersonneDAO extends DAO<Personne> {
                 personne.setPrenom(rs.getString(3));
                 personne.setVehiculeCv(rs.getInt(4));
                 personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+                personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+                // TODO: personne.setDiplomes(new ArrayList<>());
 
                 liste.add(personne);
             }

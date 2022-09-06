@@ -62,7 +62,7 @@ public class ProfesseurController {
         villeFiltre.setEditable(true);
         villeFiltre.getEditor().textProperty().addListener(observable -> villeFilter());
 
-        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll(1)));
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
      }
 
