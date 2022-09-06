@@ -1,4 +1,4 @@
-package fr.kyo.crkf.Controller;
+package fr.kyo.crkf.controller;
 
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Personne;

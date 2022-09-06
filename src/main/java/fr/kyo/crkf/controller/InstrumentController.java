@@ -1,4 +1,4 @@
-package fr.kyo.crkf.Controller;
+package fr.kyo.crkf.controller;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
@@ -106,5 +106,9 @@ public class InstrumentController {
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
+    }
+    @FXML
+    private void openCreateModal(){
+         applicationCRKF.openCreateInstrumentModal();
     }
 }

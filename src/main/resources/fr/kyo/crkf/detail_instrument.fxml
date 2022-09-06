@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.DetailInstrumentController">
+<AnchorPane xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.DetailInstrumentController">
    <children>
       <Button layoutX="26.0" layoutY="13.0" mnemonicParsing="false" onAction="#openInstrumentList" text="Retour" />
       <Label fx:id="nom" layoutX="242.0" layoutY="25.0" text="Instrument" textAlignment="CENTER">

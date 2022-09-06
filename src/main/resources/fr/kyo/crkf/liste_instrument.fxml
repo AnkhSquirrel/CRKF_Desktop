@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.InstrumentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.InstrumentController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -28,6 +28,7 @@
             <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
             <Button layoutX="703.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
             <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+            <Button layoutX="351.0" layoutY="82.0" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
          </children>
       </Pane>
       <TableView fx:id="instrumentTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="1">
