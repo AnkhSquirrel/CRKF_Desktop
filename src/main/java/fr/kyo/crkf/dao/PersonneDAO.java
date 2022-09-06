@@ -3,7 +3,6 @@ package fr.kyo.crkf.dao;
 import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
-
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -101,6 +100,29 @@ public class PersonneDAO extends DAO<Personne> {
                 personne.setPrenom(rs.getString(3));
                 personne.setVehiculeCv(rs.getInt(4));
                 personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+
+                liste.add(personne);
+            }
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    public ArrayList<Personne> getByEcole (int id_ecole) {
+        ArrayList<Personne> liste = new ArrayList<>();
+        try {
+            String strCmd = "SELECT nom, prenom from Personne where id_ecole = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1, id_ecole);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Personne personne = new Personne();
+                personne.setNom(rs.getString(1));
+                personne.setPrenom(rs.getString(2));
 
                 liste.add(personne);
             }
