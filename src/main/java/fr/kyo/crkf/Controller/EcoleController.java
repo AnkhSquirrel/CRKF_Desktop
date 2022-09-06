@@ -62,7 +62,7 @@ public class EcoleController {
 
 
                 // Intialisation des comboBox
-                ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+                villeFilter();
                 ville.valueProperty().addListener(observable -> filter());
                 ville.setEditable(true);
                 ville.getEditor().textProperty().addListener(observable -> villeFilter());
@@ -89,19 +89,23 @@ public class EcoleController {
                 nomEcole.setText("");
                 departement.getSelectionModel().selectFirst();
                 ville.getSelectionModel().selectFirst();
+                page = 1;
         }
 
         @FXML
         private void filter(){
                 if(!nomEcole.getText().isEmpty() || !nomEcole.getText().equals(searchableEcole.getNom())) {
                         searchableEcole.setNom(nomEcole.getText());
+                        page = 1;
                 }
                 if(ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
                         searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
+                        page = 1;
                 }
 
                 if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getVille().getDepartement() ){
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
+                        page = 1;
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
@@ -113,7 +117,7 @@ public class EcoleController {
                         villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"", "")));
                         ville.setItems(FXCollections.observableArrayList(villes));
                 } else {
-                        ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+                        villeFilter();
                 }
                 ville.getSelectionModel().select(0);
                 filter();

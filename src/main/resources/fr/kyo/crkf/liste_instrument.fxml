@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="1054.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.InstrumentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.InstrumentController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -21,19 +21,19 @@
    <children>
       <Pane prefHeight="200.0" prefWidth="200.0">
          <children>
-            <TextField fx:id="libelle" layoutX="72.0" layoutY="37.0" />
-            <SearchableComboBox fx:id="classification" layoutX="361.0" layoutY="37.0" />
-            <Button layoutX="982.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
-            <SearchableComboBox fx:id="famille" layoutX="702.0" layoutY="37.0" />
-            <Button layoutX="21.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
-            <Button layoutX="990.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
-            <Button layoutX="16.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+            <TextField fx:id="libelle" layoutX="84.0" layoutY="37.0" />
+            <SearchableComboBox fx:id="classification" layoutX="253.0" layoutY="37.0" />
+            <Button layoutX="643.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
+            <SearchableComboBox fx:id="famille" layoutX="448.0" layoutY="37.0" />
+            <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
+            <Button layoutX="703.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
+            <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
          </children>
       </Pane>
-      <TableView fx:id="instrumentTable" prefHeight="517.0" prefWidth="1054.0" GridPane.rowIndex="1">
+      <TableView fx:id="instrumentTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="1">
         <columns>
-            <TableColumn fx:id="libelleColumn" prefWidth="554.0" text="Libellé" />
-            <TableColumn fx:id="classificationColumn" prefWidth="499.0" text="Classification" />
+            <TableColumn fx:id="libelleColumn" prefWidth="379.0" text="Libellé" />
+            <TableColumn fx:id="classificationColumn" prefWidth="376.0" text="Classification" />
         </columns>
       </TableView>
    </children>
