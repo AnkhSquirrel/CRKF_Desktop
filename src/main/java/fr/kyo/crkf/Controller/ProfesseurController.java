@@ -9,6 +9,7 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -31,15 +32,17 @@ public class ProfesseurController {
     @FXML
     private TextField nomEtPrenomFiltre;
     @FXML
-    private SearchableComboBox<Ville> villeFiltre;
+    private ComboBox<Ville> villeFiltre;
     @FXML
     private SearchableComboBox<Departement> departementFiltre;
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
+    private int page;
 
     @FXML
      private void initialize(){
+        page = 1;
         searchableProfesseur = new SearchableProfesseur();
         filter = new Filter();
 
@@ -56,21 +59,50 @@ public class ProfesseurController {
 
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        villeFiltre.setEditable(true);
+        villeFiltre.getEditor().textProperty().addListener(observable -> villeFilter());
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getAll(1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
      }
 
+    private void villeFilter() {
+        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(), searchableProfesseur.getVille().getDepartement().getId_departement())));
+    }
+
     private void filter() {
-        if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom()))
+        if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null)
+            page = 1;
+        }
+
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null){
             searchableProfesseur.getVille().setDepartement(departementFiltre.getSelectionModel().getSelectedItem());
+            page = 1;
+        }
+
         if (villeFiltre.getSelectionModel().getSelectedItem() != null){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
-           // departementFiltre.getSelectionModel().select(villeFiltre.getSelectionModel().getSelectedItem().getDepartement());
+            page = 1;
         }
-        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur)));
+        professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
+    }
+
+    @FXML
+    private void pagePlus(){
+        if(professeurTable.getItems().size() > 0){
+            page++;
+            filter();
+        }
+
+    }
+    @FXML
+    private void pageMoin(){
+        if (page > 1){
+            page--;
+            filter();
+        }
+
     }
 
     private void filterByDepartement() {
@@ -90,6 +122,10 @@ public class ProfesseurController {
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
+    }
+    @FXML
+    private void openMainMenu(){
+        applicationCRKF.openMainMenu();
     }
 
 }

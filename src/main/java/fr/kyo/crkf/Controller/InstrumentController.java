@@ -32,12 +32,12 @@ public class InstrumentController {
 
 
     private ApplicationCRKF applicationCRKF;
+    private int page;
 
      @FXML
      private void initialize(){
+         page = 1;
          Filter filter = new Filter();
-
-
         searchableInstrument = new SearchableInstrument();
         // initialize tableview
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
@@ -79,12 +79,32 @@ public class InstrumentController {
             searchableInstrument.setFamille(famille.getSelectionModel().getSelectedItem());
             classification.getSelectionModel().select(famille.getSelectionModel().getSelectedItem().getclassification());
         }
-        instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument)));
+        instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)));
     }
     @FXML
     private void reset(){
         libelle.setText("");
         classification.getSelectionModel().selectFirst();
         famille.getSelectionModel().selectFirst();
+    }
+    @FXML
+    private void pagePlus(){
+         if(instrumentTable.getItems().size() > 0){
+             page++;
+             filter();
+         }
+
+    }
+    @FXML
+    private void pageMoin(){
+        if (page > 1){
+            page--;
+            filter();
+        }
+
+    }
+    @FXML
+    private void openMainMenu(){
+        applicationCRKF.openMainMenu();
     }
 }

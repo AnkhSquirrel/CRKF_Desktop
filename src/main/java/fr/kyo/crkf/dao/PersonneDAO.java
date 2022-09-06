@@ -81,15 +81,16 @@ public class PersonneDAO extends DAO<Personne> {
         return liste;
     }
 
-    public ArrayList<Personne> getLike(SearchableProfesseur searchableProfesseur) {
+    public ArrayList<Personne> getLike(SearchableProfesseur searchableProfesseur, int page) {
         ArrayList<Personne> liste = new ArrayList<>();
         try {
-            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?";
+            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?, @lgpage = 25, @page = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableProfesseur.getNomEtPrenom());
             s.setInt(2,searchableProfesseur.getVehiculeCV());
             s.setInt(3,searchableProfesseur.getVille().getId_ville());
             s.setInt(4,searchableProfesseur.getVille().getDepartement().getId_departement());
+            s.setInt(5,page);
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {

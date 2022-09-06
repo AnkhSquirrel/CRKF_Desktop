@@ -32,26 +32,36 @@ public class ApplicationCRKF extends javafx.application.Application {
             navbarController = fxmlLoaderNavbar.getController();
             navbarController.setMainApp(this);
 
-            FXMLLoader fxmlLoaderAccueil = new FXMLLoader();
-            fxmlLoaderAccueil.setLocation(ApplicationCRKF.class.getResource("accueil.fxml"));
-            VBox accueil = fxmlLoaderAccueil.load();
-            accueilController = fxmlLoaderAccueil.getController();
-            accueilController.setMainApp(this);
+            openMainMenu();
 
             mainWindow.setTop(navbar);
-            mainWindow.setCenter(accueil);
 
-            Scene scene = new Scene(mainWindow, 640, 480);
+            Scene scene = new Scene(mainWindow);
 
             stage.setTitle("CRKF");
-            stage.setMinWidth(640);
-            stage.setMinHeight(480);
+            stage.setMinWidth(840);
+            stage.setMinHeight(620);
             stage.setScene(scene);
             stage.show();
 
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public void openMainMenu(){
+        try{
+            FXMLLoader fxmlLoaderAccueil = new FXMLLoader();
+            fxmlLoaderAccueil.setLocation(ApplicationCRKF.class.getResource("accueil.fxml"));
+            VBox accueil = fxmlLoaderAccueil.load();
+            accueilController = fxmlLoaderAccueil.getController();
+            accueilController.setMainApp(this);
+
+            mainWindow.setCenter(accueil);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
     public void openProfesseurList() {
