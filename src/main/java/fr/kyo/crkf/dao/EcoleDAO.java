@@ -1,6 +1,7 @@
 package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Ecole;
+import fr.kyo.crkf.Tools.Pair;
 import fr.kyo.crkf.Searchable.SearchableEcole;
 
 import java.sql.*;
@@ -86,6 +87,37 @@ public class EcoleDAO extends DAO<Ecole> {
             e.printStackTrace();
         }
         return liste;
+    }
+
+    public ArrayList<Pair<Ecole, Double>> getByDistance(float latitudePointA, float longitudePointA, int page) {
+        ArrayList<Pair<Ecole, Double>> ecolesEtDistances = new ArrayList<>();
+        try{
+            // ********* Version avec pagination ******************
+            // String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole order by Nom OFFSET " + lgpage + " * (? -1)  ROWS FETCH NEXT " + lgpage + " ROWS ONLY";
+            // ...
+            // s.setInt(1,page);
+            // _______________________________________________________
+
+            String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
+                float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude();
+                double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
+
+                if (distance < 50){
+                    Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+                    Pair<Ecole, Double> pair = new Pair<>(ecole, distance);
+                    ecolesEtDistances.add(pair);
+                }
+            }
+            rs.close();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ecolesEtDistances;
     }
 
     @Override
