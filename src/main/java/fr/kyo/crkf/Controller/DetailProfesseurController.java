@@ -2,9 +2,7 @@ package fr.kyo.crkf.Controller;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
@@ -42,5 +40,9 @@ public class DetailProfesseurController {
         ecole.setText(personne.getEcole().getNom());
 
         diplomeTable.setItems(FXCollections.observableArrayList(personne.getDiplomes()));
+    }
+    @FXML
+    private void openEcoleAroundPage() {
+        applicationCRKF.openEcoleAroundPage(personne);
     }
 }
