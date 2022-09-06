@@ -41,4 +41,8 @@ public class DetailProfesseurController {
 
         diplomeTable.setItems(FXCollections.observableArrayList(personne.getDiplomes()));
     }
+    @FXML
+    private void openEcoleAroundPage() {
+        applicationCRKF.openEcoleAroundPage(personne);
+    }
 }

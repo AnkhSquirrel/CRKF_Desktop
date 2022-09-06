@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.EcoleAroundProfesseurController">
+   <children>
+      <Label fx:id="ville" text="Label" />
+      <TableView fx:id="ecoleTable" prefHeight="200.0" prefWidth="200.0">
+        <columns>
+          <TableColumn fx:id="nomColumn" prefWidth="75.0" text="Nom" />
+          <TableColumn fx:id="adresseColumn" prefWidth="75.0" text="Adresse" />
+            <TableColumn fx:id="villeColumn" prefWidth="75.0" text="Ville" />
+            <TableColumn fx:id="distanceColumn" prefWidth="75.0" text="Distance" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>
