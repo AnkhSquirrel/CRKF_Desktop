@@ -43,9 +43,6 @@ public class EcoleController {
         private Filter filter;
 
         @FXML
-        private Button reset;
-
-        @FXML
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
         private int page;
@@ -84,7 +81,7 @@ public class EcoleController {
         }
 
         private void villeFilter() {
-                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText())));
+                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
         }
 
         @FXML
@@ -111,7 +108,7 @@ public class EcoleController {
         }
 
         private void filterByDepartement() {
-                if (departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getId_departement() != 0) {
+                if (departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getId_departement() != 0 && searchableEcole.getDepartement() != departement.getSelectionModel().getSelectedItem()) {
                         ArrayList<Ville> villes = DAOFactory.getVilleDAO().gettByDepartementID(departement.getSelectionModel().getSelectedItem().getId_departement());
                         villes.add(0,new Ville(0,"Ville",0f,0f,new Departement(0,"", "")));
                         ville.setItems(FXCollections.observableArrayList(villes));

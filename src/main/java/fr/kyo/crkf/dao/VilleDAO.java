@@ -127,11 +127,14 @@ public class VilleDAO extends DAO<Ville> {
         }
     }
 
-    public ArrayList<Ville> getLike(String nom) {
+    public ArrayList<Ville> getLike(String nom, int departement_id) {
         ArrayList<Ville> list = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()){
 
-            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%' ORDER BY VILLE OFFSET 0 ROWS FETCH NEXT 25 ROWS ONLY";
+            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
+            if(departement_id != 0)
+                strCmd += " and id_departement = " + departement_id;
+            strCmd += " ORDER BY VILLE OFFSET 0 ROWS FETCH NEXT 25 ROWS ONLY";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while(rs.next())
