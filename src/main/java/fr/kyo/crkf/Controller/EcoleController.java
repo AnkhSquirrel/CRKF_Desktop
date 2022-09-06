@@ -20,37 +20,33 @@ import java.util.ArrayList;
 public class EcoleController {
 
         @FXML
-        private TableView<Object> ecoleTable;
-
+        private TableView<Ecole> ecoleTable;
         @FXML
         private TableColumn<Ecole, String> nomColumn;
-
         @FXML
         private TableColumn<Ecole, String> adresseColumn;
-
         @FXML
         private TableColumn<Ecole, String> villeColumn;
-
         @FXML
         private TableColumn<Ecole, String> departementColumn;
-
         @FXML
         private ComboBox<Ville> ville;
-
         @FXML
         private SearchableComboBox<Departement> departement;
-
-        private Filter filter;
-
+        @FXML
+        private Button reset;
         @FXML
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
-        private int page;
+        private Filter filter;
         private ApplicationCRKF applicationCRKF;
+
+        private int page;
+
         @FXML
         private void initialize(){
                 page = 1;
-                 filter = new Filter();
+                filter = new Filter();
 
                 searchableEcole = new SearchableEcole();
 
@@ -72,12 +68,12 @@ public class EcoleController {
 
                 nomEcole.textProperty().addListener(observable -> filter());
 
+                ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
+
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
 
-        }
-        public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
-                this.applicationCRKF = applicationCRKF;
+
         }
 
         private void villeFilter() {
@@ -108,7 +104,10 @@ public class EcoleController {
                         page = 1;
                 }
 
+                ecoleTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailEcole());
+
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
         }
 
         private void filterByDepartement() {
@@ -118,9 +117,18 @@ public class EcoleController {
                         ville.setItems(FXCollections.observableArrayList(villes));
                 } else {
                         villeFilter();
+
                 }
                 ville.getSelectionModel().select(0);
                 filter();
+        }
+
+
+        private void openDetailEcole(){
+                applicationCRKF.openDetailEcole(ecoleTable.getSelectionModel().getSelectedItem());
+        }
+        public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
+                this.applicationCRKF = applicationCRKF;
         }
 
         @FXML

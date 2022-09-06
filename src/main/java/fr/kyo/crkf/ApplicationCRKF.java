@@ -1,6 +1,7 @@
 package fr.kyo.crkf;
 
 import fr.kyo.crkf.Controller.*;
+import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import javafx.fxml.FXMLLoader;
@@ -136,6 +137,20 @@ public class ApplicationCRKF extends javafx.application.Application {
             detailProfesseurController.setPersonne(personne);
 
             mainWindow.setCenter(detailProfesseur);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openDetailEcole(Ecole ecole){
+        try {
+            FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
+            fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("detail_ecole.fxml"));
+            VBox detailEcole = fxmlLoaderListeEcole.load();
+            DetailEcoleController detailEcoleController = fxmlLoaderListeEcole.getController();
+            detailEcoleController.setApplicationCRKF(this);
+            detailEcoleController.setEcole(ecole);
+
+            mainWindow.setCenter(detailEcole);
         } catch (IOException e) {
             e.printStackTrace();
         }

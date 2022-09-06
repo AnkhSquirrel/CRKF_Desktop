@@ -9,6 +9,7 @@ import java.util.ArrayList;
 
 public class Personne {
     private int id_personne;
+    private int id_ecole;
     private String nom;
     private String prenom;
     private int vehiculeCv;
@@ -37,6 +38,9 @@ public class Personne {
     }
     public void setId_personne(int id_personne) {
         this.id_personne = id_personne;
+    }
+    public void setId_ecole(int id_ecole){
+        this.id_ecole = id_ecole;
     }
     public String getNom() {
         return nom;
