@@ -35,11 +35,11 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             mainWindow.setTop(navbar);
 
-            Scene scene = new Scene(mainWindow, 640, 480);
+            Scene scene = new Scene(mainWindow);
 
             stage.setTitle("CRKF");
-            stage.setMinWidth(640);
-            stage.setMinHeight(480);
+            stage.setMinWidth(840);
+            stage.setMinHeight(620);
             stage.setScene(scene);
             stage.show();
 
