@@ -13,8 +13,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
 
-import java.util.ArrayList;
-
 public class EcoleController {
 
         @FXML
@@ -90,10 +88,11 @@ public class EcoleController {
 
         @FXML
         private void reset(){
+                page = 1;
                 nomEcole.setText("");
                 departement.getSelectionModel().selectFirst();
                 ville.getSelectionModel().selectFirst();
-                page = 1;
+                //filter();
         }
 
         @FXML
@@ -107,7 +106,7 @@ public class EcoleController {
                         page = 1;
                 }
 
-                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getVille().getDepartement() ){
+                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getDepartement() ){
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
                         page = 1;
                 }
@@ -128,15 +127,13 @@ public class EcoleController {
                         page++;
                         filter();
                 }
-
         }
         @FXML
-        private void pageMoin(){
+        private void pageMoins(){
                 if (page > 1){
                         page--;
                         filter();
                 }
-
         }
         @FXML
         private void openMainMenu(){
