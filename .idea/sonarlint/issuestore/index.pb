@@ -21,7 +21,5 @@ n
 -src/main/java/fr/kyo/crkf/Entity/Famille.java,2\5\250260d77e747db4a4e27db11c2edfe4e8dd063a
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
-i
-9src/main/java/fr/kyo/crkf/controller/EcoleController.java,c\3\c3615e0e3966f243d0349f4459695d1f2679c5e7
 y
 Isrc/main/java/fr/kyo/crkf/controller/EcoleAroundProfesseurController.java,7\f\7fd15b89d98120e02d8070c2c1f94c463cf7ed30
