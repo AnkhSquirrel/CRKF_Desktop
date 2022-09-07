@@ -22,6 +22,7 @@ public class Personne {
         this.id_personne = id_personne;
         this.nom = nom;
         this.prenom = prenom;
+        diplomes = new ArrayList<>();
     }
 
     public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole ecole) {
