@@ -24,7 +24,7 @@
         <HBox alignment="CENTER" prefHeight="100.0" prefWidth="650.0" GridPane.halignment="CENTER" GridPane.valignment="CENTER">
             <children>
                 <Button mnemonicParsing="false" onAction="#openMainMenu" prefHeight="25.0" prefWidth="70.0" text="Retour" />
-                <Button mnemonicParsing="false" onAction="#pageMoin" text="-" />
+                <Button mnemonicParsing="false" onAction="#pageMoins" text="-" />
                 <TextField fx:id="nomEcole">
                     <HBox.margin>
                         <Insets right="20.0" />
