@@ -102,6 +102,8 @@ public class CreateInstrumentModalController {
             if(DAOFactory.getInstrumentDAO().insert(instrument) != 0){
                 closeModal();
             }
+        }else{
+            System.out.println("Erreur");
         }
     }
     @FXML
