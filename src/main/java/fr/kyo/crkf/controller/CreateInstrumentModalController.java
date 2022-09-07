@@ -1,5 +1,6 @@
 package fr.kyo.crkf.controller;
 
+import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Searchable.Filter;
@@ -48,11 +49,10 @@ public class CreateInstrumentModalController {
     @FXML
     private void addRow(){
         Label label = new Label();
-        label.setText("Famille Instance: ");
+        label.setText("Famille : ");
 
         ComboBox<Famille> comboBox = new ComboBox<>();
-        comboBox.setItems(FXCollections.observableArrayList(filter.getFamilles()));
-        comboBox.getSelectionModel().select(0);
+        boolean insert = setComboboxItem(comboBox);
 
         Button button = new Button();
         int id = rowsCount;
@@ -66,12 +66,35 @@ public class CreateInstrumentModalController {
         hBox.setMaxHeight(80);
         hBox.setId(String.valueOf(id));
 
-        grid.getChildren().remove(add);
-        grid.addRow(rowsCount + 1,add);
-        grid.addRow(rowsCount, hBox);
+        if(insert){
+            grid.getChildren().remove(add);
+            grid.addRow(rowsCount + 1,add);
+            grid.addRow(rowsCount, hBox);
+            rowsCount++;
+        }
 
-        rowsCount++;
 
+
+
+    }
+
+    private boolean setComboboxItem(ComboBox<Famille> comboBox) {
+        if(grid.getChildren().get(0) == add){
+            comboBox.setItems(FXCollections.observableArrayList(filter.getFamilles()));
+            comboBox.getSelectionModel().select(0);
+            return true;
+        }else{
+            HBox hBox = (HBox) grid.getChildren().get(0);
+            ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
+            if(comboBoxTemp.getSelectionModel().getSelectedItem().getId_famille() != 0){
+                ArrayList<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getId_classification());
+                familles.add(0,new Famille(0,"Famille",new Classification(0,"")));
+                comboBox.setItems(FXCollections.observableArrayList(familles));
+                comboBox.getSelectionModel().select(0);
+                return true;
+            }
+        }
+        return false;
     }
 
     private void removeRow(int row) {
