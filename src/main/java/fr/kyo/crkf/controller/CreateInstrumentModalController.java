@@ -30,14 +30,17 @@ public class CreateInstrumentModalController {
     private int rowsId;
     private int rowsCount;
     private Filter filter;
+    private InstrumentController instrumentController;
 
 
     @FXML
     private void initialize(){
+        //initialize variable
         filter = new Filter();
         rowsId = 0;
         rowsCount = 0;
 
+        //initialize add
         Button button = new Button();
         button.setText("+");
         button.setOnAction(a -> addRow());
@@ -45,17 +48,35 @@ public class CreateInstrumentModalController {
         add.setAlignment(Pos.CENTER);
         add.getChildren().setAll(button);
         add.setId("add");
-        grid.addRow(rowsId,add);
-    }
+        grid.addRow(1,add);
 
-    @FXML
-    private void addRow(){
+        //initialize first famille selector
         Label label = new Label();
         label.setText("Famille : ");
 
         ComboBox<Famille> comboBox = new ComboBox<>();
+        setComboboxItem(comboBox);
+
+        HBox hBox = new HBox();
+        hBox.getChildren().setAll(label,comboBox);
+        hBox.setAlignment(Pos.CENTER);
+        hBox.setMinHeight(80);
+        hBox.setMaxHeight(80);
+        hBox.setId(String.valueOf(1));
+
+        grid.addRow(0, hBox);
+        rowsId++;
+        rowsCount++;
+    }
+
+    @FXML
+    private void addRow(){
+        ComboBox<Famille> comboBox = new ComboBox<>();
         boolean insert = setComboboxItem(comboBox);
         if(insert && rowsCount < 5){
+            Label label = new Label();
+            label.setText("Famille : ");
+
             Button button = new Button();
             int id = rowsId;
             button.setOnAction(a -> removeRow(id));
@@ -103,7 +124,7 @@ public class CreateInstrumentModalController {
         for(int i = 0; i < grid.getChildren().size(); i++){
             Node node = grid.getChildren().get(i);
             HBox hBox = (HBox) node;
-            if((node != grid.getChildren().get(0) && node.getId().equals(String.valueOf(row))) || (node == grid.getChildren().get(0) && rowsCount == 1)){
+            if((node.getId().equals(String.valueOf(row)))){
                 grid.getChildren().remove(hBox);
                 rowsCount--;
                 if(rowsCount == 1){
@@ -114,7 +135,6 @@ public class CreateInstrumentModalController {
                 if (rowsCount == 4){
                     grid.addRow(rowsId + 1,add);
                 }
-
             }
         }
     }
@@ -123,8 +143,9 @@ public class CreateInstrumentModalController {
     private void addInstrument(){
         Instrument instrument = new Instrument(0,nom.getText());
         boolean allFamilleSet = getAllFamille(instrument);
-        if(!instrument.getNom().equals("") && allFamilleSet){
+        if(!instrument.getNom().equals("") && allFamilleSet && !instrument.getFamilles().isEmpty()){
             if(DAOFactory.getInstrumentDAO().insert(instrument) != 0){
+                instrumentController.filter();
                 closeModal();
             }
         }else{
@@ -156,5 +177,9 @@ public class CreateInstrumentModalController {
 
     public void setModal(Stage modal) {
         this.modal = modal;
+    }
+
+    public void setInstrumentController(InstrumentController instrumentController) {
+        this.instrumentController = instrumentController;
     }
 }
