@@ -56,6 +56,7 @@ public class ProfesseurController {
 
         departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        departementFiltre.getSelectionModel().select(0);
 
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
