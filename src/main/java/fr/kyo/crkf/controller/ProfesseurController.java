@@ -68,10 +68,9 @@ public class ProfesseurController {
      }
 
     private void villeFilter() {
-        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille()))
-            villeFiltre.getEditor().setText("");
-        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille()))
-            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(), searchableProfesseur.getVille().getDepartement().getId_departement())));
+        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
+            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getVille().getDepartement().getId_departement())));
+        }
     }
 
     private void filter() {
@@ -85,7 +84,7 @@ public class ProfesseurController {
             page = 1;
         }
 
-        if (villeFiltre.getSelectionModel().getSelectedItem() != null){
+        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }
@@ -121,7 +120,8 @@ public class ProfesseurController {
 
 
     private void openDetailPage() {
-        applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
+        if(!professeurTable.getSelectionModel().isEmpty())
+            applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {

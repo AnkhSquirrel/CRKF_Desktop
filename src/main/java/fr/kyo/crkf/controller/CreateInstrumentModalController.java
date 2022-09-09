@@ -147,6 +147,8 @@ public class CreateInstrumentModalController {
                     allFamilleSet = false;
                 }
             }
+        }else{
+            System.out.println("Erreur");
         }
         return  allFamilleSet;
     }

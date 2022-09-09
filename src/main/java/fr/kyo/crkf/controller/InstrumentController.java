@@ -47,7 +47,7 @@ public class InstrumentController {
          instrumentTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailInstrument());
 
          // Initialisation des comboBox
-         classification.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getAll(1)));
+         classification.setItems(FXCollections.observableArrayList(filter.getClassifications()));
          classification.valueProperty().addListener(observable -> filter());
 
 

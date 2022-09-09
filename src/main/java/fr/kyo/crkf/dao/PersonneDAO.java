@@ -102,8 +102,17 @@ public class PersonneDAO extends DAO<Personne> {
                 personne.setVehiculeCv(rs.getInt(4));
                 personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
                 personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
-                // TODO: personne.setDiplomes(new ArrayList<>());
 
+                //Search the affiliate Diplome
+                String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
+                PreparedStatement s2 = connexion.prepareStatement(strCmd2);
+                s2.setInt(1,id);
+                ResultSet rs2 = s2.executeQuery();
+
+                while (rs2.next()){
+                    personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs2.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs2.getInt(2))));
+                }
+                rs2.close();
                 liste.add(personne);
             }
             rs.close();

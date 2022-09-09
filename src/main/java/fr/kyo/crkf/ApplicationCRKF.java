@@ -147,7 +147,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
             fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("detail_ecole.fxml"));
             VBox detailEcole = fxmlLoaderListeEcole.load();
-            fr.kyo.crkf.Controller.DetailEcoleController detailEcoleController = fxmlLoaderListeEcole.getController();
+            DetailEcoleController detailEcoleController = fxmlLoaderListeEcole.getController();
             detailEcoleController.setApplicationCRKF(this);
             detailEcoleController.setEcole(ecole);
 
