@@ -175,7 +175,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         launch();
     }
 
-    public void openCreateInstrumentModal() {
+    public void openCreateInstrumentModal(InstrumentController instrumentController) {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
@@ -183,6 +183,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             CreateInstrumentModalController createInstrumentModalController = fxmlLoader.getController();
 
             createInstrumentModalController.setModal(modal);
+            createInstrumentModalController.setInstrumentController(instrumentController);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);

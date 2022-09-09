@@ -56,6 +56,7 @@ public class ProfesseurController {
 
         departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        departementFiltre.getSelectionModel().select(0);
 
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
@@ -70,7 +71,6 @@ public class ProfesseurController {
         if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getVille().getDepartement().getId_departement())));
         }
-
     }
 
     private void filter() {
