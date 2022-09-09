@@ -21,5 +21,5 @@ n
 -src/main/java/fr/kyo/crkf/Entity/Famille.java,2\5\250260d77e747db4a4e27db11c2edfe4e8dd063a
 ^
 .src/main/java/fr/kyo/crkf/Entity/Personne.java,c\a\cabfe5445443f6ad5588a885123440c7ef13b95a
-S
-#.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
+t
+Dsrc/main/java/fr/kyo/crkf/controller/DetailProfesseurController.java,8\8\88c869761165a21c61df77a1063d176f9bc9d4bd

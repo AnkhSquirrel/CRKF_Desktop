@@ -60,6 +60,7 @@ public class EcoleController {
                 ville.valueProperty().addListener(observable -> filter());
                 ville.setEditable(true);
                 ville.getEditor().textProperty().addListener(observable -> villeFilter());
+                ville.getEditor().setText("Ville");
 
                 departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
                 departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterByDepartement());
@@ -75,7 +76,10 @@ public class EcoleController {
         }
 
         private void villeFilter() {
-                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
+                if(!ville.getEditor().getText().equals(searchableEcole.getVille().getVille()))
+                        ville.getEditor().setText("");
+                if(!ville.getEditor().getText().equals(""))
+                        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
         }
 
         @FXML

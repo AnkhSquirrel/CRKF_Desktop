@@ -68,7 +68,10 @@ public class ProfesseurController {
      }
 
     private void villeFilter() {
-        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(), searchableProfesseur.getVille().getDepartement().getId_departement())));
+        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille()))
+            villeFiltre.getEditor().setText("");
+        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille()))
+            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(), searchableProfesseur.getVille().getDepartement().getId_departement())));
     }
 
     private void filter() {

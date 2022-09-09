@@ -35,12 +35,10 @@ public class CreateInstrumentModalController {
 
     @FXML
     private void initialize(){
-        //initialize variable
         filter = new Filter();
         rowsId = 0;
         rowsCount = 0;
 
-        //initialize add
         Button button = new Button();
         button.setText("+");
         button.setOnAction(a -> addRow());
@@ -48,25 +46,7 @@ public class CreateInstrumentModalController {
         add.setAlignment(Pos.CENTER);
         add.getChildren().setAll(button);
         add.setId("add");
-        grid.addRow(1,add);
-
-        //initialize first famille selector
-        Label label = new Label();
-        label.setText("Famille : ");
-
-        ComboBox<Famille> comboBox = new ComboBox<>();
-        setComboboxItem(comboBox);
-
-        HBox hBox = new HBox();
-        hBox.getChildren().setAll(label,comboBox);
-        hBox.setAlignment(Pos.CENTER);
-        hBox.setMinHeight(80);
-        hBox.setMaxHeight(80);
-        hBox.setId(String.valueOf(1));
-
-        grid.addRow(0, hBox);
-        rowsId++;
-        rowsCount++;
+        grid.addRow(rowsId,add);
     }
 
     @FXML
@@ -124,7 +104,7 @@ public class CreateInstrumentModalController {
         for(int i = 0; i < grid.getChildren().size(); i++){
             Node node = grid.getChildren().get(i);
             HBox hBox = (HBox) node;
-            if((node.getId().equals(String.valueOf(row)))){
+            if((node != grid.getChildren().get(0) && node.getId().equals(String.valueOf(row))) || (node == grid.getChildren().get(0) && rowsCount == 1)){
                 grid.getChildren().remove(hBox);
                 rowsCount--;
                 if(rowsCount == 1){
@@ -135,6 +115,7 @@ public class CreateInstrumentModalController {
                 if (rowsCount == 4){
                     grid.addRow(rowsId + 1,add);
                 }
+
             }
         }
     }
