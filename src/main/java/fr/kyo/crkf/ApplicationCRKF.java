@@ -236,4 +236,17 @@ public class ApplicationCRKF extends javafx.application.Application {
             delete = true;
         return delete;
     }
+
+    public void openGestionFamille() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_famille.fxml"));
+            GridPane gestionFamille = fxmlLoader.load();
+            GestionFamilleController gestionFamilleController = fxmlLoader.getController();
+
+            mainWindow.setCenter(gestionFamille);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

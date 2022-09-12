@@ -186,7 +186,6 @@ public class InstrumentModalController {
                 ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
                 if(comboBox.getSelectionModel().getSelectedItem().getId_famille() != 0){
                     instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
-                    System.out.println(comboBox.getSelectionModel().getSelectedItem());
                 }else{
                     allFamilleSet = false;
                 }
