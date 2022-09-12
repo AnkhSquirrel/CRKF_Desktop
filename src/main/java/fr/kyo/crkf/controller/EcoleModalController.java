@@ -90,6 +90,7 @@ public class EcoleModalController {
             DAOFactory.getDepartementDAO().update(ecoleUpdate.getAdresse().getVille().getDepartement());
             DAOFactory.getAdresseDAO().update(ecoleUpdate.getAdresse());
             DAOFactory.getEcoleDAO().update(ecoleUpdate);
+                applicationCRKF.openDetailEcole(ecoleUpdate);
                 closeModal();
             }
             else{
