@@ -202,6 +202,29 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
+
+    public void openCreateEcoleModal(){
+        Stage modal = new Stage();
+        try {
+
+                FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
+                AnchorPane modalPane = fxmlLoader.load();
+                EcoleModalController createEcoleModalController = fxmlLoader.getController();
+
+                createEcoleModalController.setModal(modal);
+
+                modal.setScene(new Scene(modalPane));
+                modal.setResizable(false);
+                modal.initModality(Modality.WINDOW_MODAL);
+                modal.initOwner(mainWindow.getScene().getWindow());
+                modal.setTitle("Ajout d'une école");
+
+                modal.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+    
     public void openUpdateInstrumentModal(Instrument instrument) {
         Stage modal = new Stage();
         try {
@@ -236,4 +259,5 @@ public class ApplicationCRKF extends javafx.application.Application {
             delete = true;
         return delete;
     }
+
 }

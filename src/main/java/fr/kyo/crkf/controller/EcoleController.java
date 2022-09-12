@@ -32,6 +32,8 @@ public class EcoleController {
         @FXML
         private Button reset;
         @FXML
+        private Button creer;
+        @FXML
         private TextField nomEcole;
         private SearchableEcole searchableEcole;
         private Filter filter;
@@ -118,6 +120,10 @@ public class EcoleController {
         }
         public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
                 this.applicationCRKF = applicationCRKF;
+        }
+        @FXML
+        private void openCreateModal(){
+                applicationCRKF.openCreateEcoleModal();
         }
 
         @FXML
