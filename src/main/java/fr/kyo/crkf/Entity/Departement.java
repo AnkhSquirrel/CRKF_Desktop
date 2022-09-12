@@ -46,7 +46,7 @@ public class Departement {
     }
     @Override
     public String toString(){
-        return departement;
+        return numero_departement + " - " + departement;
     }
     public ObservableValue<String> getDepartementStringProperty(){
         return new SimpleStringProperty(departement);
