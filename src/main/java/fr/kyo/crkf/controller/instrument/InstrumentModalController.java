@@ -1,5 +1,6 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.instrument;
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
@@ -7,23 +8,28 @@ import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
+import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Optional;
 
-public class CreateInstrumentModalController {
+public class InstrumentModalController {
     @FXML
     private GridPane grid;
     @FXML
     private TextField nom;
+    @FXML
+    private Label nomModal;
 
     private HBox add;
     private Stage modal;
@@ -31,6 +37,9 @@ public class CreateInstrumentModalController {
     private int rowsCount;
     private Filter filter;
     private InstrumentController instrumentController;
+    private boolean create;
+    private Instrument instrumentUpdate;
+    private ApplicationCRKF applicationCRKF;
 
 
     @FXML
@@ -51,9 +60,16 @@ public class CreateInstrumentModalController {
 
     @FXML
     private void addRow(){
+        addFamilleChoice(null);
+    }
+
+    private void addFamilleChoice(Famille famille){
         ComboBox<Famille> comboBox = new ComboBox<>();
         boolean insert = setComboboxItem(comboBox);
         if(insert && rowsCount < 5){
+            if(famille != null)
+                comboBox.getSelectionModel().select(famille);
+
             Label label = new Label();
             label.setText("Famille : ");
 
@@ -121,6 +137,31 @@ public class CreateInstrumentModalController {
     }
 
     @FXML
+    private void validate(){
+        if (create)
+            addInstrument();
+        else
+            updateInstrument();
+    }
+
+    private void updateInstrument() {
+        instrumentUpdate.getFamilles().clear();
+        boolean allFamilleSet = getAllFamille(instrumentUpdate);
+        if(!nom.getText().equals(""))
+            instrumentUpdate.setNom(nom.getText());
+        if(allFamilleSet && !instrumentUpdate.getFamilles().isEmpty()){
+            if(DAOFactory.getInstrumentDAO().update(instrumentUpdate)){
+                applicationCRKF.openDetailInstrument(instrumentUpdate);
+                closeModal();
+            }
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Il y a eu une érreur lors de la modification de l'instrument.\n Merci de vérifier que vos avez entrer des informations valide");
+            alert.showAndWait();
+        }
+    }
+
     private void addInstrument(){
         Instrument instrument = new Instrument(0,nom.getText());
         boolean allFamilleSet = getAllFamille(instrument);
@@ -130,7 +171,10 @@ public class CreateInstrumentModalController {
                 closeModal();
             }
         }else{
-            System.out.println("Erreur");
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Il y a eu une érreur lors de la création de l'instrument.\n Merci de vérifier que vos avez entrer des informations valide");
+            alert.showAndWait();
         }
     }
 
@@ -162,5 +206,22 @@ public class CreateInstrumentModalController {
 
     public void setInstrumentController(InstrumentController instrumentController) {
         this.instrumentController = instrumentController;
+    }
+    public void setCreate(boolean bool){
+        create = bool;
+        if(!create)
+            nomModal.setText("Modifier Instrument");
+
+    }
+    public void setInstrumentUpdate(Instrument instrument){
+        instrumentUpdate = instrument;
+        nom.setText(instrumentUpdate.getNom());
+        for(Famille famille : instrumentUpdate.getFamilles()){
+            addFamilleChoice(famille);
+        }
+    }
+
+    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
+        this.applicationCRKF = applicationCRKF;
     }
 }

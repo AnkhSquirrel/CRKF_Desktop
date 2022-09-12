@@ -5,9 +5,13 @@ import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
+import fr.kyo.crkf.controller.instrument.InstrumentModalController;
+import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
+import fr.kyo.crkf.controller.instrument.InstrumentController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
@@ -17,6 +21,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Optional;
 
 public class ApplicationCRKF extends javafx.application.Application {
 
@@ -180,10 +185,11 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
             AnchorPane modalPane = fxmlLoader.load();
-            CreateInstrumentModalController createInstrumentModalController = fxmlLoader.getController();
+            InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
-            createInstrumentModalController.setModal(modal);
-            createInstrumentModalController.setInstrumentController(instrumentController);
+            instrumentModalController.setModal(modal);
+            instrumentModalController.setCreate(true);
+            instrumentModalController.setInstrumentController(instrumentController);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);
@@ -195,5 +201,39 @@ public class ApplicationCRKF extends javafx.application.Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    public void openUpdateInstrumentModal(Instrument instrument) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            InstrumentModalController instrumentModalController = fxmlLoader.getController();
+
+            instrumentModalController.setModal(modal);
+            instrumentModalController.setCreate(false);
+            instrumentModalController.setInstrumentUpdate(instrument);
+            instrumentModalController.setApplicationCRKF(this);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un instrument");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public boolean deleteModal() {
+        boolean delete = false;
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Supprimer");
+        alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK)
+            delete = true;
+        return delete;
     }
 }

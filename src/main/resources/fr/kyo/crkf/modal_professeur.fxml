@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="643.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.CreateInstrumentModalController">
+<AnchorPane prefHeight="643.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.instrument.InstrumentModalController">
    <children>
       <Button layoutX="66.0" layoutY="577.0" mnemonicParsing="false" onAction="#closeModal" text="Annuler" />
       <GridPane layoutX="27.0" layoutY="70.0" prefHeight="400.0" prefWidth="550.0">
