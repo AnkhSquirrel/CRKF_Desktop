@@ -35,8 +35,11 @@ public class EcoleModalController {
 
         nomDepartement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         nomDepartement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
+        nomDepartement.getSelectionModel().select(0);
 
         ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+        ville.getSelectionModel().select(0);
     }
     @FXML
     private void addEcole(){
