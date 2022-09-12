@@ -9,10 +9,7 @@ import fr.kyo.crkf.Searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
@@ -38,27 +35,48 @@ public class CreateEcoleModalController {
     private void initialize(){
         filter = new Filter();
 
-
         searchableEcole = new SearchableEcole();
-
 
         nomDepartement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         nomDepartement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
-
 
         ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
     }
     @FXML
     private void addEcole(){
-        Ecole ecole = new Ecole(0, nomEcole.getText(),
-                new Adresse(0,libeleAdresse.getText(),
-                new Ville(ville.getSelectionModel().getSelectedItem().getId_ville(), ville.getSelectionModel().getSelectedItem().getVille(),0F, 0F,
-                new Departement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement(), nomDepartement.getSelectionModel().getSelectedItem().getNumero_departement() , nomDepartement.getSelectionModel().getSelectedItem().toString()))));
+        try{
 
-        if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("")){
-            int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());
-            ecole.getAdresse().setId_adresse(id);
-            DAOFactory.getEcoleDAO().insert(ecole);
+            Ecole ecole = new Ecole(0, nomEcole.getText(),
+                    new Adresse(0,libeleAdresse.getText(),
+                            new Ville(ville.getSelectionModel().getSelectedItem().getId_ville(), ville.getSelectionModel().getSelectedItem().getVille(),0F, 0F,
+                                    new Departement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement(), nomDepartement.getSelectionModel().getSelectedItem().getNumero_departement() , nomDepartement.getSelectionModel().getSelectedItem().toString()))));
+
+            if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+                int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());
+                ecole.getAdresse().setId_adresse(id);
+                DAOFactory.getEcoleDAO().insert(ecole);
+                closeModal();
+            }
+            else{
+                Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
+                alertErrorInsert.setTitle("Erreur");
+                alertErrorInsert.setHeaderText("Erreur! Mauvaise(s) donnée(s)");
+                alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
+                    if (btnTypeError == ButtonType.OK) {
+                        alertErrorInsert.close();
+                    }
+                });
+
+            }
+        } catch (RuntimeException e){
+            Alert alertErrorInput = new Alert(Alert.AlertType.ERROR);
+            alertErrorInput.setTitle("Erreur");
+            alertErrorInput.setHeaderText("Erreur ! Problème lors de l'insertion ");
+            alertErrorInput.showAndWait().ifPresent(btnTypeError -> {
+                if(btnTypeError == ButtonType.OK){
+                    alertErrorInput.close();
+                }
+            });
         }
     }
     public void setModal(Stage modal) {
