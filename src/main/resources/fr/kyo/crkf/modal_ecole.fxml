@@ -17,7 +17,7 @@
    <children>
       <VBox alignment="CENTER">
          <children>
-            <Label alignment="CENTER" text="Création d'une nouvelle école">
+            <Label fx:id="nomModal" alignment="CENTER" text="Création d'une nouvelle école">
                <VBox.margin>
                   <Insets top="100.0" />
                </VBox.margin>
@@ -92,7 +92,7 @@
                         <Insets />
                      </opaqueInsets>
                   </Button>
-                  <Button fx:id="buttonCreer" mnemonicParsing="false" onAction="#addEcole" prefHeight="25.0" text="Créer" />
+                  <Button mnemonicParsing="false" onAction="#validate" prefHeight="25.0" text="Valider" />
               </buttons>
                <VBox.margin>
                   <Insets bottom="20.0" right="20.0" top="200.0" />

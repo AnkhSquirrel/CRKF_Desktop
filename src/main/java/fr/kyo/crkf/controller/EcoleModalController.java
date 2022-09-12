@@ -1,5 +1,6 @@
 package fr.kyo.crkf.controller;
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Adresse;
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
@@ -23,8 +24,13 @@ public class EcoleModalController {
     private SearchableComboBox<Ville> ville;
     @FXML
     private SearchableComboBox<Departement> nomDepartement;
+    @FXML
+    private Label nomModal;
     private SearchableEcole searchableEcole;
+    private Ecole ecoleUpdate;
+    private boolean create;
     private Filter filter;
+    private ApplicationCRKF applicationCRKF;
 
 
     @FXML
@@ -66,12 +72,32 @@ public class EcoleModalController {
         }
     }
 
-    public void setModal(Stage modal) {
-        this.modal = modal;
+    public void setEcole(Ecole ecole){
+        ecoleUpdate = ecole;
+        nomEcole.setText(ecoleUpdate.getNom());
+        libeleAdresse.setText(ecoleUpdate.getAdresse().getAdresse());
+        nomDepartement.getSelectionModel().select(ecoleUpdate.getAdresse().getVille().getDepartement());
+        ville.getSelectionModel().select(ecoleUpdate.getAdresse().getVille());
     }
-    @FXML
-    private void closeModal(){
-        modal.close();
+
+    public void updateEcole(){
+        if (!nomEcole.getText().isEmpty() && !libeleAdresse.getText().isEmpty() && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+            ecoleUpdate.setNom(nomEcole.getText());
+            ecoleUpdate.getAdresse().setAdresse(libeleAdresse.getText());
+            ecoleUpdate.getAdresse().getVille().setVille(ville.getSelectionModel().getSelectedItem().getVille());
+            ecoleUpdate.getAdresse().getVille().getDepartement().setDepartement(nomDepartement.getSelectionModel().getSelectedItem().getDepartement());
+            DAOFactory.getVilleDAO().update(ecoleUpdate.getAdresse().getVille());
+            DAOFactory.getDepartementDAO().update(ecoleUpdate.getAdresse().getVille().getDepartement());
+            DAOFactory.getAdresseDAO().update(ecoleUpdate.getAdresse());
+            DAOFactory.getEcoleDAO().update(ecoleUpdate);
+                closeModal();
+            }
+            else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("L'école n'a pas pu être modifiée");
+            alert.showAndWait();
+        }
     }
 
     private void filterDepartement() {
@@ -85,6 +111,30 @@ public class EcoleModalController {
         if(nomDepartement.getSelectionModel().getSelectedItem() != null){
             searchableEcole.setDepartement(nomDepartement.getSelectionModel().getSelectedItem());
         }
+    }
+
+    @FXML
+    private void validate(){
+        if(create)
+            addEcole();
+        else
+            updateEcole();
+    }
+    public void setCreate(boolean bool){
+        create = bool;
+        if(!create)
+            nomModal.setText("Modifier école");
+    }
+
+    public void setModal(Stage modal) {
+        this.modal = modal;
+    }
+    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
+        this.applicationCRKF = applicationCRKF;
+    }
+    @FXML
+    private void closeModal(){
+        modal.close();
     }
 
 

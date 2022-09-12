@@ -157,7 +157,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une érreur lors de la modification de l'instrument.\n Merci de vérifier que vos avez entrer des informations valide");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -173,7 +173,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une érreur lors de la création de l'instrument.\n Merci de vérifier que vos avez entrer des informations valide");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -210,7 +210,7 @@ public class InstrumentModalController {
     public void setCreate(boolean bool){
         create = bool;
         if(!create)
-            nomModal.setText("Modifier Instrument");
+            nomModal.setText("Modifier un instrument");
 
     }
     public void setInstrumentUpdate(Instrument instrument){

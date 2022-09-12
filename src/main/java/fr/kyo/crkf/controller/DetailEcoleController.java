@@ -5,10 +5,7 @@ import fr.kyo.crkf.Entity.*;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 
 public class DetailEcoleController {
     @FXML
@@ -61,6 +58,23 @@ public class DetailEcoleController {
     @FXML
     public void openEcoleList() {
         applicationCRKF.openEcoleList();
+    }
+
+    @FXML
+    private void deleteEcole(){
+        if(applicationCRKF.deleteModal()){
+            DAOFactory.getEcoleDAO().delete(ecole);
+            applicationCRKF.openEcoleList();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("L'école n'a pas été supprimée");
+            alert.showAndWait();
+        }
+    }
+    @FXML
+    private void updateEcole(){
+        applicationCRKF.openUpdateEcole(ecole);
     }
 
 }
