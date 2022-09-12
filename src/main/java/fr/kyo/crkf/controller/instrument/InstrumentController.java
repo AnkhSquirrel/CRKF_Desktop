@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.instrument;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
@@ -68,7 +68,7 @@ public class InstrumentController {
          applicationCRKF.openDetailInstrument(instrumentTable.getSelectionModel().getSelectedItem());
      }
 
-    private void filter() {
+    public void filter() {
         if(!libelle.getText().isEmpty() || !libelle.getText().equals(searchableInstrument.getNom())){
             searchableInstrument.setNom(libelle.getText());
         }
@@ -109,6 +109,6 @@ public class InstrumentController {
     }
     @FXML
     private void openCreateModal(){
-         applicationCRKF.openCreateInstrumentModal();
+         applicationCRKF.openCreateInstrumentModal(this);
     }
 }

@@ -35,6 +35,28 @@ public class FamilleDAO extends DAO<Famille> {
         }
         return famille;
     }
+    public ArrayList<Famille> getByClassification(int id) {
+        ArrayList<Famille> list = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "SELECT id_famille, famille, id_classification from Famille where id_classification = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1,id);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next())
+                list.add(new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3))));
+            rs.close();
+
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 
     @Override
     public ArrayList<Famille> getAll(int page) {

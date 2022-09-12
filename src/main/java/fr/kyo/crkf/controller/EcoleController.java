@@ -85,7 +85,6 @@ public class EcoleController {
                 if(!ville.getEditor().getText().equals(searchableEcole.getVille().getVille())){
                         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
                 }
-
         }
 
         @FXML
