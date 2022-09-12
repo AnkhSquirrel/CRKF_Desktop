@@ -151,12 +151,26 @@ public class InstrumentDAO extends DAO<Instrument> {
     @Override
     public boolean update(Instrument object) {
         try {
-            String requete = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
-            PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getNom());
-            preparedStatement.setInt(2, object.getId_instrument());
+            String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
+            PreparedStatement preparedStatement = connexion().prepareStatement(requete);
+            preparedStatement.setInt(1, object.getId_instrument());
             preparedStatement.executeUpdate();
-            preparedStatement.close();
+
+            String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
+            PreparedStatement  preparedStatement1 = connexion().prepareStatement(requete1);
+            preparedStatement1.setString(1, object.getNom());
+            preparedStatement1.setInt(2, object.getId_instrument());
+            preparedStatement1.executeUpdate();
+            preparedStatement1.close();
+
+            for(Famille famille : object.getFamilles()){
+                String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
+                PreparedStatement  preparedStatement2 = connexion().prepareStatement(requete2);
+                preparedStatement2.setInt( 1, object.getId_instrument());
+                preparedStatement2.setInt(2, famille.getId_famille());
+                preparedStatement2.executeUpdate();
+                preparedStatement2.close();
+            }
             return true;
         } catch (SQLException e) {
             return false;

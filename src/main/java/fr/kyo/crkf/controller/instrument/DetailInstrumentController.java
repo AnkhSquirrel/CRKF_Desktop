@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.instrument;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Famille;
@@ -47,6 +47,15 @@ public class DetailInstrumentController {
         if(applicationCRKF.deleteModal()){
             DAOFactory.getInstrumentDAO().delete(instrument);
             applicationCRKF.openInstrumentList();
+        }else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Il y a eu une érreur lors de la suppression de l'instrument.");
+            alert.showAndWait();
         }
+    }
+    @FXML
+    private void updateInstrument(){
+        applicationCRKF.openUpdateInstrumentModal(instrument);
     }
 }
