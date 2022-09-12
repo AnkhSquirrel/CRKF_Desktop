@@ -3,6 +3,7 @@ package fr.kyo.crkf.controller;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
+import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -39,5 +40,13 @@ public class DetailInstrumentController {
         nom.setText(instrument.getNom());
         classification.setText(instrument.getFamilles().get(0).getclassification().getclassification());
         familleTableView.setItems(FXCollections.observableArrayList(instrument.getFamilles()));
+    }
+
+    @FXML
+    private void deleteInstrument(){
+        if(applicationCRKF.deleteModal()){
+            DAOFactory.getInstrumentDAO().delete(instrument);
+            applicationCRKF.openInstrumentList();
+        }
     }
 }

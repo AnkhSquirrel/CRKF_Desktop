@@ -47,13 +47,27 @@
             </Label>
          </children>
       </GridPane>
-      <HBox alignment="CENTER" layoutY="154.0" prefHeight="210.0" prefWidth="600.0">
+      <HBox alignment="CENTER" layoutY="154.0" prefHeight="256.0" prefWidth="600.0">
          <children>
             <TableView fx:id="familleTableView" prefHeight="114.0" prefWidth="200.0">
               <columns>
                 <TableColumn fx:id="familleColumn" prefWidth="199.0" text="Famille" />
               </columns>
             </TableView>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" layoutX="119.0" layoutY="396.0" prefHeight="100.0" prefWidth="363.0">
+         <children>
+            <Button mnemonicParsing="false" text="Modifier">
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </Button>
+            <Button mnemonicParsing="false" onAction="#deleteInstrument" text="Supprimer">
+               <HBox.margin>
+                  <Insets bottom="25.0" left="25.0" right="25.0" top="25.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>
