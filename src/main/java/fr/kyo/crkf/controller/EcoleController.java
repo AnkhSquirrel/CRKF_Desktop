@@ -33,6 +33,8 @@ public class EcoleController {
         private Button reset;
         @FXML
         private TextField nomEcole;
+        @FXML
+        private Label pageNumber;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
@@ -69,7 +71,7 @@ public class EcoleController {
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
-
+                pageNumber.setText("Page 1");
 
         }
 
@@ -109,6 +111,8 @@ public class EcoleController {
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
                         page = 1;
                 }
+
+                pageNumber.setText("Page " + page);
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
         }

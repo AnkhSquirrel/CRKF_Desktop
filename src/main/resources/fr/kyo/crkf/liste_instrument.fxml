@@ -1,41 +1,75 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
-<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.instrument.InstrumentController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.instrument.InstrumentController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
   <rowConstraints>
-    <RowConstraints maxHeight="129.0" minHeight="10.0" prefHeight="75.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+    <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <Pane prefHeight="200.0" prefWidth="200.0">
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
          <children>
-            <TextField fx:id="libelle" layoutX="84.0" layoutY="37.0" />
-            <SearchableComboBox fx:id="classification" layoutX="253.0" layoutY="37.0" />
-            <Button layoutX="643.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
-            <SearchableComboBox fx:id="famille" layoutX="448.0" layoutY="37.0" />
-            <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
-            <Button layoutX="703.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
-            <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
-            <Button layoutX="351.0" layoutY="82.0" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
+            <TextField fx:id="libelle" promptText="Instrument...">
+               <HBox.margin>
+                  <Insets left="2.0" right="2.0" />
+               </HBox.margin>
+            </TextField>
+            <SearchableComboBox fx:id="classification" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" promptText="Classification">
+               <HBox.margin>
+                  <Insets left="2.0" right="2.0" />
+               </HBox.margin>
+            </SearchableComboBox>
+            <SearchableComboBox fx:id="famille" maxHeight="25.0" prefHeight="25.0" promptText="Famille">
+               <HBox.margin>
+                  <Insets left="2.0" right="2.0" />
+               </HBox.margin>
+            </SearchableComboBox>
+            <Button mnemonicParsing="false" onAction="#reset" text="reset">
+               <HBox.margin>
+                  <Insets left="2.0" right="2.0" />
+               </HBox.margin>
+            </Button>
          </children>
-      </Pane>
-      <TableView fx:id="instrumentTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="1">
+      </HBox>
+      <TableView fx:id="instrumentTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="3">
         <columns>
             <TableColumn fx:id="libelleColumn" prefWidth="379.0" text="Libellé" />
             <TableColumn fx:id="classificationColumn" prefWidth="376.0" text="Classification" />
         </columns>
       </TableView>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="4">
+         <children>
+            <Button mnemonicParsing="false" onAction="#pageMoin" text="&lt;" />
+            <Label fx:id="pageNumber" alignment="CENTER" contentDisplay="CENTER" prefWidth="100.0" text="Page 0" />
+            <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+            <Button mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
+         </children>
+      </HBox>
    </children>
 </GridPane>
