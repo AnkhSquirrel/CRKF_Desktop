@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane prefHeight="643.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.CreateEcoleModalController">
+<AnchorPane prefHeight="643.0" prefWidth="604.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.EcoleModalController">
    <children>
       <VBox alignment="CENTER">
          <children>

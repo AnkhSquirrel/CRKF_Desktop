@@ -13,10 +13,8 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
-public class CreateEcoleModalController {
+public class EcoleModalController {
     private Stage modal;
-    @FXML
-    private Button ajouter;
     @FXML
     private TextField nomEcole;
     @FXML
@@ -25,8 +23,6 @@ public class CreateEcoleModalController {
     private SearchableComboBox<Ville> ville;
     @FXML
     private SearchableComboBox<Departement> nomDepartement;
-    @FXML
-    private Label numDepartement;
     private SearchableEcole searchableEcole;
     private Filter filter;
 
@@ -44,41 +40,29 @@ public class CreateEcoleModalController {
     }
     @FXML
     private void addEcole(){
-        try{
-
-            Ecole ecole = new Ecole(0, nomEcole.getText(),
+        Ecole ecole = new Ecole(0, nomEcole.getText(),
                     new Adresse(0,libeleAdresse.getText(),
                             new Ville(ville.getSelectionModel().getSelectedItem().getId_ville(), ville.getSelectionModel().getSelectedItem().getVille(),0F, 0F,
                                     new Departement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement(), nomDepartement.getSelectionModel().getSelectedItem().getNumero_departement() , nomDepartement.getSelectionModel().getSelectedItem().toString()))));
 
-            if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
-                int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());
-                ecole.getAdresse().setId_adresse(id);
-                DAOFactory.getEcoleDAO().insert(ecole);
-                closeModal();
-            }
-            else{
-                Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
-                alertErrorInsert.setTitle("Erreur");
-                alertErrorInsert.setHeaderText("Erreur! Mauvaise(s) donnée(s)");
-                alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
-                    if (btnTypeError == ButtonType.OK) {
-                        alertErrorInsert.close();
-                    }
-                });
-
-            }
-        } catch (RuntimeException e){
-            Alert alertErrorInput = new Alert(Alert.AlertType.ERROR);
-            alertErrorInput.setTitle("Erreur");
-            alertErrorInput.setHeaderText("Erreur ! Problème lors de l'insertion ");
-            alertErrorInput.showAndWait().ifPresent(btnTypeError -> {
-                if(btnTypeError == ButtonType.OK){
-                    alertErrorInput.close();
+        if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+            int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());
+            ecole.getAdresse().setId_adresse(id);
+            DAOFactory.getEcoleDAO().insert(ecole);
+            closeModal();
+        }
+        else{
+            Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
+            alertErrorInsert.setTitle("Erreur");
+            alertErrorInsert.setHeaderText("Erreur! Mauvaise(s) donnée(s)");
+            alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
+                if (btnTypeError == ButtonType.OK) {
+                    alertErrorInsert.close();
                 }
             });
         }
     }
+
     public void setModal(Stage modal) {
         this.modal = modal;
     }

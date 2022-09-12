@@ -202,7 +202,7 @@ public class ApplicationCRKF extends javafx.application.Application {
 
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
                 AnchorPane modalPane = fxmlLoader.load();
-                CreateEcoleModalController createEcoleModalController = fxmlLoader.getController();
+                EcoleModalController createEcoleModalController = fxmlLoader.getController();
 
                 createEcoleModalController.setModal(modal);
 
