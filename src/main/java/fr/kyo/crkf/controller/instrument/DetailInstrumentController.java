@@ -50,7 +50,7 @@ public class DetailInstrumentController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une érreur lors de la suppression de l'instrument.");
+            alert.setHeaderText("Il y a eu une erreur lors de la suppression de l'instrument.");
             alert.showAndWait();
         }
     }

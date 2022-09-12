@@ -5,6 +5,7 @@ import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
+import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
