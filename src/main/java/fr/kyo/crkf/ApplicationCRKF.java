@@ -288,12 +288,12 @@ public class ApplicationCRKF extends javafx.application.Application {
     public void openVilleGestion(){
         try{
             FXMLLoader fxmlLoader = new FXMLLoader();
-            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_ecole.fxml"));
-            GridPane gestionEcole = fxmlLoader.load();
-            GestionFamilleController gestionFamilleController = fxmlLoader.getController();
-            gestionFamilleController.setApplicationCRKF(this);
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_ville.fxml"));
+            GridPane gestionVille = fxmlLoader.load();
+            GestionVilleController gestionVilleController = fxmlLoader.getController();
+            gestionVilleController.setApplicationCRKF(this);
 
-            mainWindow.setCenter(gestionEcole);
+            mainWindow.setCenter(gestionVille);
         }catch (IOException e) {
             e.printStackTrace();
         }

@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.GestionFamilleController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="436.0" prefWidth="756.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.GestionVilleController">
    <columnConstraints>
       <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
    </columnConstraints>
@@ -25,11 +25,11 @@
          <children>
             <TextField fx:id="libelle" layoutX="174.0" layoutY="37.0" />
             <SearchableComboBox fx:id="departement" layoutX="436.0" layoutY="37.0" />
-            <Button layoutX="643.0" layoutY="37.0" mnemonicParsing="false" onAction="#reset" text="reset" />
-            <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" onAction="#pageMoin" text="-" />
-            <Button layoutX="703.0" layoutY="82.0" mnemonicParsing="false" onAction="#pagePlus" text="+" />
+            <Button layoutX="643.0" layoutY="37.0" mnemonicParsing="false" text="reset" />
+            <Button layoutX="35.0" layoutY="82.0" mnemonicParsing="false" text="-" />
+            <Button layoutX="703.0" layoutY="82.0" mnemonicParsing="false" text="+" />
             <Button layoutX="20.0" layoutY="14.0" mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
-            <Button layoutX="351.0" layoutY="82.0" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
+            <Button layoutX="351.0" layoutY="82.0" mnemonicParsing="false" text="Ajouter" />
          </children>
       </Pane>
       <TableView fx:id="villeTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="1">
@@ -40,8 +40,8 @@
          <contextMenu>
             <ContextMenu>
                <items>
-                  <MenuItem mnemonicParsing="false" onAction="#update" text="Modifier" />
-                  <MenuItem mnemonicParsing="false" onAction="#remove" text="Supprimer" />
+                  <MenuItem mnemonicParsing="false"  text="Modifier" />
+                  <MenuItem mnemonicParsing="false"  text="Supprimer" />
                </items>
             </ContextMenu>
          </contextMenu>
