@@ -59,8 +59,6 @@ public class InstrumentController {
 
         libelle.textProperty().addListener(observable -> filter());
 
-        pageNumber.setText("Page 1");
-
         reset();
         filter();
     }

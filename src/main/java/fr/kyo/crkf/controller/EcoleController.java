@@ -70,9 +70,6 @@ public class EcoleController {
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
-
-                pageNumber.setText("Page 1");
-
         }
 
         private void filterDepartement() {

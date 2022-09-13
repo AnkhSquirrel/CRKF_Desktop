@@ -9,10 +9,7 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
 
 
@@ -35,6 +32,8 @@ public class ProfesseurController {
     private ComboBox<Ville> villeFiltre;
     @FXML
     private SearchableComboBox<Departement> departementFiltre;
+    @FXML
+    private Label pageNumber;
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
@@ -65,7 +64,7 @@ public class ProfesseurController {
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
-     }
+    }
 
     private void villeFilter() {
         if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
@@ -88,6 +87,7 @@ public class ProfesseurController {
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }
+        pageNumber.setText("Page " + page);
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }
 
