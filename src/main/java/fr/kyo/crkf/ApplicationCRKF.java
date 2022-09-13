@@ -18,10 +18,12 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
+import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ApplicationCRKF extends javafx.application.Application {
@@ -44,6 +46,8 @@ public class ApplicationCRKF extends javafx.application.Application {
             mainWindow.setTop(navbar);
 
             Scene scene = new Scene(mainWindow);
+
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
             stage.setTitle("CRKF");
             stage.setMinWidth(840);

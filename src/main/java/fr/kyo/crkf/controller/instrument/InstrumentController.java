@@ -9,6 +9,7 @@ import fr.kyo.crkf.Searchable.SearchableInstrument;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
@@ -27,6 +28,8 @@ public class InstrumentController {
     private TextField libelle;
     @FXML
     private TableView<Instrument> instrumentTable;
+    @FXML
+    private Label pageNumber;
 
     private SearchableInstrument searchableInstrument;
 
@@ -84,6 +87,7 @@ public class InstrumentController {
             }
 
         }
+        pageNumber.setText("Page " + page);
         instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)));
     }
     @FXML
