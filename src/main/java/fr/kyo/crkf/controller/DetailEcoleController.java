@@ -13,28 +13,19 @@ public class DetailEcoleController {
 
     @FXML
     private Label labelVille;
-
     @FXML
     private Label labelNomEcole;
-
     @FXML
     private Label labelAdresse;
-
     @FXML
     private ApplicationCRKF applicationCRKF;
     @FXML
-    private Button retour;
-    @FXML
     private TableView<Personne> profEmbauche;
-    @FXML
-    private TableView<Personne> profTravail;
     @FXML
     private TableColumn<Personne, String> profEmbauchePrenom;
     @FXML
     private TableColumn<Personne, String> profEmbaucheNom;
-
     private Ecole ecole;
-    private Personne personne;
 
     @FXML
     private void initialize(){
