@@ -17,12 +17,9 @@ public class FamilleModalController {
     private TextField nom;
     @FXML
     private ComboBox<Classification> classification;
-    @FXML
-    private TableColumn<Famille,Button> action;
     private Stage modal;
     private boolean create;
     private GestionFamilleController gestionFamilleController;
-    private ApplicationCRKF applicationCRKF;
     private Famille famille;
 
 
@@ -63,7 +60,7 @@ public class FamilleModalController {
         if(!nom.getText().isEmpty() && classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getId_classification() != 0){
             Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem());
             if(DAOFactory.getFamilleDAO().insert(famille) != 0){
-                applicationCRKF.openGestionFamille();
+                gestionFamilleController.filter();
                 modal.close();
             }
         }
@@ -87,11 +84,9 @@ public class FamilleModalController {
         create = bool;
         if(create){
             nomModal.setText("Creer Famille");
+        }else{
+            nomModal.setText("Modifier Famille");
         }
-    }
-
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
     }
 
     public void setGestionFamilleController(GestionFamilleController gestionFamilleController) {

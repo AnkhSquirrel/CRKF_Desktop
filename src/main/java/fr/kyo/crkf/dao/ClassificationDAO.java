@@ -99,4 +99,25 @@ public class ClassificationDAO extends DAO<Classification> {
             return false;
         }
     }
+
+    public ArrayList<Classification> getLike(String classification, int page) {
+        ArrayList<Classification> list = new ArrayList<>();
+        try{
+
+            String strCmd = "SELECT id_classification, classification from Classification";
+            if(!classification.isEmpty())
+                strCmd += " where classification like '%" + classification + "%'";
+            strCmd += " order by classification OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+
+            while(rs.next())
+                list.add(new Classification(rs.getInt(1),rs.getString(2)));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }

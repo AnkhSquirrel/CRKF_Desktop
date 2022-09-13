@@ -1,10 +1,7 @@
 package fr.kyo.crkf;
 
-import fr.kyo.crkf.Entity.Ecole;
+import fr.kyo.crkf.Entity.*;
 
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
@@ -288,7 +285,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         return delete;
     }
 
-    public void openGestionFamille() {
+    public void openFamilleGestion() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_famille.fxml"));
@@ -301,7 +298,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
-    public void openModalCreateFamille() {
+    public void openModalCreateFamille(GestionFamilleController gestionFamilleController) {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_famille.fxml"));
@@ -310,13 +307,13 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             familleModalController.setModal(modal);
             familleModalController.setCreate(true);
-            familleModalController.setApplicationCRKF(this);
+            familleModalController.setGestionFamilleController(gestionFamilleController);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
-            modal.setTitle("Ajouter un instrument");
+            modal.setTitle("Ajouter une famille");
 
             modal.show();
         } catch (IOException e) {
@@ -340,7 +337,68 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
-            modal.setTitle("Ajouter un instrument");
+            modal.setTitle("Modifier une famille");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openClassificationGestion() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_classification.fxml"));
+            GridPane gestionClassification = fxmlLoader.load();
+            GestionClassificationController gestionClassificationController = fxmlLoader.getController();
+            gestionClassificationController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionClassification);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openCreateClassificationModal(GestionClassificationController gestionClassificationController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            ClassificationModalController classificationModalController = fxmlLoader.getController();
+
+            classificationModalController.setModal(modal);
+            classificationModalController.setCreate(true);
+            classificationModalController.setGestionClassificationController(gestionClassificationController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter une Classification");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openUpdateClassificationModal(GestionClassificationController gestionClassificationController, Classification classification) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            ClassificationModalController classificationModalController = fxmlLoader.getController();
+
+            classificationModalController.setModal(modal);
+            classificationModalController.setCreate(false);
+            classificationModalController.setClassification(classification);
+            classificationModalController.setGestionClassificationController(gestionClassificationController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier une Classification");
 
             modal.show();
         } catch (IOException e) {
