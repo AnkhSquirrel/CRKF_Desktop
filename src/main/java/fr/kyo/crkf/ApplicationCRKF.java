@@ -285,6 +285,19 @@ public class ApplicationCRKF extends javafx.application.Application {
         return delete;
     }
 
+    public void openVilleGestion(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_ecole.fxml"));
+            GridPane gestionEcole = fxmlLoader.load();
+            GestionFamilleController gestionFamilleController = fxmlLoader.getController();
+            gestionFamilleController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionEcole);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
     public void openFamilleGestion() {
         try {
             FXMLLoader fxmlLoader = new FXMLLoader();
