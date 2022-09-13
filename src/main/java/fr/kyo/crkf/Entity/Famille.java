@@ -1,14 +1,15 @@
 package fr.kyo.crkf.Entity;
 
+import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
 public class Famille {
     private int id_famille;
     private String famille;
-    private Classification classification;
+    private int classification;
 
-    public Famille(int id_famille, String famille, Classification classification) {
+    public Famille(int id_famille, String famille, int classification) {
         this.id_famille = id_famille;
         this.famille = famille;
         this.classification = classification;
@@ -26,9 +27,12 @@ public class Famille {
         this.famille = famille;
     }
     public Classification getclassification() {
-        return classification;
+        return DAOFactory.getClassificationDAO().getByID(classification);
     }
     public void setclassification(Classification classification) {
+        this.classification = classification.getId_classification();
+    }
+    public void setclassification(int classification) {
         this.classification = classification;
     }
     public ObservableValue<String> getFamilleStringProperty(){
@@ -38,5 +42,9 @@ public class Famille {
     @Override
     public String toString() {
         return famille;
+    }
+
+    public int getId_classification() {
+        return classification;
     }
 }

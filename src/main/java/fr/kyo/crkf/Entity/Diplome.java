@@ -1,25 +1,25 @@
 package fr.kyo.crkf.Entity;
 
-import javafx.beans.value.ObservableValue;
+import fr.kyo.crkf.dao.DAOFactory;
 
 public class Diplome {
-    private Cycle cycle;
-    private Instrument instrument;
+    private int cycle;
+    private int instrument;
 
-    public Diplome(Cycle cycle, Instrument instrument) {
+    public Diplome(int cycle, int instrument) {
         this.cycle = cycle;
         this.instrument = instrument;
     }
     public Cycle getCycle() {
-        return cycle;
+        return DAOFactory.getCycleDAO().getByID(cycle);
     }
     public void setCycle(Cycle cycle) {
-        this.cycle = cycle;
+        this.cycle = cycle.getId_cycle();
     }
     public Instrument getInstrument() {
-        return instrument;
+        return DAOFactory.getInstrumentDAO().getByID(instrument);
     }
     public void setInstrument(Instrument instrument) {
-        this.instrument = instrument;
+        this.instrument = instrument.getId_instrument();
     }
 }

@@ -58,7 +58,7 @@ public class FamilleModalController {
 
     private void createFamille(){
         if(!nom.getText().isEmpty() && classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getId_classification() != 0){
-            Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem());
+            Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem().getId_classification());
             if(DAOFactory.getFamilleDAO().insert(famille) != 0){
                 gestionFamilleController.filter();
                 modal.close();

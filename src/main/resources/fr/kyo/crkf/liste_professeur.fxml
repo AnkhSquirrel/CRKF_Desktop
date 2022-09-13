@@ -29,7 +29,7 @@
                   <Button mnemonicParsing="false" onAction="#pageMoin" text="-" />
                   <TextField fx:id="nomEtPrenomFiltre" />
                   <ComboBox fx:id="villeFiltre" prefWidth="150.0" />
-                  <SearchableComboBox fx:id="departementFiltre" />
+                  <SearchableComboBox fx:id="departementFiltre" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" prefWidth="174.0" />
                   <Button mnemonicParsing="false" onAction="#pagePlus" text="+" />
                </children></HBox>
          </children>

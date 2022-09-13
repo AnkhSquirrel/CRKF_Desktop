@@ -23,7 +23,7 @@ public class VilleDAO extends DAO<Ville> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
-            ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5)));
+            ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4), rs.getInt(5));
             rs.close();
         }
         catch (Exception e) {
@@ -41,7 +41,7 @@ public class VilleDAO extends DAO<Ville> {
             ResultSet rs = ps.executeQuery();
 
             while (rs.next())
-                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5))));
+                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
             rs.close();
         }
         catch (Exception e) {
@@ -64,7 +64,7 @@ public class VilleDAO extends DAO<Ville> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
-                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5))));
+                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
             }
             rs.close();
         }
@@ -138,7 +138,7 @@ public class VilleDAO extends DAO<Ville> {
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while(rs.next())
-                list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,DAOFactory.getDepartementDAO().getByID(rs.getInt(5))));
+                list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
             rs.close();
         }
         catch (Exception e) {

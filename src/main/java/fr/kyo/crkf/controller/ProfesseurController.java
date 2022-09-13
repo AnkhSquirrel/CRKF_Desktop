@@ -28,7 +28,6 @@ public class ProfesseurController {
     @FXML
     private TableColumn<Personne, String> departementColumn;
 
-
     @FXML
     private TextField nomEtPrenomFiltre;
     @FXML
@@ -62,35 +61,39 @@ public class ProfesseurController {
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         villeFiltre.setEditable(true);
         villeFiltre.getEditor().textProperty().addListener(observable -> villeFilter());
+        villeFiltre.getEditor().setText("Ville");
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
      }
-
     private void villeFilter() {
-        if(!villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
-            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getVille().getDepartement().getId_departement())));
+        if(searchableProfesseur.getVilleId() != 0 && !villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
+            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getDepartementId())));
         }
     }
-
     private void filter() {
         if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
             page = 1;
         }
 
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null){
-            searchableProfesseur.getVille().setDepartement(departementFiltre.getSelectionModel().getSelectedItem());
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != searchableProfesseur.getDepartementId()){
+            searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getId_departement());
+            villeFiltre.getSelectionModel().select(0);
             page = 1;
         }
 
-        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null){
+        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getId_ville() != searchableProfesseur.getVilleId()){
+            searchableProfesseur.setDepartementId(villeFiltre.getSelectionModel().getSelectedItem().getDepartementID());
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
+            if(villeFiltre.getSelectionModel().getSelectedItem().getId_ville() == 0)
+                departementFiltre.getSelectionModel().select(0);
+            else
+                departementFiltre.getSelectionModel().select(villeFiltre.getSelectionModel().getSelectedItem().getDepartement());
             page = 1;
         }
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }
-
     @FXML
     private void pagePlus(){
         if(professeurTable.getItems().size() > 0){
@@ -107,7 +110,6 @@ public class ProfesseurController {
         }
 
     }
-
     private void filterByDepartement() {
         if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
             villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().gettByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
@@ -117,13 +119,10 @@ public class ProfesseurController {
         villeFiltre.getSelectionModel().select(0);
         filter();
     }
-
-
     private void openDetailPage() {
         if(!professeurTable.getSelectionModel().isEmpty())
             applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
     }
-
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
@@ -131,5 +130,4 @@ public class ProfesseurController {
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
     }
-
 }
