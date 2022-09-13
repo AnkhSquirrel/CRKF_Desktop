@@ -64,7 +64,7 @@ public class GestionFamilleController {
 
     @FXML
     private void openCreateModal(){
-        applicationCRKF.openModalCreateFamille();
+        applicationCRKF.openModalCreateFamille(this);
     }
     @FXML
     private void reset(){
