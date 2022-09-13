@@ -6,6 +6,9 @@ import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
+import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
+import fr.kyo.crkf.controller.ecole.EcoleController;
+import fr.kyo.crkf.controller.ecole.EcoleModalController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
 import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
@@ -203,6 +206,53 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
+
+    public void openCreateEcoleModal(){
+        Stage modal = new Stage();
+        try {
+                FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
+                AnchorPane modalPane = fxmlLoader.load();
+                EcoleModalController EcoleModalController = fxmlLoader.getController();
+
+            EcoleModalController.setModal(modal);
+            EcoleModalController.setCreate(true);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajout d'une école");
+
+            modal.show();
+        }catch (IOException e){
+            e.printStackTrace();
+        }
+    }
+
+    public void openUpdateEcole(Ecole ecole) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            EcoleModalController createEcoleModalController = fxmlLoader.getController();
+
+            createEcoleModalController.setModal(modal);
+            createEcoleModalController.setCreate(false);
+            createEcoleModalController.setEcole(ecole);
+            createEcoleModalController.setApplicationCRKF(this);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modification d'une école");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void openUpdateInstrumentModal(Instrument instrument) {
         Stage modal = new Stage();
         try {
@@ -219,7 +269,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
-            modal.setTitle("Ajouter un instrument");
+            modal.setTitle("Modifier un instrument");
 
             modal.show();
         } catch (IOException e) {
@@ -231,7 +281,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         boolean delete = false;
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Supprimer");
-        alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
+        alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
         Optional<ButtonType> result = alert.showAndWait();
         if(result.isPresent() && result.get() == ButtonType.OK)
             delete = true;

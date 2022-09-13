@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.ecole;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Ecole;
