@@ -1,6 +1,5 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Searchable.SearchableFamille;
 
@@ -25,7 +24,7 @@ public class FamilleDAO extends DAO<Famille> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
-            famille =  new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3)));
+            famille =  new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3));
 
             rs.close();
 
@@ -48,7 +47,7 @@ public class FamilleDAO extends DAO<Famille> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next())
-                list.add(new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3))));
+                list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
             rs.close();
 
         }
@@ -79,7 +78,7 @@ public class FamilleDAO extends DAO<Famille> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next()){
-                list.add(new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3))));
+                list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
             }
             rs.close();
         }
@@ -97,11 +96,11 @@ public class FamilleDAO extends DAO<Famille> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_famille, famille, id_classification,(select classification from Classification where id_classification = f.id_classification) from Famille as f order by famille";
+            String strCmd = "SELECT id_famille, famille, id_classification from Famille order by famille";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
-                liste.add(new Famille(rs.getInt(1),rs.getString(2),new Classification(rs.getInt(3),rs.getString(4))));
+                liste.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
             }
             rs.close();
         }

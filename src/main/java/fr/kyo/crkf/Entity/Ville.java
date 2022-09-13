@@ -1,5 +1,6 @@
 package fr.kyo.crkf.Entity;
 
+import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -11,9 +12,9 @@ public class Ville {
     private String ville;
     private float longitude;
     private float latitude;
-    private Departement departement;
+    private int departement;
 
-    public Ville(int id_ville, String ville,float longitude, float latitude ,Departement departement) {
+    public Ville(int id_ville, String ville,float longitude, float latitude ,int departement) {
         this.id_ville = id_ville;
         this.ville = ville;
         this.longitude = longitude;
@@ -45,9 +46,15 @@ public class Ville {
         this.latitude = latitude;
     }
     public Departement getDepartement() {
+        return DAOFactory.getDepartementDAO().getByID(departement);
+    }
+    public int getDepartementID() {
         return departement;
     }
     public void setDepartement(Departement departement) {
+        this.departement = departement.getId_departement();
+    }
+    public void setDepartement(int departement) {
         this.departement = departement;
     }
     @Override

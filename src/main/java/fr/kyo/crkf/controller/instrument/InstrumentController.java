@@ -71,16 +71,21 @@ public class InstrumentController {
          applicationCRKF.openDetailInstrument(instrumentTable.getSelectionModel().getSelectedItem());
      }
 
-    public void filter() {
+    public void filter(){
         if(!libelle.getText().isEmpty() || !libelle.getText().equals(searchableInstrument.getNom())){
             searchableInstrument.setNom(libelle.getText());
         }
-        if(classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem() != searchableInstrument.getFamille().getclassification()){
-            searchableInstrument.getFamille().setclassification(classification.getSelectionModel().getSelectedItem());
+        if(classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getId_classification() != searchableInstrument.getClassificationId()){
+            searchableInstrument.setClassification(classification.getSelectionModel().getSelectedItem());
+            famille.getSelectionModel().select(0);
         }
-        if(famille.getSelectionModel().getSelectedItem() != null && famille.getSelectionModel().getSelectedItem() != searchableInstrument.getFamille()){
+        if(famille.getSelectionModel().getSelectedItem() != null && famille.getSelectionModel().getSelectedItem().getId_famille() != searchableInstrument.getFamilleId()){
             searchableInstrument.setFamille(famille.getSelectionModel().getSelectedItem());
-            classification.getSelectionModel().select(famille.getSelectionModel().getSelectedItem().getclassification());
+            if(searchableInstrument.getFamilleId() != 0){
+                searchableInstrument.setClassificationId(famille.getSelectionModel().getSelectedItem().getId_classification());
+                classification.getSelectionModel().select(famille.getSelectionModel().getSelectedItem().getclassification());
+            }
+
         }
         pageNumber.setText("Page " + page);
         instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)));

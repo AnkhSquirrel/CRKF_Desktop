@@ -27,7 +27,7 @@ public class EcoleDAO extends DAO<Ecole> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
-            ecole =  new Ecole(rs.getInt(1), rs.getString(2),DAOFactory.getAdresseDAO().getByID(rs.getInt(3)));
+            ecole =  new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3));
 
             rs.close();
 
@@ -52,7 +52,7 @@ public class EcoleDAO extends DAO<Ecole> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
-                liste.add(new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+                liste.add(new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
             }
             rs.close();
         }
@@ -78,7 +78,7 @@ public class EcoleDAO extends DAO<Ecole> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
-                Ecole ecole = (new Ecole(rs.getInt(1),rs.getString(2),DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+                Ecole ecole = (new Ecole(rs.getInt(1),rs.getString(2),rs.getInt(3)));
 
                 liste.add(ecole);
             }
@@ -110,7 +110,7 @@ public class EcoleDAO extends DAO<Ecole> {
                 double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
 
                 if (distance < 50){
-                    Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+                    Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
                     Pair<Ecole, Double> pair = new Pair<>(ecole, distance);
                     ecolesEtDistances.add(pair);
                 }

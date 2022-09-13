@@ -49,10 +49,7 @@ public class EcoleModalController {
     }
     @FXML
     private void addEcole(){
-        Ecole ecole = new Ecole(0, nomEcole.getText(),
-                    new Adresse(0,libeleAdresse.getText(),
-                            new Ville(ville.getSelectionModel().getSelectedItem().getId_ville(), ville.getSelectionModel().getSelectedItem().getVille(),0F, 0F,
-                                    new Departement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement(), nomDepartement.getSelectionModel().getSelectedItem().getNumero_departement() , nomDepartement.getSelectionModel().getSelectedItem().toString()))));
+        Ecole ecole = new Ecole(0, nomEcole.getText(), 0);
 
         if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
             int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());

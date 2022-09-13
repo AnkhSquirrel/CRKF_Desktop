@@ -1,15 +1,15 @@
 package fr.kyo.crkf.Entity;
 
+import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
 public class Adresse {
     private int id_adresse;
     private String adresse;
-    private Ville ville;
-    private Departement departement;
+    private int ville;
 
-    public Adresse(int id_adresse, String adresse, Ville ville) {
+    public Adresse(int id_adresse, String adresse, int ville) {
         this.id_adresse = id_adresse;
         this.adresse = adresse;
         this.ville = ville;
@@ -27,9 +27,12 @@ public class Adresse {
         this.adresse = adresse;
     }
     public Ville getVille() {
-        return ville;
+        return DAOFactory.getVilleDAO().getByID(ville);
     }
     public void setVille(Ville ville) {
+        this.ville = ville.getId_ville();
+    }
+    public void setVille(int ville) {
         this.ville = ville;
     }
     public ObservableValue<String> getAdresseStringProperty(){
