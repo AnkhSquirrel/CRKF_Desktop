@@ -1,6 +1,9 @@
 package fr.kyo.crkf.controller.ecole;
 
 
+import com.jfoenix.controls.JFXDrawer;
+import com.jfoenix.controls.JFXHamburger;
+import com.jfoenix.transitions.hamburger.HamburgerBackArrowBasicTransition;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ecole;
@@ -10,8 +13,14 @@ import fr.kyo.crkf.Searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.Background;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
+
+import java.io.IOException;
 
 public class EcoleController {
 
@@ -37,11 +46,12 @@ public class EcoleController {
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
         private Ecole ecole;
-
+        @FXML
+        private JFXDrawer drawer;
         private int page;
 
         @FXML
-        private void initialize(){
+        private void initialize() throws IOException {
                 page = 1;
                 filter = new Filter();
                 searchableEcole = new SearchableEcole();
@@ -66,8 +76,12 @@ public class EcoleController {
                 nomEcole.textProperty().addListener(observable -> filter());
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
-
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
+                FXMLLoader fxmlLoader = new FXMLLoader();
+                fxmlLoader.setLocation(ApplicationCRKF.class.getResource("detail_ecole.fxml"));
+                VBox detail = fxmlLoader.load();
+                drawer.setSidePane(detail);
         }
 
         private void filterDepartement() {
@@ -114,7 +128,20 @@ public class EcoleController {
 
         private void openDetailEcole(){
                 if(ecoleTable.getSelectionModel().getSelectedItem() != null){
-                        applicationCRKF.openDetailEcole(ecoleTable.getSelectionModel().getSelectedItem());
+                        try {
+                                FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
+                                fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("detail_ecole.fxml"));
+                                VBox detailEcole = fxmlLoaderListeEcole.load();
+                                DetailEcoleController detailEcoleController = fxmlLoaderListeEcole.getController();
+                                detailEcoleController.setEcole(ecoleTable.getSelectionModel().getSelectedItem());
+                                detailEcoleController.setEcoleController(this);
+                                drawer.setSidePane(detailEcole);
+                                drawer.applyCss();
+                                drawer.drag
+                                openDetail();
+                        } catch (IOException e) {
+                                e.printStackTrace();
+                        }
                 }
         }
 
@@ -144,5 +171,16 @@ public class EcoleController {
         private void openMainMenu(){
                 applicationCRKF.openMainMenu();
         }
+
+        public void closeDetail(){
+                drawer.close();
+                drawer.setDisable(true);
+        }
+
+        public void openDetail(){
+                drawer.setDisable(false);
+                drawer.open();
+        }
+
 
 }

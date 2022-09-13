@@ -3,6 +3,7 @@ package fr.kyo.crkf;
 import fr.kyo.crkf.Entity.*;
 
 import fr.kyo.crkf.controller.*;
+import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
@@ -18,7 +19,6 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -50,7 +50,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
             stage.setTitle("CRKF");
-            stage.setMinWidth(840);
+            stage.setMinWidth(740);
             stage.setMinHeight(620);
             stage.setScene(scene);
             stage.show();
@@ -93,7 +93,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
             fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("liste_ecole.fxml"));
-            GridPane listeEcole = fxmlLoaderListeEcole.load();
+            AnchorPane listeEcole = fxmlLoaderListeEcole.load();
             EcoleController ecoleController = fxmlLoaderListeEcole.getController();
             ecoleController.setApplicationCRKF(this);
 
@@ -408,5 +408,13 @@ public class ApplicationCRKF extends javafx.application.Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void closeDetal(){
+/*
+        EcoleController ecoleController = fxmlLoaderListeEcole.getController();
+        ecoleController.setApplicationCRKF(this);
+        ecoleController.closeDetail();
+ */
     }
 }

@@ -17,4 +17,6 @@ module fr.kyo.crkf {
     opens fr.kyo.crkf.controller.instrument to javafx.fxml;
     exports fr.kyo.crkf.controller.ecole;
     opens fr.kyo.crkf.controller.ecole to javafx.fxml;
+
+    requires com.jfoenix;
 }

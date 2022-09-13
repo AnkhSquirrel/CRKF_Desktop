@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import com.jfoenix.controls.JFXDrawer?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
@@ -7,71 +8,77 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.ColumnConstraints?>
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.EcoleController">
-    <columnConstraints>
-        <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
-    </columnConstraints>
-    <rowConstraints>
-      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-        <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="329.0" vgrow="SOMETIMES" />
-      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
-    </rowConstraints>
-    <children>
-      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+<AnchorPane prefHeight="490.0" prefWidth="740.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.EcoleController">
+   <children>
+      <GridPane layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0">
+         <columnConstraints>
+            <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
+         </columnConstraints>
+         <rowConstraints>
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="329.0" minHeight="10.0" prefHeight="329.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+         </rowConstraints>
          <children>
-                <Button mnemonicParsing="false" onAction="#openMainMenu" prefHeight="25.0" prefWidth="100.0" text="Retour" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
-         <children>
-            <Button fx:id="creer" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" GridPane.rowIndex="4">
-         <children>
-                <Button mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
-            <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" textAlignment="CENTER" />
-                <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
-         <children>
-                <TextField fx:id="nomEcole" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Nom">
-                    <HBox.margin>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#openMainMenu" prefHeight="25.0" prefWidth="100.0" text="Retour" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+               <children>
+                  <Button fx:id="creer" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" maxHeight="25.0" minHeight="25.0" prefHeight="25.0" GridPane.rowIndex="4">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
+                  <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" textAlignment="CENTER" />
+                  <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+               </children>
+            </HBox>
+            <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
+               <children>
+                  <TextField fx:id="nomEcole" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Nom">
+                     <HBox.margin>
                         <Insets left="2.0" right="2.0" />
-                    </HBox.margin>
-                </TextField>
-                <ComboBox fx:id="ville" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Ville">
-                    <opaqueInsets>
+                     </HBox.margin>
+                  </TextField>
+                  <ComboBox fx:id="ville" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Ville">
+                     <opaqueInsets>
                         <Insets />
-                    </opaqueInsets>
-               <HBox.margin>
-                  <Insets left="2.0" right="2.0" />
-               </HBox.margin>
-                </ComboBox>
-                <SearchableComboBox fx:id="departement" maxHeight="25.0" maxWidth="153.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Département">
-                    <HBox.margin>
+                     </opaqueInsets>
+                     <HBox.margin>
                         <Insets left="2.0" right="2.0" />
-                    </HBox.margin>
-                </SearchableComboBox>
-                <Button fx:id="reset" mnemonicParsing="false" onAction="#reset" prefHeight="20.0" prefWidth="100.0" text="Reset" />
+                     </HBox.margin>
+                  </ComboBox>
+                  <SearchableComboBox fx:id="departement" maxHeight="25.0" maxWidth="153.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="25.0" prefWidth="150.0" promptText="Département">
+                     <HBox.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </HBox.margin>
+                  </SearchableComboBox>
+                  <Button fx:id="reset" mnemonicParsing="false" onAction="#reset" prefHeight="20.0" prefWidth="100.0" text="Reset" />
+               </children>
+            </HBox>
+            <TableView fx:id="ecoleTable" prefHeight="424.0" prefWidth="650.0" GridPane.rowIndex="3">
+               <columns>
+                  <TableColumn fx:id="nomColumn" maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Nom" />
+                  <TableColumn fx:id="adresseColumn" maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Adresse" />
+                  <TableColumn fx:id="villeColumn" maxWidth="500.0" minWidth="100.0" prefWidth="100.0" text="Ville" />
+                  <TableColumn fx:id="departementColumn" maxWidth="500.0" prefWidth="100.0" text="Département" />
+               </columns>
+            </TableView>
          </children>
-      </HBox>
-        <TableView fx:id="ecoleTable" prefHeight="424.0" prefWidth="650.0" GridPane.rowIndex="3">
-            <columns>
-                <TableColumn fx:id="nomColumn" maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Nom" />
-                <TableColumn fx:id="adresseColumn" maxWidth="500.0" minWidth="100.0" prefWidth="200.0" text="Adresse" />
-                <TableColumn fx:id="villeColumn" maxWidth="500.0" minWidth="100.0" prefWidth="100.0" text="Ville" />
-                <TableColumn fx:id="departementColumn" maxWidth="500.0" prefWidth="100.0" text="Département" />
-            </columns>
-        </TableView>
-    </children>
-</GridPane>
+      </GridPane>
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" disable="true" layoutY="58.0" miniDrawerSize="0.0" overLayVisible="false" prefHeight="410.0" prefWidth="529.0" stylesheets="@style.css" />
+   </children>
+</AnchorPane>

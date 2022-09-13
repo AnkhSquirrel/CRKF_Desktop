@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.ecole;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.*;
@@ -26,6 +26,7 @@ public class DetailEcoleController {
     @FXML
     private TableColumn<Personne, String> profEmbaucheNom;
     private Ecole ecole;
+    private EcoleController ecoleController;
 
     @FXML
     private void initialize(){
@@ -68,4 +69,12 @@ public class DetailEcoleController {
         applicationCRKF.openUpdateEcole(ecole);
     }
 
+    @FXML
+    private void closeDetail(){
+        ecoleController.closeDetail();
+    }
+
+    public void setEcoleController(EcoleController ecoleController) {
+        this.ecoleController = ecoleController;
+    }
 }
