@@ -20,7 +20,6 @@ public class Filter {
         familles = DAOFactory.getFamilleDAO().getAll(1);
         familles.add(0,new Famille(0,"Famille",new Classification(0,"Classification")));
 
-
         villes = DAOFactory.getVilleDAO().getAll(1);
         villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
 

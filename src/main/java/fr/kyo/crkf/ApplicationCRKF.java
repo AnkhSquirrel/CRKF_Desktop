@@ -2,6 +2,7 @@ package fr.kyo.crkf;
 
 import fr.kyo.crkf.Entity.Ecole;
 
+import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
@@ -243,8 +244,55 @@ public class ApplicationCRKF extends javafx.application.Application {
             fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_famille.fxml"));
             GridPane gestionFamille = fxmlLoader.load();
             GestionFamilleController gestionFamilleController = fxmlLoader.getController();
+            gestionFamilleController.setApplicationCRKF(this);
 
             mainWindow.setCenter(gestionFamille);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openModalCreateFamille() {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_famille.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            FamilleModalController familleModalController = fxmlLoader.getController();
+
+            familleModalController.setModal(modal);
+            familleModalController.setCreate(true);
+            familleModalController.setApplicationCRKF(this);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un instrument");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalUpdateFamille(GestionFamilleController gestionFamilleController, Famille famille) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_famille.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            FamilleModalController familleModalController = fxmlLoader.getController();
+
+            familleModalController.setModal(modal);
+            familleModalController.setCreate(false);
+            familleModalController.setGestionFamilleController(gestionFamilleController);
+            familleModalController.setFamille(famille);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un instrument");
+
+            modal.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
