@@ -39,4 +39,8 @@ public class NavbarController {
     protected void openVilleGestion(){
         application.openVilleGestion();
     }
+    @FXML
+    protected void openDepartementGestion(){
+        application.openDepartementGestion();
+    }
 }

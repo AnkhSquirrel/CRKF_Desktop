@@ -333,7 +333,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
-
     public void openModalUpdateFamille(GestionFamilleController gestionFamilleController, Famille famille) {
         Stage modal = new Stage();
         try {
@@ -351,6 +350,66 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier une famille");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openDepartementGestion(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_departement.fxml"));
+            GridPane gestionDepartement = fxmlLoader.load();
+            GestionDepartementController gestionDepartementController = fxmlLoader.getController();
+            gestionDepartementController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionDepartement);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalUpdateDepartement(GestionDepartementController gestionDepartementController, Departement departement) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_departement.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            DepartementModalController departementModalController = fxmlLoader.getController();
+
+            departementModalController.setModal(modal);
+            departementModalController.setCreate(false);
+            departementModalController.setGestionDepartementController(gestionDepartementController);
+            departementModalController.setDepartement(departement);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier un département");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openModalCreateDepartement(GestionDepartementController gestionDepartementController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_departement.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            DepartementModalController departementModalController = fxmlLoader.getController();
+
+            departementModalController.setModal(modal);
+            departementModalController.setCreate(true);
+            departementModalController.setGestionDepartementController(gestionDepartementController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier un département");
 
             modal.show();
         } catch (IOException e) {

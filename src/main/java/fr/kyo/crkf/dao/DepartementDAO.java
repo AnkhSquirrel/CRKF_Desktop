@@ -1,5 +1,6 @@
 package fr.kyo.crkf.dao;
 
+import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Departement;
 
 import java.sql.*;
@@ -59,6 +60,26 @@ public class DepartementDAO extends DAO<Departement> {
             e.printStackTrace();
         }
         return liste;
+    }
+
+    public ArrayList<Departement> getLike(String departement, int page) {
+        ArrayList<Departement> list = new ArrayList<>();
+        try{
+            String strCmd = "SELECT id_departement, numero_departement ,Departement from Departement";
+            if(!departement.isEmpty())
+                strCmd += " where departement like '%" + departement + "%'";
+            strCmd += " order by departement OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+
+            while(rs.next())
+                list.add(new Departement(rs.getInt(1), rs.getString(2) , rs.getString(3)));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
     }
 
     @Override
