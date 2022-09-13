@@ -22,7 +22,7 @@ public class AdresseDAO extends DAO<Adresse> {
             ResultSet rs = s.executeQuery();
 
             if(rs.next())
-                adresse = new Adresse(rs.getInt(1), rs.getString(2),DAOFactory.getVilleDAO().getByID(rs.getInt(3)));
+                adresse = new Adresse(rs.getInt(1), rs.getString(2),rs.getInt(3));
 
             rs.close();
         }
@@ -45,7 +45,7 @@ public class AdresseDAO extends DAO<Adresse> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
-                liste.add(new Adresse(rs.getInt(1), rs.getString(2),DAOFactory.getVilleDAO().getByID(rs.getInt(3))));
+                liste.add(new Adresse(rs.getInt(1), rs.getString(2),rs.getInt(3)));
             }
             rs.close();
         }

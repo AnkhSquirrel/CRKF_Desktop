@@ -19,17 +19,18 @@
   </columnConstraints>
   <rowConstraints>
       <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
+      <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
     <RowConstraints maxHeight="315.0" minHeight="10.0" prefHeight="280.0" vgrow="SOMETIMES" />
       <RowConstraints maxHeight="50.0" minHeight="50.0" prefHeight="50.0" vgrow="SOMETIMES" />
   </rowConstraints>
    <children>
-      <HBox prefHeight="100.0" prefWidth="200.0">
-         <children>
-            <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
-         </children>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+       <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+           <children>
+               <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+           </children>
+       </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
          <children>
             <TextField fx:id="nomEtPrenomFiltre" prefHeight="25.0" prefWidth="150.0" promptText="Nom...">
                <HBox.margin>
@@ -48,7 +49,12 @@
             </SearchableComboBox>
          </children>
       </HBox>
-      <TableView fx:id="professeurTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="2">
+       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
+         <children>
+               <Button fx:id="creer" alignment="CENTER_RIGHT" mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter" />
+         </children>
+       </HBox>
+      <TableView fx:id="professeurTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
         <columns>
             <TableColumn fx:id="nomColumn" maxWidth="500.0" minWidth="100.0" prefWidth="150.0" text="Nom" />
             <TableColumn fx:id="prenomColumn" minWidth="100.0" prefWidth="150.0" text="Prénom" />
@@ -56,7 +62,7 @@
             <TableColumn fx:id="departementColumn" maxWidth="500.0" minWidth="100.0" prefWidth="150.0" text="Département" />
         </columns>
       </TableView>
-      <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" GridPane.rowIndex="3">
+      <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" GridPane.rowIndex="4">
          <children>
             <Button mnemonicParsing="false" onAction="#pageMoin" text="&lt;" />
             <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" />

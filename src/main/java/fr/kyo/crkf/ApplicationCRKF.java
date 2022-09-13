@@ -409,4 +409,27 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
+
+    public void openCreateProfesseurModal(ProfesseurController professeurController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_professeur.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            ProfesseurModalController professeurModalController = fxmlLoader.getController();
+
+            professeurModalController.setModal(modal);
+            professeurModalController.setCreate(true);
+            professeurModalController.setProfesseurController(professeurController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter une Classification");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

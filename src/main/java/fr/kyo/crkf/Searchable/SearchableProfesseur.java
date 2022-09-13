@@ -2,18 +2,21 @@ package fr.kyo.crkf.Searchable;
 
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.dao.DAOFactory;
 
 public class SearchableProfesseur {
     private int id_professeur;
     private String nomEtPrenom;
     private int vehiculeCV;
-    private Ville ville;
+    private int ville;
+    private int departement;
 
     public SearchableProfesseur() {
         this.id_professeur = 0;
         this.nomEtPrenom = "";
         this.vehiculeCV = 0;
-        ville = new Ville(0, "", 0f, 0f, new Departement(0, "", ""));
+        ville = 0;
+        departement = 0;
 
     }
 
@@ -30,10 +33,21 @@ public class SearchableProfesseur {
     }
 
     public void setVille(Ville ville) {
-        this.ville = ville;
+        this.ville = ville.getId_ville();
     }
 
     public Ville getVille() {
+        return DAOFactory.getVilleDAO().getByID(ville);
+    }
+    public int getVilleId() {
         return ville;
+    }
+
+    public int getDepartementId() {
+        return departement;
+    }
+
+    public void setDepartementId(int departement) {
+        this.departement = departement;
     }
 }
