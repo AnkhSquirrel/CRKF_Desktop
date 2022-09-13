@@ -31,6 +31,8 @@ public class EcoleController {
         private SearchableComboBox<Departement> departement;
         @FXML
         private TextField nomEcole;
+        @FXML
+        private Label pageNumber;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
@@ -66,9 +68,6 @@ public class EcoleController {
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
-
-
-
         }
 
         private void filterDepartement() {
@@ -107,6 +106,8 @@ public class EcoleController {
                         searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
                         page = 1;
                 }
+
+                pageNumber.setText("Page " + page);
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
         }
