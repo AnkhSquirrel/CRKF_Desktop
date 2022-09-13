@@ -31,4 +31,8 @@ public class NavbarController {
     protected void openAboutModal(){
         application.openAboutModal();
     }
+    @FXML
+    protected void openFamilleGestion(){application.openFamilleGestion();}
+    @FXML
+    protected void openClassificationGestion(){application.openClassificationGestion();}
 }

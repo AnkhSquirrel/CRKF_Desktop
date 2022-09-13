@@ -20,7 +20,6 @@ public class Filter {
         familles = DAOFactory.getFamilleDAO().getAll(1);
         familles.add(0,new Famille(0,"Famille",new Classification(0,"Classification")));
 
-
         villes = DAOFactory.getVilleDAO().getAll(1);
         villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
 
@@ -40,7 +39,6 @@ public class Filter {
     public ArrayList<Departement> getDepartements(){
         return departements;
     }
-
     public ArrayList<Famille> getFamilles() {
         return familles;
     }
@@ -49,5 +47,10 @@ public class Filter {
         ArrayList<Ville> villes = DAOFactory.getVilleDAO().getLike(text, departement_id);
         villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
         return villes;
+    }
+
+    public String getNumDepartement(int id){
+        String numDepartement = DAOFactory.getDepartementDAO().getByID(id).getNumero_departement();
+        return numDepartement;
     }
 }

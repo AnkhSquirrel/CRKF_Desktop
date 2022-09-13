@@ -13,6 +13,12 @@
             <MenuItem mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" />
       </items>
     </Menu>
+      <Menu mnemonicParsing="false" text="Gestion">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#openFamilleGestion" text="Famille" />
+            <MenuItem mnemonicParsing="false" onAction="#openClassificationGestion" text="Classification" />
+        </items>
+      </Menu>
     <Menu mnemonicParsing="false" text="Aide">
       <items>
         <MenuItem mnemonicParsing="false" onAction="#openAboutModal" text="À propos" />

@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.ecole;
 
 
 import fr.kyo.crkf.ApplicationCRKF;
@@ -30,14 +30,13 @@ public class EcoleController {
         @FXML
         private SearchableComboBox<Departement> departement;
         @FXML
-        private Button reset;
-        @FXML
         private TextField nomEcole;
         @FXML
         private Label pageNumber;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
+        private Ecole ecole;
 
         private int page;
 
@@ -45,7 +44,6 @@ public class EcoleController {
         private void initialize(){
                 page = 1;
                 filter = new Filter();
-
                 searchableEcole = new SearchableEcole();
 
                 // Intialisation des colomnes
@@ -115,10 +113,17 @@ public class EcoleController {
         }
 
         private void openDetailEcole(){
-                applicationCRKF.openDetailEcole(ecoleTable.getSelectionModel().getSelectedItem());
+                if(ecoleTable.getSelectionModel().getSelectedItem() != null){
+                        applicationCRKF.openDetailEcole(ecoleTable.getSelectionModel().getSelectedItem());
+                }
         }
+
         public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
                 this.applicationCRKF = applicationCRKF;
+        }
+        @FXML
+        private void openCreateModal(){
+                applicationCRKF.openCreateEcoleModal();
         }
 
         @FXML
