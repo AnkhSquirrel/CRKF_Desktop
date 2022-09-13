@@ -89,7 +89,7 @@ public class InstrumentController {
     }
     @FXML
     private void pagePlus(){
-         if(instrumentTable.getItems().size() > 0){
+         if(!instrumentTable.getItems().isEmpty()){
              page++;
              filter();
          }
