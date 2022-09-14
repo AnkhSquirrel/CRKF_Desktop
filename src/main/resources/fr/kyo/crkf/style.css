@@ -351,6 +351,13 @@
     -fx-text-fill: black;
 }
 
+.jfx-drawer {
+    -fx-background-color : transparent;
+}
+.jfx-drawer-side-pane{
+    -fx-background-color: -fx-primary;
+}
+
 
 
 

@@ -137,7 +137,6 @@ public class EcoleController {
                                 detailEcoleController.setEcoleController(this);
                                 drawer.setSidePane(detailEcole);
                                 drawer.applyCss();
-                                drawer.drag
                                 openDetail();
                         } catch (IOException e) {
                                 e.printStackTrace();
