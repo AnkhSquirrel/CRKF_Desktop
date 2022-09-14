@@ -3,12 +3,16 @@ package fr.kyo.crkf;
 import fr.kyo.crkf.Entity.*;
 
 import fr.kyo.crkf.controller.*;
+import fr.kyo.crkf.controller.departement.DepartementModalController;
+import fr.kyo.crkf.controller.departement.GestionDepartementController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
 import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
+import fr.kyo.crkf.controller.ville.GestionVilleController;
+import fr.kyo.crkf.controller.ville.VilleModalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -404,6 +408,53 @@ public class ApplicationCRKF extends javafx.application.Application {
             departementModalController.setModal(modal);
             departementModalController.setCreate(true);
             departementModalController.setGestionDepartementController(gestionDepartementController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Créer un département");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalCreateVille(GestionVilleController gestionVilleController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ville.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            VilleModalController villeModalController = fxmlLoader.getController();
+
+            villeModalController.setModal(modal);
+            villeModalController.setCreate(true);
+            villeModalController.setGestionVilleController(gestionVilleController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Créer une ville");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalUpdateVille(GestionVilleController gestionVilleController, Ville ville) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ville.fxml"));
+            AnchorPane modalPane = fxmlLoader.load();
+            VilleModalController villeModalController = fxmlLoader.getController();
+
+            villeModalController.setModal(modal);
+            villeModalController.setCreate(false);
+            villeModalController.setGestionVilleController(gestionVilleController);
+            villeModalController.setVille(ville);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);

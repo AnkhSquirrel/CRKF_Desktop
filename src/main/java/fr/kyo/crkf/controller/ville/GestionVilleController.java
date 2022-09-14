@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.ville;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Departement;
@@ -29,25 +29,7 @@ public class GestionVilleController {
     private String ville;
     private int page;
     private ApplicationCRKF applicationCRKF;
-
-    @FXML
-    private void initialize(){
-        page = 1;
-        Filter filter = new Filter();
-
-        // intialize TableView
-        villeColumn.setCellValueFactory(cellDate -> cellDate.getValue().getVilleStringProperty());
-        departementColumn.setCellValueFactory(cellDate -> cellDate.getValue().getDepartement().getDepartementStringProperty());
-
-        // initialize Combobox
-        departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
-        departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
-        departement.getSelectionModel().select(0);
-
-        libelle.textProperty().addListener(observable -> filter());
-
-        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departement.getSelectionModel().getSelectedItem().getId_departement())));
-    }
+    private int departementId;
 
     @FXML
     private void openMainMenu(){
@@ -59,9 +41,65 @@ public class GestionVilleController {
         this.applicationCRKF = applicationCRKF;
     }
 
-    private void filter(){
+    @FXML
+    private void initialize(){
+        departementId = 0;
+        ville = "";
+        page = 1;
+        Filter filter = new Filter();
+
+        // intialize TableView
+        villeColumn.setCellValueFactory(cellDate -> cellDate.getValue().getVilleStringProperty());
+        departementColumn.setCellValueFactory(cellDate -> cellDate.getValue().getDepartement().getDepartementStringProperty());
+
+        // initialize Combobox
+        departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
+        departement.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+        departement.getSelectionModel().select(0);
+
+        libelle.textProperty().addListener(observable -> filter());
+
+        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departement.getSelectionModel().getSelectedItem().getId_departement())));
     }
-    private void filterDepartement() {
-        filter();
+
+    private void filter(){
+       if(!libelle.getText().equals(ville)){
+           ville = libelle.getText();
+           page = 1;
+       }
+        if(departement.getSelectionModel().getSelectedItem() != null ){
+           departementId = departement.getSelectionModel().getSelectedItem().getId_departement();
+            page = 1;
+        }
+        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departementId)));
+    }
+    @FXML
+    private void openCreateModal(){
+        applicationCRKF.openModalCreateVille(this);
+    }
+    @FXML
+    private void openUpdateModal(){
+        applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
+    private void reset(){
+        libelle.setText("");
+        departement.getSelectionModel().select(0);
+    }
+    @FXML
+    private void pagePlus(){
+        if(!villeTable.getItems().isEmpty()){
+            page++;
+            filter();
+        }
+
+    }
+    @FXML
+    private void pageMoins(){
+        if (page > 1){
+            page--;
+            filter();
+        }
     }
 }

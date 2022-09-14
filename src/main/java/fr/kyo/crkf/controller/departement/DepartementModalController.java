@@ -1,8 +1,8 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.departement;
 
 import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.controller.departement.GestionDepartementController;
 import fr.kyo.crkf.dao.DAOFactory;
-import fr.kyo.crkf.dao.DepartementDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
