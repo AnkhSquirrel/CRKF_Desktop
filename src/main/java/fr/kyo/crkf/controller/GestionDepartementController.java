@@ -19,7 +19,7 @@ public class GestionDepartementController {
     @FXML
     private TableColumn<Departement,String> departementColumn;
     @FXML
-    private TableColumn<Ecole,Integer> nbreEcoleColumn;
+    private TableColumn<Departement,Integer> nbreEcoleColumn;
     @FXML
     private TableColumn<Departement, String> numDepColumn;
     @FXML
@@ -40,6 +40,8 @@ public class GestionDepartementController {
         // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
         numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
+        nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartment());
+
         libelle.textProperty().addListener(observable -> filter());
 
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));
