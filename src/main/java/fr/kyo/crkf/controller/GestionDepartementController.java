@@ -38,8 +38,6 @@ public class GestionDepartementController {
         // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
 
-        // Initialisation des comboBox
-
         libelle.textProperty().addListener(observable -> filter());
 
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));

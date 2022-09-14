@@ -62,6 +62,27 @@ public class DepartementDAO extends DAO<Departement> {
         return liste;
     }
 
+    public ArrayList<String> getNumDepartement() {
+        ArrayList<String> liste = new ArrayList<>();
+        try (Statement stmt = connexion.createStatement()) {
+
+            // Determine the column set column
+
+            String strCmd = "SELECT numero_departement from Departement order by numero_departement";
+            ResultSet rs = stmt.executeQuery(strCmd);
+
+            while (rs.next()) {
+                liste.add(rs.getString(1));
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
     public ArrayList<Departement> getLike(String departement, int page) {
         ArrayList<Departement> list = new ArrayList<>();
         try{

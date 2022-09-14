@@ -2,11 +2,14 @@ package fr.kyo.crkf.controller;
 
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.dao.DAOFactory;
+import fr.kyo.crkf.dao.DepartementDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 
 public class DepartementModalController {
     @FXML
@@ -31,6 +34,14 @@ public class DepartementModalController {
     private void updateDepartement() {
         if(!nomDep.getText().isEmpty())
             departement.setDepartement(nomDep.getText());
+        if(!numDepartement.getText().isEmpty() && !DAOFactory.getDepartementDAO().getNumDepartement().contains(numDepartement.getText()))
+            departement.setNumero_departement(numDepartement.getText());
+        else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Le numéro de département est déjà attribué");
+            alert.showAndWait();
+        }
         if(DAOFactory.getDepartementDAO().update(departement)){
             gestionDepartementController.filter();
             modal.close();
@@ -43,7 +54,7 @@ public class DepartementModalController {
 
     }
     private void createDepartement(){
-        if(!nomDep.getText().isEmpty()){
+        if(!nomDep.getText().isEmpty() && !numDepartement.getText().isEmpty() && !DAOFactory.getDepartementDAO().getNumDepartement().contains(numDepartement.getText())){
             departement = new Departement(0,numDepartement.getText(),nomDep.getText());
             if(DAOFactory.getDepartementDAO().insert(departement) != 0){
                 gestionDepartementController.filter();
