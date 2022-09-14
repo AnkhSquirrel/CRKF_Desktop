@@ -54,6 +54,9 @@ public class Departement {
     public ObservableValue<String> getDepartementStringProperty(){
         return new SimpleStringProperty(departement);
     }
+    public ObservableValue<String> getNumDepartementString(){
+        return new SimpleStringProperty(numero_departement);
+    }
 
     public ArrayList<Ville> getVilles() {
         return villes;

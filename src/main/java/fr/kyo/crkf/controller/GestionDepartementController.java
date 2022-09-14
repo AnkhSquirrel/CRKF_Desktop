@@ -21,6 +21,8 @@ public class GestionDepartementController {
     @FXML
     private TableColumn<Ecole,Integer> nbreEcoleColumn;
     @FXML
+    private TableColumn<Departement, String> numDepColumn;
+    @FXML
     private SearchableComboBox<Classification> classification;
     @FXML
     private TextField libelle;
@@ -37,7 +39,7 @@ public class GestionDepartementController {
         Filter filter = new Filter();
         // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
-
+        numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
         libelle.textProperty().addListener(observable -> filter());
 
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));

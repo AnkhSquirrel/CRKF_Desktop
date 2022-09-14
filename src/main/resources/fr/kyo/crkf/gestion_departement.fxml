@@ -31,8 +31,9 @@
       </Pane>
       <TableView fx:id="departementTable" prefHeight="315.0" prefWidth="800.0" GridPane.rowIndex="1">
          <columns>
-            <TableColumn fx:id="departementColumn" prefWidth="379.0" text="Département" />
-            <TableColumn fx:id="nbreEcoleColumn" prefWidth="376.0" text="Ecole au sein du département" />
+            <TableColumn fx:id="departementColumn" prefWidth="355.99995934963226" text="Département" />
+            <TableColumn fx:id="numDepColumn" prefWidth="100.6666259765625" text="Numéro" />
+            <TableColumn fx:id="nbreEcoleColumn" prefWidth="376.0000915527344" text="Ecole au sein du département" />
          </columns>
          <contextMenu>
             <ContextMenu>
