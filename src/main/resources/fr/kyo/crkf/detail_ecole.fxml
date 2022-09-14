@@ -15,7 +15,7 @@
 
 <VBox alignment="CENTER" maxHeight="500.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.DetailEcoleController">
    <children>
-      <HBox alignment="CENTER_RIGHT" prefHeight="53.0" prefWidth="500.0">
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="500.0">
          <children>
             <Button alignment="CENTER" mnemonicParsing="false" onAction="#closeDetail" text="Fermer">
                <HBox.margin>

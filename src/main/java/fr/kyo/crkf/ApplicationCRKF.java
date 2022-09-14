@@ -108,7 +108,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
             fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("liste_instrument.fxml"));
-            GridPane listeInstrument = fxmlLoaderListeInstrument.load();
+            AnchorPane listeInstrument = fxmlLoaderListeInstrument.load();
             InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
             instrumentController.setApplicationCRKF(this);
 
@@ -190,7 +190,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -257,9 +257,10 @@ public class ApplicationCRKF extends javafx.application.Application {
     
     public void openUpdateInstrumentModal(Instrument instrument) {
         Stage modal = new Stage();
+        modal.setResizable(true);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -268,7 +269,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             instrumentModalController.setApplicationCRKF(this);
 
             modal.setScene(new Scene(modalPane));
-            modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un instrument");

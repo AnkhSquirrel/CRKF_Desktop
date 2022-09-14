@@ -58,14 +58,11 @@ public class EcoleController {
                 filter = new Filter();
                 searchableEcole = new SearchableEcole();
 
-                // Intialisation des colomnes
                 nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
                 villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
                 adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getAdresseStringProperty());
                 departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
 
-
-                // Intialisation des comboBox
                 villeFilter();
                 ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
                 ville.setEditable(true);
@@ -79,11 +76,6 @@ public class EcoleController {
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
-
-                FXMLLoader fxmlLoader = new FXMLLoader();
-                fxmlLoader.setLocation(ApplicationCRKF.class.getResource("detail_ecole.fxml"));
-                VBox detail = fxmlLoader.load();
-                drawer.setSidePane(detail);
         }
 
         private void filterDepartement() {
