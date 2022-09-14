@@ -1,4 +1,4 @@
-package fr.kyo.crkf;
+    package fr.kyo.crkf;
 
 import fr.kyo.crkf.Entity.*;
 
@@ -50,8 +50,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
             stage.setTitle("CRKF");
-            stage.setMinWidth(740);
+            stage.setMinWidth(760);
             stage.setMinHeight(620);
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
 
@@ -212,7 +213,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-                AnchorPane modalPane = fxmlLoader.load();
+                VBox modalPane = fxmlLoader.load();
                 EcoleModalController EcoleModalController = fxmlLoader.getController();
 
             EcoleModalController.setModal(modal);
@@ -234,7 +235,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             EcoleModalController createEcoleModalController = fxmlLoader.getController();
 
             createEcoleModalController.setModal(modal);

@@ -15,9 +15,12 @@
 
 <VBox alignment="CENTER" maxHeight="500.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.DetailEcoleController">
    <children>
-      <HBox prefHeight="53.0" prefWidth="500.0">
+      <HBox alignment="CENTER_RIGHT" prefHeight="53.0" prefWidth="500.0">
          <children>
-            <Button alignment="CENTER" mnemonicParsing="false" onAction="#closeDetail" text="Fermer" />
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#closeDetail" text="Fermer">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
          </children>
       </HBox>
       <Label fx:id="labelNomEcole" text="École" textAlignment="CENTER">
@@ -86,6 +89,9 @@
                         <Button mnemonicParsing="false" onAction="#deleteEcole" prefHeight="25.0" prefWidth="261.0" text="Supprimer" />
                       <Button mnemonicParsing="false" onAction="#updateEcole" text="Modifier" />
                     </buttons>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
                   </ButtonBar>
                </children>
                <opaqueInsets>

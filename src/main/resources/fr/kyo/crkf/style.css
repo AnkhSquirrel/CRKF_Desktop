@@ -351,19 +351,6 @@
     -fx-text-fill: black;
 }
 
-.jfx-drawer {
-    -fx-background-color : transparent;
-}
-.jfx-drawer-side-pane{
-    -fx-background-color: -fx-primary;
-}
-
-
-
-
-
-
-
 
 /* custom */
 
@@ -373,4 +360,11 @@
 
 .table-row-cell:hover{
     -fx-cursor: hand;
+}
+
+.jfx-drawer {
+    -fx-background-color : transparent;
+}
+.jfx-drawer-side-pane{
+    -fx-background-color: -fx-primary;
 }
