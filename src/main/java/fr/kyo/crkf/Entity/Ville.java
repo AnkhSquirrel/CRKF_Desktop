@@ -4,8 +4,6 @@ import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
-import java.util.ArrayList;
-
 
 public class Ville {
     private int id_ville;

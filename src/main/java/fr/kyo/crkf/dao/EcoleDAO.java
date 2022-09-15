@@ -91,6 +91,24 @@ public class EcoleDAO extends DAO<Ecole> {
         return liste;
     }
 
+    public ArrayList<Ecole> getByDepartement(int id) {
+        ArrayList<Ecole> list = new ArrayList<>();
+        try{
+            String strCmd = "SELECT id_ecole, Nom, id_adresse from ecole where id_adresse in (select id_adresse from Adresse where id_ville in (select id_ville from Ville where id_departement = ? ))";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1,id);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next())
+                list.add(new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+            rs.close();
+        }
+        catch (Exception e){
+            e.printStackTrace();
+        }
+        return list;
+    }
+
     public ArrayList<Pair<Ecole, Double>> getByDistance(float latitudePointA, float longitudePointA, int page) {
         ArrayList<Pair<Ecole, Double>> ecolesEtDistances = new ArrayList<>();
         try{

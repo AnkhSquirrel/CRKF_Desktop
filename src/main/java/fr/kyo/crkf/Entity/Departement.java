@@ -1,5 +1,7 @@
 package fr.kyo.crkf.Entity;
 
+import fr.kyo.crkf.dao.DAOFactory;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -48,6 +50,12 @@ public class Departement {
     }
     public ObservableValue<String> getDepartementStringProperty(){
         return new SimpleStringProperty(departement);
+    }
+    public ObservableValue<String> getNumDepartementString(){
+        return new SimpleStringProperty(numero_departement);
+    }
+    public ObservableValue<Integer> getNumberOfSchoolInDepartment(){
+        return new ReadOnlyObjectWrapper<>(DAOFactory.getEcoleDAO().getByDepartement(id_departement).size());
     }
 
 }

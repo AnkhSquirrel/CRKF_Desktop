@@ -17,6 +17,8 @@
         <items>
           <MenuItem mnemonicParsing="false" onAction="#openFamilleGestion" text="Famille" />
             <MenuItem mnemonicParsing="false" onAction="#openClassificationGestion" text="Classification" />
+            <MenuItem mnemonicParsing="false" onAction="#openVilleGestion" text="Ville" />
+            <MenuItem mnemonicParsing="false" onAction="#openDepartementGestion" text="Département" />
         </items>
       </Menu>
     <Menu mnemonicParsing="false" text="Aide">
