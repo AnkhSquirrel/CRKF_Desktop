@@ -41,7 +41,7 @@
             </Label>
             <Label alignment="CENTER_RIGHT" prefHeight="125.0" prefWidth="150.0" text="Adresse :" GridPane.rowIndex="1">
                <font>
-                  <Font size="14.0" />
+                  <Font name="System Italic" size="14.0" />
                </font>
             </Label>
             <TextField fx:id="libeleAdresse" GridPane.columnIndex="1" GridPane.rowIndex="1">
