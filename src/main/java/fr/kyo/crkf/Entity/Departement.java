@@ -11,13 +11,11 @@ public class Departement {
     private int id_departement;
     private String numero_departement;
     private String departement;
-    private ArrayList<Ville> villes;
 
     public Departement(int id_departement, String numero_departement, String departement) {
         this.id_departement = id_departement;
         this.numero_departement = numero_departement;
         this.departement = departement;
-        villes = new ArrayList<>();
     }
 
     public int getId_departement() {
@@ -43,9 +41,6 @@ public class Departement {
     public void setDepartement(String departement) {
         this.departement = departement;
     }
-    public ArrayList<Ville> getVille(){
-        return villes;
-    }
     @Override
     public String toString(){
         if(id_departement == 0)
@@ -61,10 +56,6 @@ public class Departement {
     }
     public ObservableValue<Integer> getNumberOfSchoolInDepartment(){
         return new ReadOnlyObjectWrapper<>(DAOFactory.getEcoleDAO().getByDepartement(id_departement).size());
-    }
-
-    public ArrayList<Ville> getVilles() {
-        return villes;
     }
 
 }

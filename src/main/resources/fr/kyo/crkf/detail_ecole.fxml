@@ -13,8 +13,16 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="677.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.DetailEcoleController">
+<VBox alignment="CENTER" maxHeight="500.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.DetailEcoleController">
    <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="500.0">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#closeDetail" text="Fermer">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
       <Label fx:id="labelNomEcole" text="École" textAlignment="CENTER">
          <font>
             <Font size="24.0" />
@@ -23,11 +31,6 @@
             <Insets bottom="20.0" top="10.0" />
          </VBox.margin>
       </Label>
-      <Button fx:id="retour" alignment="CENTER" mnemonicParsing="false" onAction="#openEcoleList" text="Retour">
-         <VBox.margin>
-            <Insets bottom="30.0" right="300.0" />
-         </VBox.margin>
-      </Button>
       <HBox alignment="CENTER" prefHeight="295.0" prefWidth="700.0">
          <children>
             <VBox alignment="CENTER_LEFT" prefHeight="295.0" prefWidth="356.0">
@@ -86,6 +89,9 @@
                         <Button mnemonicParsing="false" onAction="#deleteEcole" prefHeight="25.0" prefWidth="261.0" text="Supprimer" />
                       <Button mnemonicParsing="false" onAction="#updateEcole" text="Modifier" />
                     </buttons>
+                     <VBox.margin>
+                        <Insets left="5.0" right="5.0" />
+                     </VBox.margin>
                   </ButtonBar>
                </children>
                <opaqueInsets>

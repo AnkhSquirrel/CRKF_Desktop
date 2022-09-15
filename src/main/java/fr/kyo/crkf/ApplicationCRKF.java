@@ -1,10 +1,12 @@
-package fr.kyo.crkf;
+    package fr.kyo.crkf;
 
 import fr.kyo.crkf.Entity.*;
 
 import fr.kyo.crkf.controller.*;
+
 import fr.kyo.crkf.controller.departement.DepartementModalController;
 import fr.kyo.crkf.controller.departement.GestionDepartementController;
+import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
@@ -26,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ApplicationCRKF extends javafx.application.Application {
@@ -49,9 +52,12 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             Scene scene = new Scene(mainWindow);
 
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
             stage.setTitle("CRKF");
-            stage.setMinWidth(840);
+            stage.setMinWidth(760);
             stage.setMinHeight(620);
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
 
@@ -93,7 +99,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
             fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("liste_ecole.fxml"));
-            GridPane listeEcole = fxmlLoaderListeEcole.load();
+            AnchorPane listeEcole = fxmlLoaderListeEcole.load();
             EcoleController ecoleController = fxmlLoaderListeEcole.getController();
             ecoleController.setApplicationCRKF(this);
 
@@ -107,7 +113,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
             fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("liste_instrument.fxml"));
-            GridPane listeInstrument = fxmlLoaderListeInstrument.load();
+            AnchorPane listeInstrument = fxmlLoaderListeInstrument.load();
             InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
             instrumentController.setApplicationCRKF(this);
 
@@ -189,7 +195,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -212,7 +218,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-                AnchorPane modalPane = fxmlLoader.load();
+                VBox modalPane = fxmlLoader.load();
                 EcoleModalController EcoleModalController = fxmlLoader.getController();
 
             EcoleModalController.setModal(modal);
@@ -234,7 +240,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             EcoleModalController createEcoleModalController = fxmlLoader.getController();
 
             createEcoleModalController.setModal(modal);
@@ -256,9 +262,10 @@ public class ApplicationCRKF extends javafx.application.Application {
     
     public void openUpdateInstrumentModal(Instrument instrument) {
         Stage modal = new Stage();
+        modal.setResizable(true);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -267,7 +274,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             instrumentModalController.setApplicationCRKF(this);
 
             modal.setScene(new Scene(modalPane));
-            modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un instrument");
@@ -527,5 +533,13 @@ public class ApplicationCRKF extends javafx.application.Application {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    private void closeDetal(){
+/*
+        EcoleController ecoleController = fxmlLoaderListeEcole.getController();
+        ecoleController.setApplicationCRKF(this);
+        ecoleController.closeDetail();
+ */
     }
 }

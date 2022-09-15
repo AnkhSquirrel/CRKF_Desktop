@@ -18,7 +18,7 @@ public class SearchableEcole {
     public SearchableEcole() {
         this.id_ecole = id_ecole;
         this.nom = nom;
-        ville = new Ville(0, "",0F, 0F, new Departement(0, "", ""));
+        ville = new Ville(0, "",0F, 0F, 0);
         departement = new Departement(0, "Departement", "");
     }
     public int getId_ecole() {

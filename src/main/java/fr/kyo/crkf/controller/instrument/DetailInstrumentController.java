@@ -3,6 +3,7 @@ package fr.kyo.crkf.controller.instrument;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Entity.Instrument;
+import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -20,7 +21,7 @@ public class DetailInstrumentController {
     @FXML
     private ApplicationCRKF applicationCRKF;
     private Instrument instrument;
-
+    private InstrumentController instrumentController;
     @FXML
     private void initialize(){
         familleColumn.setCellValueFactory(cellData -> cellData.getValue().getFamilleStringProperty());
@@ -57,5 +58,14 @@ public class DetailInstrumentController {
     @FXML
     private void updateInstrument(){
         applicationCRKF.openUpdateInstrumentModal(instrument);
+    }
+
+    @FXML
+    private void closeDetail(){
+        instrumentController.closeDetail();
+    }
+
+    public void setInstrumentController(InstrumentController instrumentController) {
+        this.instrumentController = instrumentController;
     }
 }
