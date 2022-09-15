@@ -67,8 +67,8 @@ public class VilleModalController {
         longitude.setText(String.valueOf(ville.getLongitude()));
     }
     private void createVille(){
-        ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem());
         if(!nomVille.getText().isEmpty() && !nomDepartement.getSelectionModel().isEmpty() && !longitude.getText().isEmpty() && !latitude.getText().isEmpty()){
+            ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem());
             DAOFactory.getVilleDAO().insert(ville);
             gestionVilleController.filter();
             closeModal();
@@ -95,8 +95,8 @@ public class VilleModalController {
         if(!nomDepartement.getSelectionModel().isEmpty())
             ville.setDepartement(nomDepartement.getSelectionModel().getSelectedItem());
         if(DAOFactory.getVilleDAO().update(ville)){
-                gestionVilleController.filter();
-                modal.close();
+            gestionVilleController.filter();
+            modal.close();
         } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
