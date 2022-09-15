@@ -107,7 +107,7 @@ public class InstrumentModalController {
             ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
             if(comboBoxTemp.getSelectionModel().getSelectedItem().getId_famille() != 0){
                 ArrayList<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getId_classification());
-                familles.add(0,new Famille(0,"Famille",new Classification(0,"")));
+                familles.add(0,new Famille(0,"Famille",0));
                 comboBox.setItems(FXCollections.observableArrayList(familles));
                 comboBox.getSelectionModel().select(0);
                 comboBoxTemp.setDisable(true);
