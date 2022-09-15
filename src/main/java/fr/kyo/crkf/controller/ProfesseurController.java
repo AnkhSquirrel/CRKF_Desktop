@@ -1,16 +1,26 @@
 package fr.kyo.crkf.controller;
 
+import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
 import fr.kyo.crkf.ApplicationCRKF;
+import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
+import javafx.scene.effect.GaussianBlur;
+import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
+import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
+
+import java.io.IOException;
 
 
 public class ProfesseurController {
@@ -37,6 +47,10 @@ public class ProfesseurController {
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
     private int page;
+    @FXML
+    private GridPane listeProfesseur;
+    @FXML
+    private JFXDrawer drawer;
 
     @FXML
      private void initialize(){
@@ -63,7 +77,7 @@ public class ProfesseurController {
         villeFiltre.getEditor().setText("Ville");
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
-        professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailPage());
+        professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
     private void villeFilter() {
         if(searchableProfesseur.getVilleId() != 0 && !villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
@@ -119,9 +133,24 @@ public class ProfesseurController {
         villeFiltre.getSelectionModel().select(0);
         filter();
     }
-    private void openDetailPage() {
-        if(!professeurTable.getSelectionModel().isEmpty())
-            applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
+    private void openDetailProfesseur() {
+        if(professeurTable.getSelectionModel().getSelectedItem() != null){
+            try {
+                FXMLLoader fxmlLoaderListeProfesseur = new FXMLLoader();
+                fxmlLoaderListeProfesseur.setLocation(ApplicationCRKF.class.getResource("detail_professeur.fxml"));
+                VBox detailEcole = fxmlLoaderListeProfesseur.load();
+                DetailProfesseurController detailProfesseurController = fxmlLoaderListeProfesseur.getController();
+                detailProfesseurController.setPersonne(professeurTable.getSelectionModel().getSelectedItem());
+                detailProfesseurController.setProfesseurController(this);
+                detailProfesseurController.setApplicationCRKF(applicationCRKF);
+                detailProfesseurController.setDrawer(drawer);
+                drawer.setSidePane(detailEcole);
+                drawer.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
+                openDetail();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
@@ -133,5 +162,22 @@ public class ProfesseurController {
     @FXML
     private void openCreateModal(){
         applicationCRKF.openCreateProfesseurModal(this);
+    }
+    public void closeDetail(){
+        drawer.close();
+        drawer.setDisable(true);
+        listeProfesseur.setEffect(null);
+        listeProfesseur.setDisable(false);
+    }
+
+    public void openDetail(){
+        drawer.setDisable(false);
+        drawer.open();
+        listeProfesseur.setEffect(new GaussianBlur());
+        listeProfesseur.setDisable(true);
+    }
+
+    public void closeEcoleAroundPage(){
+        openDetailProfesseur();
     }
 }

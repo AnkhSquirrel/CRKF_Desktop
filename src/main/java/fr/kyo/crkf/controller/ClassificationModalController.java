@@ -67,9 +67,9 @@ public class ClassificationModalController {
     public void setCreate(boolean bool) {
         create = bool;
         if(create){
-            nomModal.setText("Creer Classification");
+            nomModal.setText("Création d'une classfication");
         }else{
-            nomModal.setText("Modifier Classification");
+            nomModal.setText("Modification d'une classification");
         }
     }
     public void setGestionClassificationController(GestionClassificationController gestionClassificationController) {

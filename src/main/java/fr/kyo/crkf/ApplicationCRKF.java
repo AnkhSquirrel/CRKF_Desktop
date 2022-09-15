@@ -85,7 +85,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeProfesseur = new FXMLLoader();
             fxmlLoaderListeProfesseur.setLocation(ApplicationCRKF.class.getResource("liste_professeur.fxml"));
-            GridPane listeProfesseur = fxmlLoaderListeProfesseur.load();
+            AnchorPane listeProfesseur = fxmlLoaderListeProfesseur.load();
             ProfesseurController professeurController = fxmlLoaderListeProfesseur.getController();
             professeurController.setApplicationCRKF(this);
 
@@ -144,20 +144,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
-    public void openDetailProfesseur(Personne personne){
-        try {
-            FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
-            fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("detail_professeur.fxml"));
-            VBox detailProfesseur = fxmlLoaderListeInstrument.load();
-            DetailProfesseurController detailProfesseurController = fxmlLoaderListeInstrument.getController();
-            detailProfesseurController.setApplicationCRKF(this);
-            detailProfesseurController.setPersonne(personne);
-
-            mainWindow.setCenter(detailProfesseur);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public void openDetailEcole(Ecole ecole){
         try {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
@@ -168,20 +154,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             detailEcoleController.setEcole(ecole);
 
             mainWindow.setCenter(detailEcole);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    public void openEcoleAroundPage(Personne personne){
-        try {
-            FXMLLoader fxmlLoaderEcoleAroundPage = new FXMLLoader();
-            fxmlLoaderEcoleAroundPage.setLocation(ApplicationCRKF.class.getResource("ecole_around_page.fxml"));
-            VBox ecoleAroundProf = fxmlLoaderEcoleAroundPage.load();
-            EcoleAroundProfesseurController ecoleAroundProfesseurController = fxmlLoaderEcoleAroundPage.getController();
-            ecoleAroundProfesseurController.setApplicationCRKF(this);
-            ecoleAroundProfesseurController.setPersonne(personne);
-            mainWindow.setCenter(ecoleAroundProf);
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -492,7 +464,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             ClassificationModalController classificationModalController = fxmlLoader.getController();
 
             classificationModalController.setModal(modal);
@@ -515,7 +487,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             ClassificationModalController classificationModalController = fxmlLoader.getController();
 
             classificationModalController.setModal(modal);
@@ -539,7 +511,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_professeur.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             ProfesseurModalController professeurModalController = fxmlLoader.getController();
 
             professeurModalController.setModal(modal);
