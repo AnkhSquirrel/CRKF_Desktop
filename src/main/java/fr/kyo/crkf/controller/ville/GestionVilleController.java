@@ -9,11 +9,10 @@ import fr.kyo.crkf.dao.DAOFactory;
 import fr.kyo.crkf.dao.VilleDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
+
+import java.util.Optional;
 
 public class GestionVilleController {
     @FXML
@@ -42,6 +41,15 @@ public class GestionVilleController {
     }
 
     @FXML
+    private void openCreateModal(){
+        applicationCRKF.openModalCreateVille(this);
+    }
+    @FXML
+    private void openUpdateModal(){
+        applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
+    }
+
+    @FXML
     private void initialize(){
         departementId = 0;
         ville = "";
@@ -61,8 +69,7 @@ public class GestionVilleController {
 
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departement.getSelectionModel().getSelectedItem().getId_departement())));
     }
-
-    private void filter(){
+    public void filter(){
        if(!libelle.getText().equals(ville)){
            ville = libelle.getText();
            page = 1;
@@ -74,12 +81,14 @@ public class GestionVilleController {
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departementId)));
     }
     @FXML
-    private void openCreateModal(){
-        applicationCRKF.openModalCreateVille(this);
-    }
-    @FXML
-    private void openUpdateModal(){
-        applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
+    private void remove(){
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Supprimer");
+        alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK)
+            DAOFactory.getVilleDAO().delete(villeTable.getSelectionModel().getSelectedItem());
+        filter();
     }
 
     @FXML

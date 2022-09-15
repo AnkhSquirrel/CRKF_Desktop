@@ -41,7 +41,7 @@
             <ContextMenu>
                <items>
                   <MenuItem mnemonicParsing="false" onAction="#openUpdateModal" text="Modifier" />
-                  <MenuItem mnemonicParsing="false" text="Supprimer" />
+                  <MenuItem mnemonicParsing="false" onAction="#remove" text="Supprimer" />
                </items>
             </ContextMenu>
          </contextMenu>

@@ -13,9 +13,9 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane prefHeight="562.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ville.VilleModalController">
+<AnchorPane prefHeight="627.0" prefWidth="649.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ville.VilleModalController">
    <children>
-      <VBox alignment="CENTER" layoutY="24.0" prefHeight="597.0" prefWidth="649.0">
+      <VBox alignment="CENTER" prefHeight="737.0" prefWidth="649.0">
          <children>
             <Label fx:id="nomModal" alignment="CENTER" text="Création d'une nouvelle ville">
                <VBox.margin>
@@ -25,12 +25,14 @@
                   <Font size="25.0" />
                </font>
             </Label>
-            <GridPane prefHeight="207.0" prefWidth="628.0">
+            <GridPane minHeight="-Infinity" prefHeight="203.0" prefWidth="649.0">
                <columnConstraints>
                   <ColumnConstraints halignment="RIGHT" hgrow="SOMETIMES" maxWidth="150.0" minWidth="120.0" prefWidth="150.0" />
                   <ColumnConstraints hgrow="SOMETIMES" maxWidth="454.0" minWidth="10.0" prefWidth="452.0" />
                </columnConstraints>
                <rowConstraints>
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
+                  <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                   <RowConstraints minHeight="10.0" prefHeight="30.0" vgrow="SOMETIMES" />
                </rowConstraints>
@@ -40,17 +42,43 @@
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <Label alignment="CENTER_RIGHT" prefHeight="125.0" prefWidth="150.0" text="Departement :" GridPane.rowIndex="1">
+                  <Label alignment="CENTER_RIGHT" prefHeight="125.0" prefWidth="150.0" text="Departement :" GridPane.rowIndex="3">
                      <font>
                         <Font size="20.0" />
                      </font>
                   </Label>
-                  <SearchableComboBox fx:id="nomDepartement" maxHeight="25.0" maxWidth="303.0" prefHeight="25.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                  <SearchableComboBox fx:id="nomDepartement" maxHeight="25.0" maxWidth="303.0" prefHeight="25.0" prefWidth="303.0" GridPane.columnIndex="1" GridPane.rowIndex="3">
                      <GridPane.margin>
                         <Insets left="10.0" />
                      </GridPane.margin>
                   </SearchableComboBox>
                   <TextField fx:id="nomVille" GridPane.columnIndex="1">
+                     <opaqueInsets>
+                        <Insets right="20.0" />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="20.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="10.0" prefHeight="125.0" prefWidth="150.0" text="Longitude :" GridPane.rowIndex="1">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <Label alignment="CENTER_RIGHT" layoutX="10.0" layoutY="61.0" prefHeight="125.0" prefWidth="150.0" text="Latitude :" GridPane.rowIndex="2">
+                     <font>
+                        <Font size="20.0" />
+                     </font>
+                  </Label>
+                  <TextField fx:id="longitude" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                     <opaqueInsets>
+                        <Insets right="20.0" />
+                     </opaqueInsets>
+                     <GridPane.margin>
+                        <Insets left="10.0" right="20.0" />
+                     </GridPane.margin>
+                  </TextField>
+                  <TextField fx:id="latitude" GridPane.columnIndex="1" GridPane.rowIndex="2">
                      <opaqueInsets>
                         <Insets right="20.0" />
                      </opaqueInsets>
