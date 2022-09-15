@@ -70,7 +70,7 @@ public class ProfesseurController {
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getDepartementId())));
         }
     }
-    private void filter() {
+    public void filter() {
         if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
             page = 1;
@@ -129,5 +129,9 @@ public class ProfesseurController {
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
+    }
+    @FXML
+    private void openCreateModal(){
+        applicationCRKF.openCreateProfesseurModal(this);
     }
 }

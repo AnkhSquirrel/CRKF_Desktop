@@ -53,4 +53,12 @@ public class Filter {
         String numDepartement = DAOFactory.getDepartementDAO().getByID(id).getNumero_departement();
         return numDepartement;
     }
+
+    public ArrayList<Ecole> getEcolesLike(String s) {
+        SearchableEcole searchableEcole = new SearchableEcole();
+        searchableEcole.setNom(s);
+        ArrayList<Ecole> ecoles = DAOFactory.getEcoleDAO().getLike(searchableEcole,1);
+        ecoles.add(new Ecole(0,"Ecole",0));
+        return ecoles;
+    }
 }

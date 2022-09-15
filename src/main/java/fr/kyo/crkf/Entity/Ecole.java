@@ -38,4 +38,9 @@ public class Ecole {
     public ObservableValue<String> getNomStringProperty(){
         return new SimpleStringProperty(nom);
     }
+
+    @Override
+    public String toString() {
+        return nom;
+    }
 }
