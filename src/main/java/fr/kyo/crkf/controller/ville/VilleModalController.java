@@ -68,7 +68,7 @@ public class VilleModalController {
     }
     private void createVille(){
         if(!nomVille.getText().isEmpty() && !nomDepartement.getSelectionModel().isEmpty() && !longitude.getText().isEmpty() && !latitude.getText().isEmpty()){
-            ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem());
+            ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem().getId_departement());
             DAOFactory.getVilleDAO().insert(ville);
             gestionVilleController.filter();
             closeModal();

@@ -100,7 +100,7 @@ public class EcoleDAO extends DAO<Ecole> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next())
-                list.add(new Ecole(rs.getInt(1), rs.getString(2), DAOFactory.getAdresseDAO().getByID(rs.getInt(3))));
+                list.add(new Ecole(rs.getInt(1), rs.getString(2), rs.getInt(3)));
             rs.close();
         }
         catch (Exception e){
