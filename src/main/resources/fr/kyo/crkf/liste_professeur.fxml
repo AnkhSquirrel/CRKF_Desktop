@@ -58,5 +58,10 @@
             <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
          </children>
       </HBox>
+      <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+         </children>
+      </HBox>
    </children>
 </GridPane>
