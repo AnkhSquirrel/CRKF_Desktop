@@ -16,6 +16,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -30,7 +31,8 @@ public class InstrumentModalController {
     private TextField nom;
     @FXML
     private Label nomModal;
-
+    @FXML
+    private VBox modalVbox;
     private HBox add;
     private Stage modal;
     private int rowsId;
@@ -40,6 +42,7 @@ public class InstrumentModalController {
     private boolean create;
     private Instrument instrumentUpdate;
     private ApplicationCRKF applicationCRKF;
+
 
 
     @FXML
@@ -92,7 +95,6 @@ public class InstrumentModalController {
             if(rowsCount < 5)
                 grid.addRow(rowsId + 1,add);
         }
-
     }
 
     private boolean setComboboxItem(ComboBox<Famille> comboBox) {
@@ -105,7 +107,7 @@ public class InstrumentModalController {
             ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
             if(comboBoxTemp.getSelectionModel().getSelectedItem().getId_famille() != 0){
                 ArrayList<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getId_classification());
-                familles.add(0,new Famille(0,"Famille",new Classification(0,"")));
+                familles.add(0,new Famille(0,"Famille",0));
                 comboBox.setItems(FXCollections.observableArrayList(familles));
                 comboBox.getSelectionModel().select(0);
                 comboBoxTemp.setDisable(true);
@@ -116,7 +118,6 @@ public class InstrumentModalController {
     }
 
     private void removeRow(int row) {
-
         for(int i = 0; i < grid.getChildren().size(); i++){
             Node node = grid.getChildren().get(i);
             HBox hBox = (HBox) node;
@@ -131,7 +132,6 @@ public class InstrumentModalController {
                 if (rowsCount == 4){
                     grid.addRow(rowsId + 1,add);
                 }
-
             }
         }
     }
@@ -157,7 +157,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
             alert.showAndWait();
         }
     }
@@ -173,7 +173,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
             alert.showAndWait();
         }
     }
@@ -186,7 +186,6 @@ public class InstrumentModalController {
                 ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
                 if(comboBox.getSelectionModel().getSelectedItem().getId_famille() != 0){
                     instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
-                    System.out.println(comboBox.getSelectionModel().getSelectedItem());
                 }else{
                     allFamilleSet = false;
                 }

@@ -13,28 +13,20 @@ public class DetailEcoleController {
 
     @FXML
     private Label labelVille;
-
     @FXML
     private Label labelNomEcole;
-
     @FXML
     private Label labelAdresse;
-
     @FXML
     private ApplicationCRKF applicationCRKF;
     @FXML
-    private Button retour;
-    @FXML
     private TableView<Personne> profEmbauche;
-    @FXML
-    private TableView<Personne> profTravail;
     @FXML
     private TableColumn<Personne, String> profEmbauchePrenom;
     @FXML
     private TableColumn<Personne, String> profEmbaucheNom;
-
     private Ecole ecole;
-    private Personne personne;
+    private EcoleController ecoleController;
 
     @FXML
     private void initialize(){
@@ -77,4 +69,12 @@ public class DetailEcoleController {
         applicationCRKF.openUpdateEcole(ecole);
     }
 
+    @FXML
+    private void closeDetail(){
+        ecoleController.closeDetail();
+    }
+
+    public void setEcoleController(EcoleController ecoleController) {
+        this.ecoleController = ecoleController;
+    }
 }

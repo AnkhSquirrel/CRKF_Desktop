@@ -1,7 +1,7 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
+import fr.kyo.crkf.Searchable.SearchableFamille;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -24,7 +24,7 @@ public class FamilleDAO extends DAO<Famille> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
-            famille =  new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3)));
+            famille =  new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3));
 
             rs.close();
 
@@ -47,9 +47,40 @@ public class FamilleDAO extends DAO<Famille> {
             ResultSet rs = s.executeQuery();
 
             while (rs.next())
-                list.add(new Famille(rs.getInt(1),rs.getString(2),DAOFactory.getClassificationDAO().getByID(rs.getInt(3))));
+                list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
             rs.close();
 
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public ArrayList<Famille> getLike(SearchableFamille searchableFamille, int page) {
+        ArrayList<Famille> list = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "SELECT id_famille, famille, id_classification from Famille";
+
+            if(searchableFamille.getClassification() != 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification() + " and famille like '%" + searchableFamille.getNom() + "%'";
+            else if(searchableFamille.getClassification() != 0 && searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification();
+            else if(searchableFamille.getClassification() == 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where famille like '%" + searchableFamille.getNom() + "%'";
+            strCmd += " order by famille OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
+
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()){
+                list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
+            }
+            rs.close();
         }
         // Handle any errors that may have occurred.
         catch (Exception e) {
@@ -65,11 +96,11 @@ public class FamilleDAO extends DAO<Famille> {
 
             // Determine the column set column
 
-            String strCmd = "SELECT id_famille, famille, id_classification,(select classification from Classification where id_classification = f.id_classification) from Famille as f order by famille";
+            String strCmd = "SELECT id_famille, famille, id_classification from Famille order by famille";
             ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
-                liste.add(new Famille(rs.getInt(1),rs.getString(2),new Classification(rs.getInt(3),rs.getString(4))));
+                liste.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
             }
             rs.close();
         }

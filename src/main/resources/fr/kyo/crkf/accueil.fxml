@@ -7,11 +7,11 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
+<VBox alignment="CENTER" minWidth="500.0" prefHeight="200.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
    <children>
       <Label text="Recherche par ..." textAlignment="CENTER">
          <font>
-            <Font size="18.0" />
+            <Font name="System Italic" size="18.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
@@ -19,30 +19,46 @@
             <Insets />
          </VBox.margin>
          <children>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" textAlignment="CENTER" />
-               </children>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="5.0" right="5.0" />
                </HBox.margin>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openProfesseurList" text="Professeur" textAlignment="CENTER" />
-               </children>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openProfesseurList" text="Professeur" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="5.0" right="5.0" />
                </HBox.margin>
-            </VBox>
-            <VBox alignment="CENTER" prefHeight="200.0" prefWidth="100.0">
-               <children>
-                  <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openEcoleList" text="École" textAlignment="CENTER" />
-               </children>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openEcoleList" text="École" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets bottom="10.0" left="10.0" right="10.0" top="10.0" />
+                  <Insets left="5.0" right="5.0" />
                </HBox.margin>
-            </VBox>
+            </Button>
+         </children>
+      </HBox>
+      <Label text="Gestion :" textAlignment="CENTER">
+         <font>
+            <Font name="System Italic" size="18.0" />
+         </font>
+      </Label>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <children>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionFamille" text="Famille" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionClassification" text="Classification" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionVille" text="Ville" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionDepartement" text="Département" textAlignment="CENTER" />
          </children>
       </HBox>
    </children>

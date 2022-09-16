@@ -23,7 +23,7 @@ public class PersonneDAO extends DAO<Personne> {
             ResultSet rs = s.executeQuery();
 
             rs.next();
-            personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),DAOFactory.getAdresseDAO().getByID(rs.getInt(5)), DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+            personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5), rs.getInt(6));
             rs.close();
 
             //Search the affiliate Diplome
@@ -33,7 +33,7 @@ public class PersonneDAO extends DAO<Personne> {
             ResultSet rs2 = s2.executeQuery();
 
             while (rs2.next()){
-                personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs.getInt(2))));
+                personne.addDiplome(new Diplome(rs.getInt(1),rs.getInt(2)));
             }
             rs2.close();
 
@@ -58,7 +58,7 @@ public class PersonneDAO extends DAO<Personne> {
 
             while (rs.next()) {
                 int id = rs.getInt(1);
-                Personne personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),DAOFactory.getAdresseDAO().getByID(rs.getInt(5)), DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+                Personne personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5), rs.getInt(6));
 
                 //Search the affiliate Diplome
                 String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
@@ -67,7 +67,7 @@ public class PersonneDAO extends DAO<Personne> {
                 ResultSet rs2 = s2.executeQuery();
 
                 while (rs2.next()){;
-                    personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs2.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs2.getInt(2))));
+                    personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
                 }
                 rs2.close();
                 liste.add(personne);
@@ -88,8 +88,8 @@ public class PersonneDAO extends DAO<Personne> {
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableProfesseur.getNomEtPrenom());
             s.setInt(2,searchableProfesseur.getVehiculeCV());
-            s.setInt(3,searchableProfesseur.getVille().getId_ville());
-            s.setInt(4,searchableProfesseur.getVille().getDepartement().getId_departement());
+            s.setInt(3,searchableProfesseur.getVilleId());
+            s.setInt(4,searchableProfesseur.getDepartementId());
             s.setInt(5,page);
             ResultSet rs = s.executeQuery();
 
@@ -110,7 +110,7 @@ public class PersonneDAO extends DAO<Personne> {
                 ResultSet rs2 = s2.executeQuery();
 
                 while (rs2.next()){
-                    personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs2.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs2.getInt(2))));
+                    personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
                 }
                 rs2.close();
                 liste.add(personne);

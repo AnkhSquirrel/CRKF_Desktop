@@ -18,11 +18,10 @@ public class Filter {
         classifications.add(0,new Classification(0,"Classification"));
 
         familles = DAOFactory.getFamilleDAO().getAll(1);
-        familles.add(0,new Famille(0,"Famille",new Classification(0,"Classification")));
-
+        familles.add(0,new Famille(0,"Famille",0));
 
         villes = DAOFactory.getVilleDAO().getAll(1);
-        villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
+        villes.add(0, new Ville(0,"Ville", 0F, 0F, 0));
 
         departements = DAOFactory.getDepartementDAO().getAll(1);
         departements.add(0, new Departement(0,"", "Departement"));
@@ -46,12 +45,20 @@ public class Filter {
 
     public ArrayList<Ville> getVilleLike(String text, int departement_id){
         ArrayList<Ville> villes = DAOFactory.getVilleDAO().getLike(text, departement_id);
-        villes.add(0, new Ville(0,"Ville", 0F, 0F, new Departement(0, "", "Departement")));
+        villes.add(0, new Ville(0,"Ville", 0F, 0F, 0));
         return villes;
     }
 
     public String getNumDepartement(int id){
         String numDepartement = DAOFactory.getDepartementDAO().getByID(id).getNumero_departement();
         return numDepartement;
+    }
+
+    public ArrayList<Ecole> getEcolesLike(String s) {
+        SearchableEcole searchableEcole = new SearchableEcole();
+        searchableEcole.setNom(s);
+        ArrayList<Ecole> ecoles = DAOFactory.getEcoleDAO().getLike(searchableEcole,1);
+        ecoles.add(new Ecole(0,"Ecole",0));
+        return ecoles;
     }
 }

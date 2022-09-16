@@ -1,10 +1,11 @@
-package fr.kyo.crkf;
+    package fr.kyo.crkf;
 
-import fr.kyo.crkf.Entity.Ecole;
+import fr.kyo.crkf.Entity.*;
 
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.*;
+
+import fr.kyo.crkf.controller.departement.DepartementModalController;
+import fr.kyo.crkf.controller.departement.GestionDepartementController;
 import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
@@ -12,6 +13,8 @@ import fr.kyo.crkf.controller.ecole.EcoleModalController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
 import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
+import fr.kyo.crkf.controller.ville.GestionVilleController;
+import fr.kyo.crkf.controller.ville.VilleModalController;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
@@ -25,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.util.Objects;
 import java.util.Optional;
 
 public class ApplicationCRKF extends javafx.application.Application {
@@ -48,9 +52,12 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             Scene scene = new Scene(mainWindow);
 
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+
             stage.setTitle("CRKF");
-            stage.setMinWidth(840);
+            stage.setMinWidth(760);
             stage.setMinHeight(620);
+            stage.setResizable(false);
             stage.setScene(scene);
             stage.show();
 
@@ -78,7 +85,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeProfesseur = new FXMLLoader();
             fxmlLoaderListeProfesseur.setLocation(ApplicationCRKF.class.getResource("liste_professeur.fxml"));
-            GridPane listeProfesseur = fxmlLoaderListeProfesseur.load();
+            AnchorPane listeProfesseur = fxmlLoaderListeProfesseur.load();
             ProfesseurController professeurController = fxmlLoaderListeProfesseur.getController();
             professeurController.setApplicationCRKF(this);
 
@@ -92,7 +99,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
             fxmlLoaderListeEcole.setLocation(ApplicationCRKF.class.getResource("liste_ecole.fxml"));
-            GridPane listeEcole = fxmlLoaderListeEcole.load();
+            AnchorPane listeEcole = fxmlLoaderListeEcole.load();
             EcoleController ecoleController = fxmlLoaderListeEcole.getController();
             ecoleController.setApplicationCRKF(this);
 
@@ -106,7 +113,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try {
             FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
             fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("liste_instrument.fxml"));
-            GridPane listeInstrument = fxmlLoaderListeInstrument.load();
+            AnchorPane listeInstrument = fxmlLoaderListeInstrument.load();
             InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
             instrumentController.setApplicationCRKF(this);
 
@@ -137,20 +144,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
-    public void openDetailProfesseur(Personne personne){
-        try {
-            FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
-            fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("detail_professeur.fxml"));
-            VBox detailProfesseur = fxmlLoaderListeInstrument.load();
-            DetailProfesseurController detailProfesseurController = fxmlLoaderListeInstrument.getController();
-            detailProfesseurController.setApplicationCRKF(this);
-            detailProfesseurController.setPersonne(personne);
-
-            mainWindow.setCenter(detailProfesseur);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
     public void openDetailEcole(Ecole ecole){
         try {
             FXMLLoader fxmlLoaderListeEcole = new FXMLLoader();
@@ -166,20 +159,6 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
 
-    public void openEcoleAroundPage(Personne personne){
-        try {
-            FXMLLoader fxmlLoaderEcoleAroundPage = new FXMLLoader();
-            fxmlLoaderEcoleAroundPage.setLocation(ApplicationCRKF.class.getResource("ecole_around_page.fxml"));
-            VBox ecoleAroundProf = fxmlLoaderEcoleAroundPage.load();
-            EcoleAroundProfesseurController ecoleAroundProfesseurController = fxmlLoaderEcoleAroundPage.getController();
-            ecoleAroundProfesseurController.setApplicationCRKF(this);
-            ecoleAroundProfesseurController.setPersonne(personne);
-            mainWindow.setCenter(ecoleAroundProf);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
     public static void main(String[] args) {
         launch();
     }
@@ -188,7 +167,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -211,7 +190,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-                AnchorPane modalPane = fxmlLoader.load();
+                VBox modalPane = fxmlLoader.load();
                 EcoleModalController EcoleModalController = fxmlLoader.getController();
 
             EcoleModalController.setModal(modal);
@@ -233,7 +212,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             EcoleModalController createEcoleModalController = fxmlLoader.getController();
 
             createEcoleModalController.setModal(modal);
@@ -255,9 +234,10 @@ public class ApplicationCRKF extends javafx.application.Application {
     
     public void openUpdateInstrumentModal(Instrument instrument) {
         Stage modal = new Stage();
+        modal.setResizable(true);
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_instrument.fxml"));
-            AnchorPane modalPane = fxmlLoader.load();
+            VBox modalPane = fxmlLoader.load();
             InstrumentModalController instrumentModalController = fxmlLoader.getController();
 
             instrumentModalController.setModal(modal);
@@ -266,7 +246,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             instrumentModalController.setApplicationCRKF(this);
 
             modal.setScene(new Scene(modalPane));
-            modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un instrument");
@@ -288,4 +267,266 @@ public class ApplicationCRKF extends javafx.application.Application {
         return delete;
     }
 
+    public void openVilleGestion(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_ville.fxml"));
+            GridPane gestionVille = fxmlLoader.load();
+            GestionVilleController gestionVilleController = fxmlLoader.getController();
+            gestionVilleController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionVille);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openFamilleGestion() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_famille.fxml"));
+            GridPane gestionFamille = fxmlLoader.load();
+            GestionFamilleController gestionFamilleController = fxmlLoader.getController();
+            gestionFamilleController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionFamille);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openModalCreateFamille(GestionFamilleController gestionFamilleController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_famille.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            FamilleModalController familleModalController = fxmlLoader.getController();
+
+            familleModalController.setModal(modal);
+            familleModalController.setCreate(true);
+            familleModalController.setGestionFamilleController(gestionFamilleController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter une famille");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openModalUpdateFamille(GestionFamilleController gestionFamilleController, Famille famille) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_famille.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            FamilleModalController familleModalController = fxmlLoader.getController();
+
+            familleModalController.setModal(modal);
+            familleModalController.setCreate(false);
+            familleModalController.setGestionFamilleController(gestionFamilleController);
+            familleModalController.setFamille(famille);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier une famille");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openDepartementGestion(){
+        try{
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_departement.fxml"));
+            GridPane gestionDepartement = fxmlLoader.load();
+            GestionDepartementController gestionDepartementController = fxmlLoader.getController();
+            gestionDepartementController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionDepartement);
+        }catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalUpdateDepartement(GestionDepartementController gestionDepartementController, Departement departement) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_departement.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            DepartementModalController departementModalController = fxmlLoader.getController();
+
+            departementModalController.setModal(modal);
+            departementModalController.setCreate(false);
+            departementModalController.setGestionDepartementController(gestionDepartementController);
+            departementModalController.setDepartement(departement);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier un département");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    public void openModalCreateDepartement(GestionDepartementController gestionDepartementController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_departement.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            DepartementModalController departementModalController = fxmlLoader.getController();
+
+            departementModalController.setModal(modal);
+            departementModalController.setCreate(true);
+            departementModalController.setGestionDepartementController(gestionDepartementController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Créer un département");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalCreateVille(GestionVilleController gestionVilleController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ville.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            VilleModalController villeModalController = fxmlLoader.getController();
+
+            villeModalController.setModal(modal);
+            villeModalController.setCreate(true);
+            villeModalController.setGestionVilleController(gestionVilleController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Créer une ville");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openModalUpdateVille(GestionVilleController gestionVilleController, Ville ville) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ville.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            VilleModalController villeModalController = fxmlLoader.getController();
+
+            villeModalController.setModal(modal);
+            villeModalController.setCreate(false);
+            villeModalController.setGestionVilleController(gestionVilleController);
+            villeModalController.setVille(ville);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier un département");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openClassificationGestion() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_classification.fxml"));
+            GridPane gestionClassification = fxmlLoader.load();
+            GestionClassificationController gestionClassificationController = fxmlLoader.getController();
+            gestionClassificationController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionClassification);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openCreateClassificationModal(GestionClassificationController gestionClassificationController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            ClassificationModalController classificationModalController = fxmlLoader.getController();
+
+            classificationModalController.setModal(modal);
+            classificationModalController.setCreate(true);
+            classificationModalController.setGestionClassificationController(gestionClassificationController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter une Classification");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openUpdateClassificationModal(GestionClassificationController gestionClassificationController, Classification classification) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_classification.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            ClassificationModalController classificationModalController = fxmlLoader.getController();
+
+            classificationModalController.setModal(modal);
+            classificationModalController.setCreate(false);
+            classificationModalController.setClassification(classification);
+            classificationModalController.setGestionClassificationController(gestionClassificationController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier une Classification");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openCreateProfesseurModal(ProfesseurController professeurController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_professeur.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            ProfesseurModalController professeurModalController = fxmlLoader.getController();
+
+            professeurModalController.setModal(modal);
+            professeurModalController.setCreate(true);
+            professeurModalController.setProfesseurController(professeurController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter une Classification");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

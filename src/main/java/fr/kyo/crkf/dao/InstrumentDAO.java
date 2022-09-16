@@ -90,8 +90,8 @@ public class InstrumentDAO extends DAO<Instrument> {
             String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?, @lgpage = 25, @page = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableInstrument.getNom());
-            s.setInt(2,searchableInstrument.getFamille().getId_famille());
-            s.setInt(3,searchableInstrument.getFamille().getclassification().getId_classification());
+            s.setInt(2,searchableInstrument.getFamilleId());
+            s.setInt(3,searchableInstrument.getClassificationId());
             s.setInt(4, page);
             ResultSet rs = s.executeQuery();
 
