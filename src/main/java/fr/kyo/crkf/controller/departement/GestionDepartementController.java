@@ -90,6 +90,10 @@ public class GestionDepartementController {
             filter();
         }
     }
+    @FXML
+    private void reset(){
+        libelle.setText("");
+    }
 
     @FXML
     private void pagePlus(){
