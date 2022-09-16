@@ -70,18 +70,18 @@ public class GestionVilleController {
 
         libelle.textProperty().addListener(observable -> filter());
 
-        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departement.getSelectionModel().getSelectedItem().getId_departement())));
+        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getId_departement(), page)));
     }
     public void filter(){
        if(!libelle.getText().equals(ville)){
            ville = libelle.getText();
            page = 1;
        }
-        if(departement.getSelectionModel().getSelectedItem() != null ){
+        if(departement.getSelectionModel().getSelectedItem() != null && departementId != departement.getSelectionModel().getSelectedItem().getId_departement()){
            departementId = departement.getSelectionModel().getSelectedItem().getId_departement();
             page = 1;
         }
-        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departementId)));
+        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, page)));
         pageNumber.setText("Page " + page);
     }
     @FXML
@@ -108,7 +108,6 @@ public class GestionVilleController {
             page++;
             filter();
         }
-
     }
     @FXML
     private void pageMoins(){

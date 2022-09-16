@@ -147,4 +147,25 @@ public class VilleDAO extends DAO<Ville> {
         }
         return list;
     }
+
+    public ArrayList<Ville> getLikeForGestion(String nom, int departement_id, int page) {
+        ArrayList<Ville> list = new ArrayList<>();
+        try (Statement stmt = connexion.createStatement()){
+
+            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
+            if(departement_id != 0)
+                strCmd += " and id_departement = " + departement_id;
+            strCmd += " order by VILLE OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
+            ResultSet rs = stmt.executeQuery(strCmd);
+
+
+            while(rs.next())
+                list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
 }
