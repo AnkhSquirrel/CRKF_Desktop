@@ -4,6 +4,8 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Tools.Pair;
 import fr.kyo.crkf.Entity.Personne;
+import fr.kyo.crkf.controller.DetailProfesseurController;
+import fr.kyo.crkf.controller.ProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -32,6 +34,7 @@ public class EcoleAroundProfesseurController {
     private Personne personne;
     private ApplicationCRKF applicationCRKF;
     private ArrayList<Pair<Ecole, Double>> ecolesEtDistance;
+    private ProfesseurController professeurController;
 
 
     @FXML
@@ -56,4 +59,12 @@ public class EcoleAroundProfesseurController {
         ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getByDistance(personne.getAdresse().getVille().getLatitude(), personne.getAdresse().getVille().getLongitude(), 1)));
     }
 
+    @FXML
+    private void closeEcoleAroundPage(){
+        professeurController.closeEcoleAroundPage();
+    }
+
+    public void setProfesseurController(ProfesseurController professeurController){
+        this.professeurController = professeurController;
+    }
 }

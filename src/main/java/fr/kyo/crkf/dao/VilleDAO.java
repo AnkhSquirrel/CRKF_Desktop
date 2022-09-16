@@ -137,6 +137,7 @@ public class VilleDAO extends DAO<Ville> {
             strCmd += " ORDER BY VILLE OFFSET 0 ROWS FETCH NEXT 25 ROWS ONLY";
             ResultSet rs = stmt.executeQuery(strCmd);
 
+
             while(rs.next())
                 list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
             rs.close();
