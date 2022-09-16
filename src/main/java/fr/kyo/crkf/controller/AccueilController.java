@@ -26,4 +26,16 @@ public class AccueilController {
     protected void openInstrumentList() {
         application.openInstrumentList();
     }
+
+    @FXML
+    protected void openGestionVille() { application.openVilleGestion(); }
+
+    @FXML
+    protected void openGestionDepartement() { application.openDepartementGestion(); }
+
+    @FXML
+    protected void openGestionFamille() { application.openFamilleGestion(); }
+
+    @FXML
+    protected void openGestionClassification() { application.openClassificationGestion(); }
 }
