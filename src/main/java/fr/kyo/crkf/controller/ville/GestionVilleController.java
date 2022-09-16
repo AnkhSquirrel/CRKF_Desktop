@@ -25,6 +25,8 @@ public class GestionVilleController {
     private SearchableComboBox<Departement> departement;
     @FXML
     private TextField libelle;
+    @FXML
+    private Label pageNumber;
     private String ville;
     private int page;
     private ApplicationCRKF applicationCRKF;
@@ -79,6 +81,7 @@ public class GestionVilleController {
             page = 1;
         }
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLike(ville, departementId)));
+        pageNumber.setText("Page " + page);
     }
     @FXML
     private void remove(){

@@ -115,8 +115,8 @@ public class EcoleController {
                         page = 1;
                 }
 
-                pageNumber.setText("Page " + page);
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+                pageNumber.setText("Page " + page);
         }
 
         private void openDetailEcole(){

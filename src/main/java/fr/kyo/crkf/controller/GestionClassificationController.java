@@ -22,6 +22,8 @@ public class GestionClassificationController {
     private TextField libelle;
     @FXML
     private TableView<Classification> classificationTable;
+    @FXML
+    private Label pageNumber;
     private int page;
     private String classification;
     private ApplicationCRKF applicationCRKF;
@@ -49,6 +51,7 @@ public class GestionClassificationController {
             page = 1;
         }
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
+        pageNumber.setText("Page " + page);
     }
 
     @FXML

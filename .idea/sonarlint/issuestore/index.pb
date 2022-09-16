@@ -19,8 +19,6 @@ k
 ;src/main/java/fr/kyo/crkf/controller/AccueilController.java,f\0\f043af8c0deb003d196adeffe12db6b90c16daf9
 u
 Esrc/main/java/fr/kyo/crkf/controller/ecole/DetailEcoleController.java,f\4\f43c8420f1cc7f33629c374fbbbe1b191602eb4c
-o
-?src/main/java/fr/kyo/crkf/controller/ecole/EcoleController.java,1\4\14980b0a49d020704be7caff2f0f9d4458bc60ae
 
 Osrc/main/java/fr/kyo/crkf/controller/ecole/EcoleAroundProfesseurController.java,4\f\4fef8961e40341c515f9f7f6501f9875bd9f80ed
 t
