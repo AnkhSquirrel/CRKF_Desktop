@@ -78,6 +78,11 @@
                   <TableColumn fx:id="departementColumn" maxWidth="500.0" prefWidth="150.0" text="Département" />
                </columns>
             </TableView>
+            <HBox alignment="CENTER_LEFT" prefHeight="100.0" prefWidth="200.0">
+               <children>
+                  <Button mnemonicParsing="false" onAction="#openMainMenu" text="Retour" />
+               </children>
+            </HBox>
          </children>
       </GridPane>
       <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" disable="true" layoutY="58.0" miniDrawerSize="0.0" overLayVisible="false" prefHeight="400.0" prefWidth="529.0" stylesheets="@style.css" />
