@@ -68,7 +68,7 @@ public class GestionClassificationController {
 
     }
     @FXML
-    private void pageMoin(){
+    private void pageMoins(){
         if (page > 1){
             page--;
             filter();

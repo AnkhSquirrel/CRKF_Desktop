@@ -27,11 +27,7 @@ t
 Dsrc/main/java/fr/kyo/crkf/controller/DetailProfesseurController.java,8\8\88c869761165a21c61df77a1063d176f9bc9d4bd
 s
 Csrc/main/java/fr/kyo/crkf/controller/ProfesseurModalController.java,7\5\75f59e2ae41f9eea9d4d6e86106841c95e99fceb
-y
-Isrc/main/java/fr/kyo/crkf/controller/GestionClassificationController.java,6\4\64e6295070b4b26c06d29df2b7e8a71dce8d7d7a
 w
 Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48b1a5dbc153c4379c94dca72a3eebac9eb5fd4b
 n
 >src/main/java/fr/kyo/crkf/controller/ProfesseurController.java,b\3\b33b223153de8638fc40c6c9490d6f64ed7c0f42
-^
-.src/main/java/fr/kyo/crkf/ApplicationCRKF.java,0\8\0851fee7dfa2fbdc8c48e468acccb38e2dfbddc8
