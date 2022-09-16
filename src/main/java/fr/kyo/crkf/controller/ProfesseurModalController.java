@@ -4,10 +4,13 @@ import fr.kyo.crkf.Entity.*;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
+import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
+import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
@@ -32,13 +35,18 @@ public class ProfesseurModalController {
     private boolean create;
     private ProfesseurController professeurController;
     private Filter filter;
+    private Ville selectedVille;
+    private Ecole selectedEcole;
 
     @FXML
     private void initialize(){
+        selectedVille = null;
+        selectedEcole = null;
         filter = new Filter();
 
         ecole.setEditable(true);
         ecole.getEditor().textProperty().addListener(observable -> ecoleFilter());
+        ecole.getSelectionModel().selectedItemProperty().addListener(a -> selectEcole());
         ecole.setItems(FXCollections.observableArrayList(filter.getEcolesLike("")));
 
         cv.textProperty().addListener((observable, oldValue, newValue) -> {
@@ -47,20 +55,31 @@ public class ProfesseurModalController {
             }
         });
 
-        departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
-        departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
-        departement.getSelectionModel().select(0);
-
         ville.setEditable(true);
         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", 0)));
         ville.getSelectionModel().select(0);
+        ville.getSelectionModel().selectedItemProperty().addListener(a -> filterVille());
+
+        departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
+        departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
+        departement.getSelectionModel().select(0);
+    }
+
+    private void selectEcole() {
+        if(ecole.getSelectionModel().getSelectedIndex() >= 1 && ecole.getSelectionModel().getSelectedItem() != null)
+            selectedEcole = ecole.getSelectionModel().getSelectedItem();
+    }
+
+    private void filterVille() {
+        if(ville.getSelectionModel().getSelectedIndex() >= 1 && ville.getSelectionModel().getSelectedItem() != null)
+            selectedVille = ville.getSelectionModel().getSelectedItem();
     }
 
     private void filterDepartement() {
-        /*if(departement.getSelectionModel().getSelectedItem() != null){
+        if(departement.getSelectionModel().getSelectedItem() != null){
             ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", departement.getSelectionModel().getSelectedItem().getId_departement())));
             ville.getSelectionModel().select(0);
-        }*/
+        }
 
     }
 
@@ -72,11 +91,11 @@ public class ProfesseurModalController {
 
     @FXML
     void validate() {
-        System.out.println(ville.getSelectionModel().getSelectedItem());
-        boolean adresseComplete = ville.getSelectionModel().getSelectedItem() != null &&
-                ville.getSelectionModel().getSelectedItem().getId_ville() != 0 &&
+        boolean adresseComplete = selectedVille != null &&
                 !adresse.getText().isEmpty();
-        boolean professeurComplete =!nom.getText().isEmpty() && !prenom.getText().isBlank() && !cv.getText().isBlank() && ecole.getSelectionModel().getSelectedItem() != null && ecole.getSelectionModel().getSelectedItem().getId_ecole() != 0;
+        boolean professeurComplete =!nom.getText().isEmpty() &&
+                !prenom.getText().isEmpty() && !cv.getText().isEmpty() &&
+                selectedEcole != null;
         if(adresseComplete && professeurComplete){
             System.out.println("in");
             if(create){
@@ -93,10 +112,10 @@ public class ProfesseurModalController {
     }
 
     private void createPersonne() {
-        Adresse adresseObject = new Adresse(0, adresse.getText(),ville.getSelectionModel().getSelectedItem().getId_ville());
+        Adresse adresseObject = new Adresse(0, adresse.getText(),selectedVille.getId_ville());
         int adresseId = DAOFactory.getAdresseDAO().insert(adresseObject);
         if(adresseId != 0){
-            Personne personne = new Personne(0,nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()), adresseId,ecole.getSelectionModel().getSelectedItem().getId_ecole());
+            Personne personne = new Personne(0,nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()), adresseId,selectedEcole.getId_ecole());
             if(DAOFactory.getPersonneDAO().insert(personne) != 0){
                 professeurController.filter();
                 modal.close();

@@ -152,13 +152,11 @@ public class ProfesseurController {
             }
         }
     }
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
-    }
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
     }
+
     @FXML
     private void openCreateModal(){
         applicationCRKF.openCreateProfesseurModal(this);
@@ -177,7 +175,11 @@ public class ProfesseurController {
         listeProfesseur.setDisable(true);
     }
 
-    public void closeEcoleAroundPage(){
+    public void closeEcoleAroundPage() {
         openDetailProfesseur();
+    }
+
+    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
+        this.applicationCRKF = applicationCRKF;
     }
 }

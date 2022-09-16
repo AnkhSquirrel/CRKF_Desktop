@@ -89,7 +89,6 @@ public class EcoleController {
                         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
                 }
         }
-
         @FXML
         private void reset(){
                 page = 1;
@@ -145,6 +144,10 @@ public class EcoleController {
         private void openCreateModal(){
                 applicationCRKF.openCreateEcoleModal();
         }
+        @FXML
+        private void openMainMenu(){
+                applicationCRKF.openMainMenu();
+        }
 
         @FXML
         private void pagePlus(){
@@ -159,10 +162,6 @@ public class EcoleController {
                         page--;
                         filter();
                 }
-        }
-        @FXML
-        private void openMainMenu(){
-                applicationCRKF.openMainMenu();
         }
 
         public void closeDetail(){
