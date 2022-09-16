@@ -76,7 +76,8 @@ public class ClassificationModalController {
         this.gestionClassificationController = gestionClassificationController;
     }
     public void setClassification(Classification classification) {
-        this.classification = classification;
-        nom.setText(classification.getclassification());
+            this.classification = classification;
+            nom.setText(classification.getclassification());
+
     }
 }
