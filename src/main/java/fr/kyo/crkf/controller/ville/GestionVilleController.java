@@ -48,6 +48,7 @@ public class GestionVilleController {
     }
     @FXML
     private void openUpdateModal(){
+        if (villeTable.getSelectionModel().getSelectedItem() != null)
         applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
     }
 
@@ -85,13 +86,15 @@ public class GestionVilleController {
     }
     @FXML
     private void remove(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Supprimer");
-        alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK)
-            DAOFactory.getVilleDAO().delete(villeTable.getSelectionModel().getSelectedItem());
-        filter();
+        if (villeTable.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Supprimer");
+            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+                DAOFactory.getVilleDAO().delete(villeTable.getSelectionModel().getSelectedItem());
+            filter();
+        }
     }
 
     @FXML

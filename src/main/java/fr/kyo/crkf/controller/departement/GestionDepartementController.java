@@ -70,6 +70,7 @@ public class GestionDepartementController {
     }
     @FXML
     private void update(){
+        if (departementTable.getSelectionModel().getSelectedItem() != null)
         applicationCRKF.openModalUpdateDepartement(this, departementTable.getSelectionModel().getSelectedItem());
     }
     @FXML
@@ -79,13 +80,15 @@ public class GestionDepartementController {
 
     @FXML
     private void remove(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Supprimer");
-        alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK)
-            DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
-        filter();
+        if (departementTable.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Supprimer");
+            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+                DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
+            filter();
+        }
     }
 
     @FXML

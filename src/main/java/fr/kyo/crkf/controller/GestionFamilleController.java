@@ -100,16 +100,19 @@ public class GestionFamilleController {
 
     @FXML
     private void remove(){
-        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-        alert.setTitle("Supprimer");
-        alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
-        Optional<ButtonType> result = alert.showAndWait();
-        if(result.isPresent() && result.get() == ButtonType.OK)
-            DAOFactory.getFamilleDAO().delete(familleTable.getSelectionModel().getSelectedItem());
-        filter();
+        if (familleTable.getSelectionModel().getSelectedItem() != null){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Supprimer");
+            alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+                DAOFactory.getFamilleDAO().delete(familleTable.getSelectionModel().getSelectedItem());
+            filter();
+        }
     }
     @FXML
     private void update(){
+        if (familleTable.getSelectionModel().getSelectedItem() != null)
         applicationCRKF.openModalUpdateFamille(this, familleTable.getSelectionModel().getSelectedItem());
     }
 }
