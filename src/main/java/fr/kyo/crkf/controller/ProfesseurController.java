@@ -123,11 +123,11 @@ public class ProfesseurController {
         if(!professeurTable.getSelectionModel().isEmpty())
             applicationCRKF.openDetailProfesseur(professeurTable.getSelectionModel().getSelectedItem());
     }
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
-    }
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
+    }
+    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
+        this.applicationCRKF = applicationCRKF;
     }
 }
