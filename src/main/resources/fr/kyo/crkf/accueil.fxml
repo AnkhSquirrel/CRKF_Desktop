@@ -36,29 +36,29 @@
             </Button>
          </children>
       </HBox>
-      <Label text="Insérer... (TODO)" textAlignment="CENTER">
+      <Label text="Gestion :" textAlignment="CENTER">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
-            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openInstrumentList" text="a" textAlignment="CENTER">
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionFamille" text="Famille" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openProfesseurList" text="b" textAlignment="CENTER">
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionClassification" text="Classification" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openEcoleList" text="c" textAlignment="CENTER">
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionVille" text="Ville" textAlignment="CENTER">
                <HBox.margin>
                   <Insets left="5.0" right="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openEcoleList" text="d" textAlignment="CENTER" />
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionDepartement" text="Département" textAlignment="CENTER" />
          </children>
       </HBox>
    </children>
