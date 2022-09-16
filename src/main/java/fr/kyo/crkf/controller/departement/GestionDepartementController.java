@@ -28,6 +28,8 @@ public class GestionDepartementController {
     private TextField libelle;
     @FXML
     private TableView<Departement> departementTable;
+    @FXML
+    private Label pageNumber;
     private String departement;
     private ApplicationCRKF applicationCRKF;
     private int page;
@@ -55,6 +57,7 @@ public class GestionDepartementController {
             page = 1;
         }
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));
+        pageNumber.setText("Page " + page);
     }
 
 

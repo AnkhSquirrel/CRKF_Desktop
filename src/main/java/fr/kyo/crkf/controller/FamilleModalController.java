@@ -83,9 +83,9 @@ public class FamilleModalController {
     public void setCreate(boolean bool) {
         create = bool;
         if(create){
-            nomModal.setText("Creer Famille");
+            nomModal.setText("Création d'une nouvelle famille");
         }else{
-            nomModal.setText("Modifier Famille");
+            nomModal.setText("Modification d'une nouvelle famille");
         }
     }
 

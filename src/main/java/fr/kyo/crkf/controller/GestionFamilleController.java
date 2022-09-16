@@ -24,6 +24,8 @@ public class GestionFamilleController {
     private TextField libelle;
     @FXML
     private TableView<Famille> familleTable;
+    @FXML
+    private Label pageNumber;
     private int page;
     private SearchableFamille searchableFamille;
     private ApplicationCRKF applicationCRKF;
@@ -60,6 +62,7 @@ public class GestionFamilleController {
             page = 1;
         }
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
+        pageNumber.setText("Page " + page);
     }
 
     @FXML
@@ -80,7 +83,7 @@ public class GestionFamilleController {
 
     }
     @FXML
-    private void pageMoin(){
+    private void pageMoins(){
         if (page > 1){
             page--;
             filter();

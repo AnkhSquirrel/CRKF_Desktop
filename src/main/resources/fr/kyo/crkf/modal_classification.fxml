@@ -11,13 +11,15 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-
 <VBox alignment="CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ClassificationModalController">
    <children>
-      <Label fx:id="nomModal" prefHeight="70.0" prefWidth="334.0" text="Création d'une classification">
+      <Label fx:id="nomModal" alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="539.0" text="Création d'une classification d'instrument" textAlignment="CENTER">
          <font>
             <Font size="25.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="10.0" top="10.0" />
+         </VBox.margin>
       </Label>
       <GridPane prefHeight="100.0" prefWidth="550.0">
         <columnConstraints>
