@@ -46,6 +46,11 @@
                         <Insets left="2.0" right="2.0" />
                      </HBox.margin>
                   </SearchableComboBox>
+                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
+                     <HBox.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="professeurTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
