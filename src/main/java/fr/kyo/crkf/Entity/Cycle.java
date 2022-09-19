@@ -1,5 +1,8 @@
 package fr.kyo.crkf.Entity;
 
+import fr.kyo.crkf.dao.DAOFactory;
+import javafx.beans.property.ReadOnlyObjectWrapper;
+import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -45,4 +48,8 @@ public class Cycle {
     public String toString() {
         return libelle;
     }
+    public ObservableValue<Integer> getHighestCycle(){
+        return new ReadOnlyObjectWrapper<>(DAOFactory.getCycleDAO().getHighestCycle());
+    }
+    
 }

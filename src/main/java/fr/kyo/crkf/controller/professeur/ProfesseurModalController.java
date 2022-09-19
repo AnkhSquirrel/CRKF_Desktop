@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.professeur;
 
 import fr.kyo.crkf.Entity.*;
 import fr.kyo.crkf.Searchable.Filter;

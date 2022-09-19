@@ -38,4 +38,7 @@ public class AccueilController {
 
     @FXML
     protected void openGestionClassification() { application.openClassificationGestion(); }
+
+    @FXML
+    protected void openGestionCycle() { application.openCycleGestion(); }
 }

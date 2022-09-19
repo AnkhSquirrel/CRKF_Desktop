@@ -13,7 +13,7 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.RowConstraints?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.classification.GestionClassificationController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.cycle.GestionCycleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -32,7 +32,7 @@
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="1">
          <children>
-            <Button mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter une classification" />
+            <Button mnemonicParsing="false" onAction="#openCreateModal" text="Ajouter une cycle" />
          </children>
       </HBox>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0" GridPane.rowIndex="2">
@@ -49,10 +49,10 @@
             </Button>
          </children>
       </HBox>
-      <TableView fx:id="classificationTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
+      <TableView fx:id="cycleTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
         <columns>
             <TableColumn fx:id="libelleColumn" maxWidth="500.0" minWidth="100.0" prefWidth="400.0" text="Libellé" />
-            <TableColumn fx:id="famillesColumn" maxWidth="300.0" minWidth="100.0" prefWidth="150.0" text="Nombre de Famille" />
+            <TableColumn fx:id="cycleColumn" maxWidth="300.0" minWidth="100.0" prefWidth="150.0" text="Cycle" />
         </columns>
          <contextMenu>
             <ContextMenu>

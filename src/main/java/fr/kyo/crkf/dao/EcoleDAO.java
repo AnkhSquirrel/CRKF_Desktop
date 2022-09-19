@@ -117,7 +117,6 @@ public class EcoleDAO extends DAO<Ecole> {
             // ...
             // s.setInt(1,page);
             // _______________________________________________________
-
             String strCmd = "SELECT id_ecole, Nom, id_adresse from Ecole";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             ResultSet rs = s.executeQuery();
@@ -129,7 +128,7 @@ public class EcoleDAO extends DAO<Ecole> {
 
                 if (distance < 50){
                     Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
-                    Pair<Ecole, Double> pair = new Pair<>(ecole, distance);
+                    Pair<Ecole, Double> pair = new Pair<>(ecole, ( Math.round(distance * 100.0) / 100.0 ));
                     ecolesEtDistances.add(pair);
                 }
             }
