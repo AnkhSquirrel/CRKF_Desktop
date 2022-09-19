@@ -72,6 +72,7 @@ public class FamilleDAO extends DAO<Famille> {
                 strCmd += " where id_classification = " + searchableFamille.getClassification();
             else if(searchableFamille.getClassification() == 0 && !searchableFamille.getNom().isEmpty())
                 strCmd += " where famille like '%" + searchableFamille.getNom() + "%'";
+            if(page > 0)
             strCmd += " order by famille OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
 
             PreparedStatement s = connexion.prepareStatement(strCmd);

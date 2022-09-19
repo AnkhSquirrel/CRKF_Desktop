@@ -107,6 +107,7 @@ public class ClassificationDAO extends DAO<Classification> {
             String strCmd = "SELECT id_classification, classification from Classification";
             if(!classification.isEmpty())
                 strCmd += " where classification like '%" + classification + "%'";
+            if (page > 0)
             strCmd += " order by classification OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             ResultSet rs = s.executeQuery();

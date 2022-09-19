@@ -138,7 +138,7 @@ public class InstrumentController {
     }
     @FXML
     private void pagePlus(){
-         if(!instrumentTable.getItems().isEmpty()){
+         if(!instrumentTable.getItems().isEmpty() && pageTotale > page){
              page++;
              filter();
          }
