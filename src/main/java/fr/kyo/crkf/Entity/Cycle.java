@@ -51,5 +51,5 @@ public class Cycle {
     public ObservableValue<Integer> getHighestCycle(){
         return new ReadOnlyObjectWrapper<>(DAOFactory.getCycleDAO().getHighestCycle());
     }
-    
+
 }

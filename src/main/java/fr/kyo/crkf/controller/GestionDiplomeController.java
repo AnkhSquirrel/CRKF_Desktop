@@ -6,6 +6,7 @@ import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.controller.professeur.ProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
