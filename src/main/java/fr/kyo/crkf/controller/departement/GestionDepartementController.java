@@ -81,13 +81,33 @@ public class GestionDepartementController {
     @FXML
     private void remove(){
         if (departementTable.getSelectionModel().getSelectedItem() != null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Supprimer");
-            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK)
-                DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
-            filter();
+            if (DAOFactory.getDepartementDAO().getVilleByDepartement(departementTable.getSelectionModel().getSelectedItem().getId_departement()) == null){
+                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                alert.setTitle("Supprimer");
+                alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+                Optional<ButtonType> result = alert.showAndWait();
+                if(result.isPresent() && result.get() == ButtonType.OK)
+                    DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
+                filter();
+            }else {
+                Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
+                alertErrorInsert.setTitle("Erreur");
+                alertErrorInsert.setHeaderText("Le département ne peut pas être supprimé car il contient des villes");
+                alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
+                    if (btnTypeError == ButtonType.OK) {
+                        alertErrorInsert.close();
+                    }
+                });
+            }
+        } else {
+            Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
+            alertErrorInsert.setTitle("Erreur");
+            alertErrorInsert.setHeaderText("Erreur lors de la suppression.");
+            alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
+                if (btnTypeError == ButtonType.OK) {
+                    alertErrorInsert.close();
+                }
+            });
         }
     }
     @FXML

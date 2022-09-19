@@ -133,7 +133,7 @@ public class ProfesseurController {
     }
     private void filterByDepartement() {
         if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
-            villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().gettByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
+            villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
         } else {
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         }
