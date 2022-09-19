@@ -84,8 +84,10 @@ public class CycleDAO extends DAO<Cycle> {
             String strCmd = "SELECT MAX(cycle) from Cycle";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             ResultSet rs = s.executeQuery();
+            rs.next();
+            int highest = rs.getInt(1);
             rs.close();
-            return rs.getInt(1);
+            return highest;
         }
         catch (Exception e) {
             e.printStackTrace();
@@ -101,8 +103,12 @@ public class CycleDAO extends DAO<Cycle> {
             preparedStatement.setString( 1 , objet.getLibelle());
             preparedStatement.setInt(2, objet.getCycle());
             preparedStatement.executeUpdate();
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-            return 0;
+            return id;
         }catch (SQLException e) {
             return 0;
         }

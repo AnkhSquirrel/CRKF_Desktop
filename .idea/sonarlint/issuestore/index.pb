@@ -1,8 +1,6 @@
 
 u
 Esrc/main/java/fr/kyo/crkf/controller/ecole/DetailEcoleController.java,f\4\f43c8420f1cc7f33629c374fbbbe1b191602eb4c
-j
-:src/main/java/fr/kyo/crkf/controller/NavbarController.java,9\5\95fe555560ad249d05275bac945b180455ebca8e
 a
 1src/main/java/fr/kyo/crkf/Entity/Departement.java,0\a\0a612dd4b7a150096f7ca5bd88106517e6df1d81
 Y

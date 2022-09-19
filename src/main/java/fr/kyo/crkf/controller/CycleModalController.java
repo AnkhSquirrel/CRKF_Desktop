@@ -53,7 +53,7 @@ public class CycleModalController {
 
     }
     private void createCycle(){
-        if(!nom.getText().isEmpty()){
+        if(!nom.getText().isEmpty() && !cycleTextField.getText().isEmpty()){
             cycle = new Cycle(0,nom.getText(), Integer.parseInt(cycleTextField.getText()));
             if(DAOFactory.getCycleDAO().insert(cycle) != 0){
                 gestionCycleController.filter();
@@ -90,6 +90,6 @@ public class CycleModalController {
             this.cycle = cycle;
             nom.setText(cycle.getLibelle());
             cycleTextField.setText(String.valueOf(cycle.getCycle()));
-
+            cycleTextField.setDisable(true);
     }
 }

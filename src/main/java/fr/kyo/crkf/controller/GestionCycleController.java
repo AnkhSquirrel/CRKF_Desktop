@@ -91,24 +91,23 @@ public class GestionCycleController {
             alert.setTitle("Supprimer");
             alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
             Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK){
-                if(cycleTable.getSelectionModel().getSelectedItem().getHighestCycle().getValue() > cycleTable.getSelectionModel().getSelectedItem().getCycle()){
-                    alert.close();
-                    Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                    alert1.setTitle("Erreur");
-                    alert1.setHeaderText("Il y a eu une erreur lors de la suppresion du cycle.\nIl est impossible de supprimer un cycle qui a des cycles supérieurs");
-                    alert1.showAndWait();
-                }else{
-                    DAOFactory.getCycleDAO().delete(cycleTable.getSelectionModel().getSelectedItem());
-                    filter();
-                }
+            if(!(result.isPresent() && result.get() == ButtonType.OK) || cycleTable.getSelectionModel().getSelectedItem().getHighestCycle().getValue() > cycleTable.getSelectionModel().getSelectedItem().getCycle()){
+                alert.close();
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Erreur");
+                alert1.setHeaderText("Il y a eu une erreur lors de la suppresion du cycle.\nIl est impossible de supprimer un cycle qui a des cycles supérieurs");
+                alert1.showAndWait();
+            }else{
+                DAOFactory.getCycleDAO().delete(cycleTable.getSelectionModel().getSelectedItem());
+                filter();
+
             }
         }
     }
     @FXML
     private void update(){
         if (cycleTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openUpdateCycleModal(this, cycleTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openUpdateCycleModal(this, cycleTable.getSelectionModel().getSelectedItem());
     }
 }
 
