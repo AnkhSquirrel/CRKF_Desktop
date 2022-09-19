@@ -5,13 +5,12 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
+import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.VBox;
 
@@ -72,6 +71,19 @@ public class DetailProfesseurController {
     @FXML
     private void closeDetail(){
         professeurController.closeDetail();
+    }
+    @FXML
+    private void openUpdateModal(){
+        applicationCRKF.openUpdateProfesseurModal(professeurController, personne);
+        professeurController.filter();
+    }
+    @FXML
+    private void delete(){
+        if(applicationCRKF.deleteModal()){
+            DAOFactory.getPersonneDAO().delete(personne);
+            professeurController.filter();
+            professeurController.closeDetail();
+        }
     }
 
     public void setProfesseurController(ProfesseurController professeurController){
