@@ -1,11 +1,7 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.classification;
 
-import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
-import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;

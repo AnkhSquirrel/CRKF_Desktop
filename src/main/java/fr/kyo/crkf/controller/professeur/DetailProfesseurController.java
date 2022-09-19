@@ -1,12 +1,10 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Personne;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
-import fr.kyo.crkf.controller.ecole.EcoleController;
-import fr.kyo.crkf.controller.instrument.InstrumentController;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;

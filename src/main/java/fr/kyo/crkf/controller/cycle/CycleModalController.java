@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.cycle;
 
 import fr.kyo.crkf.Entity.Cycle;
 import fr.kyo.crkf.dao.DAOFactory;

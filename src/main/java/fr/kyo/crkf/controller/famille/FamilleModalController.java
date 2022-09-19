@@ -1,6 +1,5 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.famille;
 
-import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Famille;
 import fr.kyo.crkf.Searchable.Filter;

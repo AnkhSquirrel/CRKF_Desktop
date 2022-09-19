@@ -1,16 +1,13 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.professeur;
 
 import fr.kyo.crkf.Entity.*;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
-import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.SingleSelectionModel;
 import javafx.scene.control.TextField;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 

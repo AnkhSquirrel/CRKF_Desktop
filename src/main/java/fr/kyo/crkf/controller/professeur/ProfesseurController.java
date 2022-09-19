@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.Entity.Departement;
@@ -7,7 +7,6 @@ import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
