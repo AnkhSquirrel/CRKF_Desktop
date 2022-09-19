@@ -15,7 +15,6 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-
 <AnchorPane prefHeight="490.0" prefWidth="740.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ProfesseurController">
    <children>
       <GridPane fx:id="listeProfesseur" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0">
@@ -47,6 +46,11 @@
                         <Insets left="2.0" right="2.0" />
                      </HBox.margin>
                   </SearchableComboBox>
+                  <Button mnemonicParsing="false" onAction="#reset" text="Reset">
+                     <HBox.margin>
+                        <Insets left="2.0" right="2.0" />
+                     </HBox.margin>
+                  </Button>
                </children>
             </HBox>
             <TableView fx:id="professeurTable" prefHeight="200.0" prefWidth="200.0" GridPane.rowIndex="3">
