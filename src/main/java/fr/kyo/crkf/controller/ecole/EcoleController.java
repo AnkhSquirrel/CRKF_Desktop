@@ -42,6 +42,13 @@ public class EcoleController {
         private TextField nomEcole;
         @FXML
         private Label pageNumber;
+        @FXML
+        private Label numberOfPage;
+        @FXML
+        private Button pagePlus;
+        @FXML
+        private Button pageMoins;
+        private int pageTotale;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
@@ -76,6 +83,12 @@ public class EcoleController {
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
+
+                pageTotale = FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)).size() / 25;
+                if (pageTotale % 1 == 0)
+                        pageTotale ++;
+                numberOfPage.setText(String.valueOf(pageTotale));
         }
 
         private void filterDepartement() {

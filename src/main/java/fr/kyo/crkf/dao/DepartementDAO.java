@@ -90,6 +90,7 @@ public class DepartementDAO extends DAO<Departement> {
             String strCmd = "SELECT id_departement, numero_departement ,Departement from Departement";
             if(!departement.isEmpty())
                 strCmd += " where departement like '%" + departement + "%'";
+            if(page > 0)
             strCmd += " order by departement OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             ResultSet rs = s.executeQuery();

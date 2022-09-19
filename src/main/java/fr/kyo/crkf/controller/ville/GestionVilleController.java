@@ -27,6 +27,13 @@ public class GestionVilleController {
     private TextField libelle;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private String ville;
     private int page;
     private ApplicationCRKF applicationCRKF;
@@ -70,6 +77,11 @@ public class GestionVilleController {
 
         libelle.textProperty().addListener(observable -> filter());
 
+        pageTotale = FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, 0)).size() / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getId_departement(), page)));
     }
     public void filter(){
@@ -81,6 +93,10 @@ public class GestionVilleController {
            departementId = departement.getSelectionModel().getSelectedItem().getId_departement();
             page = 1;
         }
+        pageTotale = FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, 0)).size() / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, page)));
         pageNumber.setText("Page " + page);
     }
@@ -104,7 +120,7 @@ public class GestionVilleController {
     }
     @FXML
     private void pagePlus(){
-        if(!villeTable.getItems().isEmpty()){
+        if(!villeTable.getItems().isEmpty() && pageTotale > page ){
             page++;
             filter();
         }

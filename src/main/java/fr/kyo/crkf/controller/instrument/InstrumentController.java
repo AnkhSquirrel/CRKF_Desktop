@@ -13,10 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.event.Event;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.effect.GaussianBlur;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
@@ -45,6 +42,13 @@ public class InstrumentController {
     private JFXDrawer drawer;
     @FXML
     private GridPane listeInstrument;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private SearchableInstrument searchableInstrument;
 
 
@@ -68,6 +72,12 @@ public class InstrumentController {
          famille.valueProperty().addListener(observable -> filter());
 
          libelle.textProperty().addListener(observable -> filter());
+
+         pageTotale = FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)).size() / 25;
+         if (pageTotale % 1 == 0)
+             pageTotale ++;
+         numberOfPage.setText(String.valueOf(pageTotale));
+         pageNumber.setText("Page " + page);
 
          reset();
          filter();
@@ -114,6 +124,11 @@ public class InstrumentController {
         }
         pageNumber.setText("Page " + page);
         instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)));
+        pageTotale = FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)).size() / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+        pageNumber.setText("Page " + page);
     }
     @FXML
     private void reset(){
@@ -130,7 +145,7 @@ public class InstrumentController {
 
     }
     @FXML
-    private void pageMoin(){
+    private void pageMoins(){
         if (page > 1){
             page--;
             filter();

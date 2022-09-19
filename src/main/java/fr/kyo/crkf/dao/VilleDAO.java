@@ -155,6 +155,7 @@ public class VilleDAO extends DAO<Ville> {
             String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
             if(departement_id != 0)
                 strCmd += " and id_departement = " + departement_id;
+            if(page > 0 )
             strCmd += " order by VILLE OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
             ResultSet rs = stmt.executeQuery(strCmd);
 
