@@ -142,4 +142,28 @@ public class CycleDAO extends DAO<Cycle> {
             return false;
         }
     }
+
+    public Cycle getByCycle(int i) {
+        Cycle cycle = null;
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "SELECT id_libelle, libelle, cycle from Cycle where cycle = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1,i);
+            ResultSet rs = s.executeQuery();
+
+            rs.next();
+            cycle =  new Cycle(rs.getInt(1), rs.getString(2), rs.getInt(3));
+
+            rs.close();
+
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return cycle;
+    }
 }

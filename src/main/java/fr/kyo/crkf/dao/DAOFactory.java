@@ -33,4 +33,7 @@ public class DAOFactory {
     public static PersonneDAO getPersonneDAO() {
         return new PersonneDAO(connexion);
     }
+    public static DiplomeDAO getDiplomeDAO() {
+        return new DiplomeDAO(connexion);
+    }
 }

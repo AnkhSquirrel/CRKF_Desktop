@@ -44,6 +44,10 @@ public class Cycle {
         return new SimpleStringProperty(String.valueOf(libelle));
     }
 
+    @Override
+    public String toString() {
+        return libelle;
+    }
     public ObservableValue<Integer> getHighestCycle(){
         return new ReadOnlyObjectWrapper<>(DAOFactory.getCycleDAO().getHighestCycle());
     }
