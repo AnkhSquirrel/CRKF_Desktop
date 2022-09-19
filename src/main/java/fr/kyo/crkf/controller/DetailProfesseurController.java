@@ -77,7 +77,7 @@ public class DetailProfesseurController {
     }
     @FXML
     private void openUpdateModal(){
-        applicationCRKF.openUpdateProfesseurModal(this);
+        applicationCRKF.openUpdateProfesseurModal(professeurController, personne);
         professeurController.filter();
     }
     @FXML
@@ -86,11 +86,6 @@ public class DetailProfesseurController {
             DAOFactory.getPersonneDAO().delete(personne);
             professeurController.filter();
             professeurController.closeDetail();
-        }else{
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une érreur lors de la suppression du professeur.");
-            alert.showAndWait();
         }
     }
 

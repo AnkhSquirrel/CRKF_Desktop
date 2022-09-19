@@ -530,7 +530,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
 
-    public void openUpdateProfesseurModal(DetailProfesseurController detailProfesseurController) {
+    public void openUpdateProfesseurModal(ProfesseurController professeurController, Personne personne) {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_professeur.fxml"));
@@ -539,7 +539,8 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             professeurModalController.setModal(modal);
             professeurModalController.setCreate(false);
-            professeurModalController.setDetailProfesseurController(detailProfesseurController);
+            professeurModalController.setProfesseurController(professeurController);
+            professeurModalController.setProfesseur(personne);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);

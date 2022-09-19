@@ -152,6 +152,10 @@ public class ProfesseurController {
             }
         }
     }
+    public void openDetailProfesseur(Personne personne){
+        professeurTable.getSelectionModel().select(personne);
+        openDetailProfesseur();
+    }
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
