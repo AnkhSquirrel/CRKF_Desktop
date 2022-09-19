@@ -21,6 +21,14 @@ module fr.kyo.crkf {
     opens fr.kyo.crkf.controller.departement to javafx.fxml;
     exports fr.kyo.crkf.controller.ville;
     opens fr.kyo.crkf.controller.ville to javafx.fxml;
+    exports fr.kyo.crkf.controller.cycle;
+    opens fr.kyo.crkf.controller.cycle to javafx.fxml;
+    exports fr.kyo.crkf.controller.famille;
+    opens fr.kyo.crkf.controller.famille to javafx.fxml;
+    exports fr.kyo.crkf.controller.classification;
+    opens fr.kyo.crkf.controller.classification to javafx.fxml;
+    exports fr.kyo.crkf.controller.professeur;
+    opens fr.kyo.crkf.controller.professeur to javafx.fxml;
 
 
     requires com.jfoenix;

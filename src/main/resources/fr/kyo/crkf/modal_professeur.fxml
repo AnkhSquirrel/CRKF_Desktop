@@ -13,7 +13,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<VBox alignment="CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ProfesseurModalController">
+<VBox alignment="CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.professeur.ProfesseurModalController">
    <children>
       <Label alignment="CENTER" prefHeight="0.0" text="Création d'une nouvelle personne">
          <font>

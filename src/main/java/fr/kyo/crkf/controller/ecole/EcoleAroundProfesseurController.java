@@ -4,8 +4,7 @@ import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Ecole;
 import fr.kyo.crkf.Tools.Pair;
 import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.controller.DetailProfesseurController;
-import fr.kyo.crkf.controller.ProfesseurController;
+import fr.kyo.crkf.controller.professeur.ProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -15,7 +14,6 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 
 import java.util.ArrayList;
-import java.util.Comparator;
 
 public class EcoleAroundProfesseurController {
 

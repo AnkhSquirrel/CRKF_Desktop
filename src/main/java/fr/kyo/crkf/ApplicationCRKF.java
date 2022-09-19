@@ -4,14 +4,22 @@ import fr.kyo.crkf.Entity.*;
 
 import fr.kyo.crkf.controller.*;
 
+import fr.kyo.crkf.controller.classification.ClassificationModalController;
+import fr.kyo.crkf.controller.classification.GestionClassificationController;
+import fr.kyo.crkf.controller.cycle.CycleModalController;
+import fr.kyo.crkf.controller.cycle.GestionCycleController;
 import fr.kyo.crkf.controller.departement.DepartementModalController;
 import fr.kyo.crkf.controller.departement.GestionDepartementController;
 import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
+import fr.kyo.crkf.controller.famille.FamilleModalController;
+import fr.kyo.crkf.controller.famille.GestionFamilleController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
 import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
+import fr.kyo.crkf.controller.professeur.ProfesseurController;
+import fr.kyo.crkf.controller.professeur.ProfesseurModalController;
 import fr.kyo.crkf.controller.ville.GestionVilleController;
 import fr.kyo.crkf.controller.ville.VilleModalController;
 import javafx.fxml.FXMLLoader;
