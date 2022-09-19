@@ -1,12 +1,13 @@
 package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Adresse;
+import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.Entity.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
 
 public class AdresseDAO extends DAO<Adresse> {
-    private final int lgpage = 25;
     protected AdresseDAO(Connection connexion) {
         super(connexion);
     }
@@ -16,13 +17,14 @@ public class AdresseDAO extends DAO<Adresse> {
         Adresse adresse= null;
         try{
 
-            String strCmd = "SELECT id_adresse, adresse, id_ville from Adresse where id_adresse = ?";
+            String strCmd = "SELECT id_adresse, adresse, id_ville from Adresse as a where id_adresse = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
             ResultSet rs = s.executeQuery();
 
-            if(rs.next())
-                adresse = new Adresse(rs.getInt(1), rs.getString(2),rs.getInt(3));
+            rs.next();
+
+            adresse = new Adresse(rs.getInt(1), rs.getString(2),DAOFactory.getVilleDAO().getByID(rs.getInt(3)));
 
             rs.close();
         }
@@ -33,19 +35,17 @@ public class AdresseDAO extends DAO<Adresse> {
     }
 
     @Override
-    public ArrayList<Adresse> getAll(int page) {
+    public ArrayList<Adresse> getAll() {
         ArrayList<Adresse> liste = new ArrayList<>();
-        try {
+        try (Statement stmt = connexion.createStatement()) {
 
 
             // Determine the column set colum
-            String strCmd = "SELECT id_adresse, adresse, id_ville from Adresse order by adresse OFFSET " + lgpage + " * (? -1)  ROWS FETCH NEXT " + lgpage + " ROWS ONLY";
-            PreparedStatement s = connexion.prepareStatement(strCmd);
-            s.setInt(1,page);
-            ResultSet rs = s.executeQuery();
+            String strCmd = "SELECT id_adresse, adresse, id_villefrom Adresse as a order by adresse";
+            ResultSet rs = stmt.executeQuery(strCmd);
 
             while (rs.next()) {
-                liste.add(new Adresse(rs.getInt(1), rs.getString(2),rs.getInt(3)));
+                liste.add(new Adresse(rs.getInt(1), rs.getString(2),DAOFactory.getVilleDAO().getByID(rs.getInt(3))));
             }
             rs.close();
         }
@@ -56,21 +56,17 @@ public class AdresseDAO extends DAO<Adresse> {
     }
 
     @Override
-    public int insert(Adresse objet) {
+    public boolean insert(Adresse objet) {
         try {
             String requete = "INSERT INTO adresse (adresse,id_ville) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getAdresse());
             preparedStatement.setInt(2, objet.getVille().getId_ville());
             preparedStatement.executeUpdate();
-            ResultSet rs = preparedStatement.getGeneratedKeys();
-            int id = 0;
-            if(rs.next())
-                id = rs.getInt(1);
             preparedStatement.close();
-            return id;
+            return true;
         }catch (SQLException e) {
-            return 0;
+            return false;
         }
     }
 

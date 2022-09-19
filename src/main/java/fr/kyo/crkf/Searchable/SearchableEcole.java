@@ -18,8 +18,7 @@ public class SearchableEcole {
     public SearchableEcole() {
         this.id_ecole = id_ecole;
         this.nom = nom;
-        ville = new Ville(0, "",0F, 0F, 0);
-        departement = new Departement(0, "Departement", "");
+        //adresse = new Adresse(0,"", new Ville(0,"",0F,0F,new Departement(0,"")));
     }
     public int getId_ecole() {
         return id_ecole;
@@ -39,23 +38,8 @@ public class SearchableEcole {
     public void setDepartement(Departement departement) {
         this.departement = departement;
     }
-    public Adresse getAdresse() {
-        return adresse;
-    }
 
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
-    public Ville getVille() {
-        return ville;
-    }
-
-    public void setVille(Ville ville) {
-        this.ville = ville;
-    }
     public ObservableValue<String> getNomStringProperty(){
         return new SimpleStringProperty(nom);
     }
-
 }

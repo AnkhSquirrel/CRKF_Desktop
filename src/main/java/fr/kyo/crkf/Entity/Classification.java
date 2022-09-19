@@ -1,12 +1,7 @@
 package fr.kyo.crkf.Entity;
 
-import fr.kyo.crkf.dao.DAOFactory;
-import javafx.beans.property.ReadOnlyObjectWrapper;
-import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
-
-import java.util.ArrayList;
 
 public class Classification {
     private int id_classification;
@@ -30,9 +25,6 @@ public class Classification {
     }
     public ObservableValue<String> getClassificationStringProperty(){
         return new SimpleStringProperty(classification);
-    }
-    public ObservableValue<Integer> getNumberFamilles(){
-        return new ReadOnlyObjectWrapper<>(DAOFactory.getFamilleDAO().getByClassification(id_classification).size());
     }
     @Override
     public String toString() {

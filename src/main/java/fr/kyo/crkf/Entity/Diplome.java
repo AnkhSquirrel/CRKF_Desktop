@@ -1,25 +1,23 @@
 package fr.kyo.crkf.Entity;
 
-import fr.kyo.crkf.dao.DAOFactory;
-
 public class Diplome {
-    private int cycle;
-    private int instrument;
+    private Cycle cycle;
+    private Instrument instrument;
 
-    public Diplome(int cycle, int instrument) {
+    public Diplome(Cycle cycle, Instrument instrument) {
         this.cycle = cycle;
         this.instrument = instrument;
     }
     public Cycle getCycle() {
-        return DAOFactory.getCycleDAO().getByID(cycle);
+        return cycle;
     }
     public void setCycle(Cycle cycle) {
-        this.cycle = cycle.getId_cycle();
+        this.cycle = cycle;
     }
     public Instrument getInstrument() {
-        return DAOFactory.getInstrumentDAO().getByID(instrument);
+        return instrument;
     }
     public void setInstrument(Instrument instrument) {
-        this.instrument = instrument.getId_instrument();
+        this.instrument = instrument;
     }
 }

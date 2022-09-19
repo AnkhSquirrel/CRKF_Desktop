@@ -1,6 +1,5 @@
 package fr.kyo.crkf.Entity;
 
-import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 
@@ -9,7 +8,7 @@ import java.util.ArrayList;
 public class Instrument {
     private int id_instrument;
     private String nom;
-    private ArrayList<Integer> familles;
+    private ArrayList<Famille> familles;
 
     public Instrument(int id_instrument, String nom) {
         this.id_instrument = id_instrument;
@@ -29,19 +28,13 @@ public class Instrument {
         this.nom = nom;
     }
     public ArrayList<Famille> getFamilles() {
-        ArrayList<Famille> list = new ArrayList<>();
-        for(int i : familles){
-            list.add(DAOFactory.getFamilleDAO().getByID(i));
-        }
-        return list;
+        return familles;
     }
     public void setFamilles(ArrayList<Famille> familles) {
-        this.familles.clear();
-        for(Famille famille : familles)
-            this.familles.add(famille.getId_famille());
+        this.familles = familles;
     }
     public void addFamille(Famille famille){
-        familles.add(famille.getId_famille());
+        familles.add(famille);
     }
     public ObservableValue<String> getNomStringProperty(){
         return new SimpleStringProperty(nom);

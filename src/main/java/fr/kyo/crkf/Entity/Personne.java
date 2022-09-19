@@ -1,6 +1,5 @@
 package fr.kyo.crkf.Entity;
 
-import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleIntegerProperty;
 import javafx.beans.property.SimpleStringProperty;
@@ -10,23 +9,15 @@ import java.util.ArrayList;
 
 public class Personne {
     private int id_personne;
-    private int id_ecole;
     private String nom;
     private String prenom;
     private int vehiculeCv;
-    private int adresse;
-    private int ecole;
+    private Adresse adresse;
+    private Ecole ecole;
 
     private ArrayList<Diplome> diplomes;
 
-    public Personne() {
-        this.id_personne = 0;
-        this.nom = "";
-        this.prenom = "";
-        diplomes = new ArrayList<>();
-    }
-
-    public Personne(int id_personne, String nom, String prenom, int vehiculeCv, int adresse, int ecole) {
+    public Personne(int id_personne, String nom, String prenom, int vehiculeCv, Adresse adresse, Ecole ecole) {
         this.id_personne = id_personne;
         this.nom = nom;
         this.prenom = prenom;
@@ -40,9 +31,6 @@ public class Personne {
     }
     public void setId_personne(int id_personne) {
         this.id_personne = id_personne;
-    }
-    public void setId_ecole(int id_ecole){
-        this.id_ecole = id_ecole;
     }
     public String getNom() {
         return nom;
@@ -63,16 +51,16 @@ public class Personne {
         this.vehiculeCv = vehiculeCv;
     }
     public Adresse getAdresse() {
-        return DAOFactory.getAdresseDAO().getByID(adresse);
+        return adresse;
     }
     public void setAdresse(Adresse adresse) {
-        this.adresse = adresse.getId_adresse();
+        this.adresse = adresse;
     }
     public Ecole getEcole() {
-        return DAOFactory.getEcoleDAO().getByID(ecole);
+        return ecole;
     }
     public void setEcole(Ecole ecole) {
-        this.ecole = ecole.getId_ecole();
+        this.ecole = ecole;
     }
     public ArrayList<Diplome> getDiplomes() {
         return diplomes;
