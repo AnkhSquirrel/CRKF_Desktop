@@ -42,8 +42,7 @@ public class InstrumentModalController {
     private boolean create;
     private Instrument instrumentUpdate;
     private ApplicationCRKF applicationCRKF;
-
-
+    private double height;
 
     @FXML
     private void initialize(){
@@ -59,6 +58,8 @@ public class InstrumentModalController {
         add.getChildren().setAll(button);
         add.setId("add");
         grid.addRow(rowsId,add);
+
+        height = 221;
     }
 
     @FXML
@@ -94,6 +95,8 @@ public class InstrumentModalController {
             rowsCount++;
             if(rowsCount < 5)
                 grid.addRow(rowsId + 1,add);
+            height += 80;
+            modal.setHeight(height);
         }
     }
 
@@ -124,6 +127,8 @@ public class InstrumentModalController {
             if((node != grid.getChildren().get(0) && node.getId().equals(String.valueOf(row))) || (node == grid.getChildren().get(0) && rowsCount == 1)){
                 grid.getChildren().remove(hBox);
                 rowsCount--;
+                height -= 80;
+                modal.setHeight(height);
                 if(rowsCount == 1){
                     HBox temp = (HBox) grid.getChildren().get(0);
                     ComboBox<Famille> comboBox = (ComboBox<Famille>) temp.getChildren().get(1);
