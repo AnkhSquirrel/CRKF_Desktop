@@ -124,6 +124,13 @@ public class ProfesseurController {
         }
 
     }
+    @FXML
+    private void reset(){
+        page = 1;
+        nomEtPrenomFiltre.setText("");
+        villeFiltre.getSelectionModel().selectFirst();
+        departementFiltre.getSelectionModel().selectFirst();
+    }
     private void filterByDepartement() {
         if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
             villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().gettByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
@@ -152,22 +159,22 @@ public class ProfesseurController {
             }
         }
     }
+
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
     }
-
     @FXML
     private void openCreateModal(){
         applicationCRKF.openCreateProfesseurModal(this);
     }
+
     public void closeDetail(){
         drawer.close();
         drawer.setDisable(true);
         listeProfesseur.setEffect(null);
         listeProfesseur.setDisable(false);
     }
-
     public void openDetail(){
         drawer.setDisable(false);
         drawer.open();
