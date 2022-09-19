@@ -2,6 +2,7 @@ package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.Entity.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -101,6 +102,24 @@ public class DepartementDAO extends DAO<Departement> {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public ArrayList<Ville> getVilleByDepartement(int id) {
+        ArrayList<Ville> liste = new ArrayList<>();
+        try {
+            PreparedStatement ps = connexion.prepareStatement("SELECT id_ville, ville, longitude,latitude,id_departement from Ville as V where id_departement = ? ");
+            ps.setInt(1,id);
+
+            ResultSet rs = ps.executeQuery();
+
+            while (rs.next())
+                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
     }
 
     @Override

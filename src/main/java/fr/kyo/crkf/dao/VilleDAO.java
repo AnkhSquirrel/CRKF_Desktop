@@ -32,7 +32,7 @@ public class VilleDAO extends DAO<Ville> {
         return ville;
     }
 
-    public ArrayList<Ville> gettByDepartementID(int id) {
+    public ArrayList<Ville> getByDepartementID(int id) {
         ArrayList<Ville> liste = new ArrayList<>();
         try {
             PreparedStatement ps = connexion.prepareStatement("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_departement = ? ");
