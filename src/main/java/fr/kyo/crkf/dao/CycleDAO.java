@@ -1,5 +1,6 @@
 package fr.kyo.crkf.dao;
 
+import fr.kyo.crkf.Entity.Classification;
 import fr.kyo.crkf.Entity.Cycle;
 
 import java.sql.*;
@@ -55,6 +56,41 @@ public class CycleDAO extends DAO<Cycle> {
             e.printStackTrace();
         }
         return liste;
+    }
+
+    public ArrayList<Cycle> getLike(String cycle, int page) {
+        ArrayList<Cycle> list = new ArrayList<>();
+        try{
+
+            String strCmd = "SELECT id_libelle, libelle, cycle from Cycle";
+            if(!cycle.isEmpty())
+                strCmd += " where cycle like '%" + cycle + "%'";
+            strCmd += " order by cycle OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+
+            while(rs.next())
+                list.add(new Cycle(rs.getInt(1),rs.getString(2), rs.getInt(3)));
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return list;
+    }
+
+    public int getHighestCycle() {
+        try{
+            String strCmd = "SELECT MAX(cycle) from Cycle";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.close();
+            return rs.getInt(1);
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     @Override
