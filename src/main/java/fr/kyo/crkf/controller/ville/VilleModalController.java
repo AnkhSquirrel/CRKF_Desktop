@@ -31,6 +31,16 @@ public class VilleModalController {
     @FXML
     private void initialize(){
         nomDepartement.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getAll(1)));
+        longitude.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                longitude.setText(newValue.replaceAll("^(\\d*\\.)|\\D", "$1"));
+            }
+        });
+        latitude.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                latitude.setText(newValue.replaceAll("^(\\d*\\.)|\\D", "$1"));
+            }
+        });
     }
 
     @FXML
