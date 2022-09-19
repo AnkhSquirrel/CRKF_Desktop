@@ -37,6 +37,7 @@ public class ProfesseurModalController {
     private Filter filter;
     private Ville selectedVille;
     private Ecole selectedEcole;
+    private DetailProfesseurController detailProfesseurController;
 
     @FXML
     private void initialize(){
@@ -148,6 +149,10 @@ public class ProfesseurModalController {
 
     public void setProfesseurController(ProfesseurController professeurController) {
         this.professeurController = professeurController;
+    }
+
+    public void setDetailProfesseurController(DetailProfesseurController detailProfesseurController) {
+        this.detailProfesseurController = detailProfesseurController;
     }
 }
 

@@ -76,10 +76,13 @@
             </TableView>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#openEcoleAroundPage" text="Écoles associées">
-         <VBox.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </VBox.margin></Button>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="363.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#delete" text="Supprimer" />
+            <Button mnemonicParsing="false" onAction="#openEcoleAroundPage" text="Écoles associées" />
+            <Button mnemonicParsing="false" onAction="#openUpdateModal" text="Modifier" />
+         </children>
+      </HBox>
    </children>
    <opaqueInsets>
       <Insets />
