@@ -1,8 +1,6 @@
 
 u
 Esrc/main/java/fr/kyo/crkf/controller/ecole/DetailEcoleController.java,f\4\f43c8420f1cc7f33629c374fbbbe1b191602eb4c
-^
-.src/main/java/fr/kyo/crkf/ApplicationCRKF.java,0\8\0851fee7dfa2fbdc8c48e468acccb38e2dfbddc8
 k
 ;src/main/java/fr/kyo/crkf/controller/AccueilController.java,f\0\f043af8c0deb003d196adeffe12db6b90c16daf9
 j
@@ -23,10 +21,6 @@ Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48
 +src/main/java/fr/kyo/crkf/Entity/Ecole.java,4\6\463c7ba57f7dbcd06f40fc12a27b742607b9793c
 [
 +src/main/java/fr/kyo/crkf/dao/EcoleDAO.java,3\2\32033d44bfa39d3ac2c75c8f92d3924bb4b4a68f
-t
-Dsrc/main/java/fr/kyo/crkf/controller/ville/VilleModalController.java,6\e\6e345f180be35c7cb18138a301051717e8e237c4
-^
-.src/main/java/fr/kyo/crkf/dao/PersonneDAO.java,8\1\816ff16f3f093a04997104225287018cc1818a5e
 `
 0src/main/java/fr/kyo/crkf/dao/InstrumentDAO.java,6\8\68d7e5e272ca3952f857c4b05be862ef354a0f07
 ]

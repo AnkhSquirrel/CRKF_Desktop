@@ -11,6 +11,8 @@ public class Filter {
     private ArrayList<Famille> familles;
     private ArrayList<Departement> departements;
     private ArrayList<Ville> villes;
+    private ArrayList<Instrument> instruments;
+    private ArrayList<Cycle> cycles;
     
 
     public Filter(){
@@ -26,6 +28,11 @@ public class Filter {
         departements = DAOFactory.getDepartementDAO().getAll(1);
         departements.add(0, new Departement(0,"", "Departement"));
 
+        instruments = DAOFactory.getInstrumentDAO().getAll(1);
+        instruments.add(0, new Instrument(0, "Instrument"));
+
+        cycles = DAOFactory.getCycleDAO().getAll(1);
+        cycles.add(0, new Cycle(0, "Cycle" , 0));
     }
 
     public ArrayList<Classification> getClassifications() {
@@ -60,5 +67,13 @@ public class Filter {
         ArrayList<Ecole> ecoles = DAOFactory.getEcoleDAO().getLike(searchableEcole,1);
         ecoles.add(new Ecole(0,"Ecole",0));
         return ecoles;
+    }
+
+    public ArrayList<Instrument> getInstrument() {
+        return instruments;
+    }
+
+    public ArrayList<Cycle> getCycles(){
+        return cycles;
     }
 }

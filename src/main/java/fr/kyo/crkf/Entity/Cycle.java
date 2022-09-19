@@ -40,4 +40,9 @@ public class Cycle {
     public ObservableValue<String> getCycleStringProperty(){
         return new SimpleStringProperty(String.valueOf(libelle));
     }
+
+    @Override
+    public String toString() {
+        return libelle;
+    }
 }

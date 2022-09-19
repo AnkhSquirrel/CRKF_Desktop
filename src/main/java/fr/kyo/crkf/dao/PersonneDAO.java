@@ -27,13 +27,13 @@ public class PersonneDAO extends DAO<Personne> {
             rs.close();
 
             //Search the affiliate Diplome
-            String strCmd2 = "select id_cycle,id_instrument from Personne_Diplome where id_personne = ?";
+            String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
             PreparedStatement s2 = connexion.prepareStatement(strCmd2);
             s2.setInt(1,id);
             ResultSet rs2 = s2.executeQuery();
 
-            while (rs2.next()){
-                personne.addDiplome(new Diplome(rs.getInt(1),rs.getInt(2)));
+            while (rs2.next()){;
+                personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
             }
             rs2.close();
 

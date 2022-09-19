@@ -553,4 +553,51 @@ public class ApplicationCRKF extends javafx.application.Application {
             e.printStackTrace();
         }
     }
+
+    public void openGestionDiplome(Personne personne, ProfesseurController professeurController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("gestion_diplome.fxml"));
+            GridPane modalPane = fxmlLoader.load();
+            GestionDiplomeController gestionDiplomeController = fxmlLoader.getController();
+
+            gestionDiplomeController.setProfesseurController(professeurController);
+            gestionDiplomeController.setPersonne(personne);
+            gestionDiplomeController.setApplicationCRKF(this);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Gestion Diplome");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openAddDiplomeModal(GestionDiplomeController gestionDiplomeController, Personne personne) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_diplome.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            DiplomeModalController diplomeModalController = fxmlLoader.getController();
+
+            diplomeModalController.setModal(modal);
+            diplomeModalController.setCreate(true);
+            diplomeModalController.setPersonne(personne);
+            diplomeModalController.setGestionDiplomeController(gestionDiplomeController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un Professeur");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }

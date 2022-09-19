@@ -81,6 +81,7 @@
             <Button mnemonicParsing="false" onAction="#delete" text="Supprimer" />
             <Button mnemonicParsing="false" onAction="#openEcoleAroundPage" text="Écoles associées" />
             <Button mnemonicParsing="false" onAction="#openUpdateModal" text="Modifier" />
+            <Button mnemonicParsing="false" onAction="#openGestionDiplome" text="Gestion Diplomes" />
          </children>
       </HBox>
    </children>

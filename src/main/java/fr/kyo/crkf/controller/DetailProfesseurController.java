@@ -14,6 +14,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 
 import java.io.IOException;
@@ -95,5 +96,23 @@ public class DetailProfesseurController {
 
     public void setDrawer(JFXDrawer drawer){
         this.drawer = drawer;
+    }
+
+    @FXML
+    private void openGestionDiplome(){
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("gestion_diplome.fxml"));
+            GridPane modalPane = fxmlLoader.load();
+            GestionDiplomeController gestionDiplomeController = fxmlLoader.getController();
+
+            gestionDiplomeController.setProfesseurController(professeurController);
+            gestionDiplomeController.setPersonne(personne);
+            gestionDiplomeController.setApplicationCRKF(applicationCRKF);
+
+            drawer.setSidePane(modalPane);
+            drawer.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
     }
 }
