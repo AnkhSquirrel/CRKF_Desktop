@@ -1,10 +1,8 @@
 package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
 import fr.kyo.crkf.Entity.Personne;
-
+import fr.kyo.crkf.Searchable.SearchableProfesseur;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -22,20 +20,20 @@ public class PersonneDAO extends DAO<Personne> {
             String strCmd = "select id_personne,Nom,Prenom,VehiculeCV,id_adresse,id_ecole from Personne where id_personne = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setInt(1,id);
-            ResultSet rs = s.executeQuery(strCmd);
+            ResultSet rs = s.executeQuery();
 
             rs.next();
-            personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),DAOFactory.getAdresseDAO().getByID(rs.getInt(5)), DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+            personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5), rs.getInt(6));
             rs.close();
 
             //Search the affiliate Diplome
             String strCmd2 = "select id_cycle,id_instrument from Personne_Diplome where id_personne = ?";
             PreparedStatement s2 = connexion.prepareStatement(strCmd2);
             s2.setInt(1,id);
-            ResultSet rs2 = s2.executeQuery(strCmd);
+            ResultSet rs2 = s2.executeQuery();
 
             while (rs2.next()){
-                personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs.getInt(2))));
+                personne.addDiplome(new Diplome(rs.getInt(1),rs.getInt(2)));
             }
             rs2.close();
 
@@ -48,7 +46,7 @@ public class PersonneDAO extends DAO<Personne> {
     }
 
     @Override
-    public ArrayList<Personne> getAll() {
+    public ArrayList<Personne> getAll(int page) {
         ArrayList<Personne> liste = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()) {
 
@@ -60,7 +58,7 @@ public class PersonneDAO extends DAO<Personne> {
 
             while (rs.next()) {
                 int id = rs.getInt(1);
-                Personne personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),DAOFactory.getAdresseDAO().getByID(rs.getInt(5)), DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+                Personne personne = new Personne(rs.getInt(1),rs.getString(2),rs.getString(3),rs.getInt(4),rs.getInt(5), rs.getInt(6));
 
                 //Search the affiliate Diplome
                 String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
@@ -68,8 +66,8 @@ public class PersonneDAO extends DAO<Personne> {
                 s2.setInt(1,id);
                 ResultSet rs2 = s2.executeQuery();
 
-                while (rs2.next()){
-                    personne.addDiplome(new Diplome(DAOFactory.getCycleDAO().getByID(rs.getInt(1)),DAOFactory.getInstrumentDAO().getByID(rs.getInt(2))));
+                while (rs2.next()){;
+                    personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
                 }
                 rs2.close();
                 liste.add(personne);
@@ -83,27 +81,88 @@ public class PersonneDAO extends DAO<Personne> {
         return liste;
     }
 
+    public ArrayList<Personne> getLike(SearchableProfesseur searchableProfesseur, int page) {
+        ArrayList<Personne> liste = new ArrayList<>();
+        try {
+            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?, @lgpage = 25, @page = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableProfesseur.getNomEtPrenom());
+            s.setInt(2,searchableProfesseur.getVehiculeCV());
+            s.setInt(3,searchableProfesseur.getVilleId());
+            s.setInt(4,searchableProfesseur.getDepartementId());
+            s.setInt(5,page);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Personne personne = new Personne();
+                int id = rs.getInt(1);
+                personne.setId_personne(id);
+                personne.setNom(rs.getString(2));
+                personne.setPrenom(rs.getString(3));
+                personne.setVehiculeCv(rs.getInt(4));
+                personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+                personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+
+                //Search the affiliate Diplome
+                String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
+                PreparedStatement s2 = connexion.prepareStatement(strCmd2);
+                s2.setInt(1,id);
+                ResultSet rs2 = s2.executeQuery();
+
+                while (rs2.next()){
+                    personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
+                }
+                rs2.close();
+                liste.add(personne);
+            }
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+    public ArrayList<Personne> getByEcole (int id_ecole) {
+        ArrayList<Personne> liste = new ArrayList<>();
+        try {
+            String strCmd = "SELECT nom, prenom from Personne where id_ecole = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setInt(1, id_ecole);
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Personne personne = new Personne();
+                personne.setNom(rs.getString(1));
+                personne.setPrenom(rs.getString(2));
+
+                liste.add(personne);
+            }
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
     @Override
-    public boolean insert(Personne objet) {
+    public int insert(Personne objet) {
         try {
             String requete = "INSERT INTO Personne (Nom,Prenom,VehiculeCV,id_adresse,id_ecole) VALUES (?,?,?,?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getNom());
-            preparedStatement.setString(2,objet.getNom());
-            preparedStatement.setString(3,objet.getPrenom());
-            preparedStatement.setInt(4,objet.getVehiculeCv());
-            preparedStatement.setInt(5,objet.getAdresse().getId_adresse());
-            preparedStatement.setInt(4,objet.getEcole().getId_ecole());
+            preparedStatement.setString(2,objet.getPrenom());
+            preparedStatement.setInt(3,objet.getVehiculeCv());
+            preparedStatement.setInt(4,objet.getAdresse().getId_adresse());
+            preparedStatement.setInt(5,objet.getEcole().getId_ecole());
             preparedStatement.executeUpdate();
+
+            ResultSet rs = preparedStatement.getGeneratedKeys();
+            int id = 0;
+            if(rs.next())
+                id = rs.getInt(1);
             preparedStatement.close();
-
-            String strCmd = "SELECT SCOPE_IDENTITY()";
-            PreparedStatement s = connexion.prepareStatement(strCmd);
-            ResultSet rs = s.executeQuery(strCmd);
-
-            rs.next();
-            int id = rs.getInt(1);
-            rs.close();
 
             for(Diplome diplome : objet.getDiplomes()){
                 String requete2 = "INSERT INTO Personne_Diplome (id_cycle,id_personne,id_instrument) VALUES (?,?,?)";
@@ -114,9 +173,9 @@ public class PersonneDAO extends DAO<Personne> {
                 preparedStatement2.executeUpdate();
                 preparedStatement2.close();
             }
-            return true;
+            return id;
         }catch (SQLException e) {
-            return false;
+            return 0;
         }
     }
 

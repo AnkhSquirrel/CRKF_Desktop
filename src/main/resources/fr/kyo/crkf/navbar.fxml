@@ -4,7 +4,7 @@
 <?import javafx.scene.control.MenuBar?>
 <?import javafx.scene.control.MenuItem?>
 
-<MenuBar xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.Controller.NavbarController">
+<MenuBar xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.NavbarController">
   <menus>
     <Menu mnemonicParsing="false" text="Rechercher">
       <items>
@@ -13,9 +13,17 @@
             <MenuItem mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" />
       </items>
     </Menu>
+      <Menu mnemonicParsing="false" text="Gestion">
+        <items>
+          <MenuItem mnemonicParsing="false" onAction="#openFamilleGestion" text="Famille" />
+            <MenuItem mnemonicParsing="false" onAction="#openClassificationGestion" text="Classification" />
+            <MenuItem mnemonicParsing="false" onAction="#openVilleGestion" text="Ville" />
+            <MenuItem mnemonicParsing="false" onAction="#openDepartementGestion" text="Département" />
+        </items>
+      </Menu>
     <Menu mnemonicParsing="false" text="Aide">
       <items>
-        <MenuItem mnemonicParsing="false" text="À propos" />
+        <MenuItem mnemonicParsing="false" onAction="#openAboutModal" text="À propos" />
       </items>
     </Menu>
   </menus>

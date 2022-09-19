@@ -1,9 +1,9 @@
-package fr.kyo.crkf.Controller;
+package fr.kyo.crkf.controller;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import javafx.fxml.FXML;
 
-public class NavbarController {
+public class AccueilController {
 
     @FXML
     private ApplicationCRKF application;
@@ -26,4 +26,16 @@ public class NavbarController {
     protected void openInstrumentList() {
         application.openInstrumentList();
     }
+
+    @FXML
+    protected void openGestionVille() { application.openVilleGestion(); }
+
+    @FXML
+    protected void openGestionDepartement() { application.openDepartementGestion(); }
+
+    @FXML
+    protected void openGestionFamille() { application.openFamilleGestion(); }
+
+    @FXML
+    protected void openGestionClassification() { application.openClassificationGestion(); }
 }
