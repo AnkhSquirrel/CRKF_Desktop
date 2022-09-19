@@ -1,12 +1,6 @@
 
 u
 Esrc/main/java/fr/kyo/crkf/controller/ecole/DetailEcoleController.java,f\4\f43c8420f1cc7f33629c374fbbbe1b191602eb4c
-^
-.src/main/java/fr/kyo/crkf/ApplicationCRKF.java,0\8\0851fee7dfa2fbdc8c48e468acccb38e2dfbddc8
-k
-;src/main/java/fr/kyo/crkf/controller/AccueilController.java,f\0\f043af8c0deb003d196adeffe12db6b90c16daf9
-j
-:src/main/java/fr/kyo/crkf/controller/NavbarController.java,9\5\95fe555560ad249d05275bac945b180455ebca8e
 a
 1src/main/java/fr/kyo/crkf/Entity/Departement.java,0\a\0a612dd4b7a150096f7ca5bd88106517e6df1d81
 Y
@@ -17,23 +11,13 @@ r
 Bsrc/main/java/fr/kyo/crkf/controller/GestionFamilleController.java,0\2\02add2f91c0c1d94fc717371fe224b55d85b5710
 ‚
 Rsrc/main/java/fr/kyo/crkf/controller/departement/GestionDepartementController.java,2\c\2c8ba895b98e2e86f73b0ad2ed276ee6b211bcd8
-w
-Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48b1a5dbc153c4379c94dca72a3eebac9eb5fd4b
 [
 +src/main/java/fr/kyo/crkf/Entity/Ecole.java,4\6\463c7ba57f7dbcd06f40fc12a27b742607b9793c
-[
-+src/main/java/fr/kyo/crkf/dao/EcoleDAO.java,3\2\32033d44bfa39d3ac2c75c8f92d3924bb4b4a68f
-t
-Dsrc/main/java/fr/kyo/crkf/controller/ville/VilleModalController.java,6\e\6e345f180be35c7cb18138a301051717e8e237c4
 ^
 .src/main/java/fr/kyo/crkf/dao/PersonneDAO.java,8\1\816ff16f3f093a04997104225287018cc1818a5e
 `
 0src/main/java/fr/kyo/crkf/dao/InstrumentDAO.java,6\8\68d7e5e272ca3952f857c4b05be862ef354a0f07
 ]
 -src/main/java/fr/kyo/crkf/dao/FamilleDAO.java,d\8\d8b01d35c36b0bcd4154387d12af7352bfcb911f
-d
-4src/main/java/fr/kyo/crkf/dao/ClassificationDAO.java,7\5\75f69c5b6776011024cebddd0b4434930152757b
 v
 Fsrc/main/java/fr/kyo/crkf/controller/ville/GestionVilleController.java,d\3\d301f347d2ec7859c753c1e6066708342bcff3d0
-[
-+src/main/java/fr/kyo/crkf/dao/VilleDAO.java,a\2\a2b1762692e863697f9e0007609e083e3e2a0484

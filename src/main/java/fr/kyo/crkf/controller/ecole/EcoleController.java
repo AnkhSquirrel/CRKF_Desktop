@@ -80,6 +80,11 @@ public class EcoleController {
 
         private void filterDepartement() {
                 filter();
+                if (departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getId_departement() != 0) {
+                        ville.setDisable(false);
+                } else {
+                        ville.setDisable(true);
+                }
                 ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getDepartement().getId_departement())));
                 ville.getSelectionModel().select(0);
         }

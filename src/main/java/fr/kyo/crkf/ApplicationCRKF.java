@@ -4,15 +4,22 @@ import fr.kyo.crkf.Entity.*;
 
 import fr.kyo.crkf.controller.*;
 
+import fr.kyo.crkf.controller.classification.ClassificationModalController;
+import fr.kyo.crkf.controller.classification.GestionClassificationController;
+import fr.kyo.crkf.controller.cycle.CycleModalController;
+import fr.kyo.crkf.controller.cycle.GestionCycleController;
 import fr.kyo.crkf.controller.departement.DepartementModalController;
 import fr.kyo.crkf.controller.departement.GestionDepartementController;
 import fr.kyo.crkf.controller.ecole.DetailEcoleController;
-import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.controller.ecole.EcoleController;
 import fr.kyo.crkf.controller.ecole.EcoleModalController;
+import fr.kyo.crkf.controller.famille.FamilleModalController;
+import fr.kyo.crkf.controller.famille.GestionFamilleController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
 import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
+import fr.kyo.crkf.controller.professeur.ProfesseurController;
+import fr.kyo.crkf.controller.professeur.ProfesseurModalController;
 import fr.kyo.crkf.controller.ville.GestionVilleController;
 import fr.kyo.crkf.controller.ville.VilleModalController;
 import javafx.fxml.FXMLLoader;
@@ -549,6 +556,67 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.setTitle("Modifier un Professeur");
 
             modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openCreateCycleModal(GestionCycleController gestionCycleController) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_cycle.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            CycleModalController cycleModalController = fxmlLoader.getController();
+
+            cycleModalController.setModal(modal);
+            cycleModalController.setCreate(true);
+            cycleModalController.setGestionCycleController(gestionCycleController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un cycle");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openUpdateCycleModal(GestionCycleController gestionCycleController, Cycle cycle) {
+        Stage modal = new Stage();
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_cycle.fxml"));
+            VBox modalPane = fxmlLoader.load();
+            CycleModalController cycleModalController = fxmlLoader.getController();
+
+            cycleModalController.setModal(modal);
+            cycleModalController.setCreate(false);
+            cycleModalController.setCycle(cycle);
+            cycleModalController.setGestionCycleController(gestionCycleController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Modifier un cycle");
+
+            modal.show();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void openCycleGestion() {
+        try {
+            FXMLLoader fxmlLoader = new FXMLLoader();
+            fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_cycle.fxml"));
+            GridPane gestionCycle = fxmlLoader.load();
+            GestionCycleController gestionCycleController = fxmlLoader.getController();
+            gestionCycleController.setApplicationCRKF(this);
+
+            mainWindow.setCenter(gestionCycle);
         } catch (IOException e) {
             e.printStackTrace();
         }

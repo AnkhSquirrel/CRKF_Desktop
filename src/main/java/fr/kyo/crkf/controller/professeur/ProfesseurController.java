@@ -1,4 +1,4 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.Entity.Departement;
@@ -7,7 +7,6 @@ import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.Searchable.Filter;
 import fr.kyo.crkf.Searchable.SearchableProfesseur;
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.controller.ecole.DetailEcoleController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
@@ -51,7 +50,6 @@ public class ProfesseurController {
     private GridPane listeProfesseur;
     @FXML
     private JFXDrawer drawer;
-
     @FXML
      private void initialize(){
         page = 1;
@@ -134,8 +132,10 @@ public class ProfesseurController {
     private void filterByDepartement() {
         if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
             villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
+            villeFiltre.setDisable(false);
         } else {
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
+            villeFiltre.setDisable(true);
         }
         villeFiltre.getSelectionModel().select(0);
         filter();
