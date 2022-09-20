@@ -4,6 +4,7 @@ import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.Entity.Diplome;
 import fr.kyo.crkf.Entity.Personne;
+import fr.kyo.crkf.controller.GestionDiplomeController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
