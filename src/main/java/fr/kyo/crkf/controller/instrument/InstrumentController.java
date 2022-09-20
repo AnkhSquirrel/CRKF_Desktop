@@ -73,7 +73,7 @@ public class InstrumentController {
 
          libelle.textProperty().addListener(observable -> filter());
 
-         pageTotale = FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)).size() / 25;
+         pageTotale = DAOFactory.getInstrumentDAO().getLikeAllInstrument(searchableInstrument).size() / 25;
          if (pageTotale % 1 == 0)
              pageTotale ++;
          numberOfPage.setText(String.valueOf(pageTotale));
@@ -124,7 +124,7 @@ public class InstrumentController {
         }
         pageNumber.setText("Page " + page);
         instrumentTable.setItems(FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)));
-        pageTotale = FXCollections.observableArrayList(DAOFactory.getInstrumentDAO().getLike(searchableInstrument, page)).size() / 25;
+        pageTotale = DAOFactory.getInstrumentDAO().getLikeAllInstrument(searchableInstrument).size() / 25;
         if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));

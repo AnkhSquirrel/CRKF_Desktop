@@ -120,6 +120,45 @@ public class InstrumentDAO extends DAO<Instrument> {
         return liste;
     }
 
+    public ArrayList<Instrument> getLikeAllInstrument(SearchableInstrument searchableInstrument) {
+        ArrayList<Instrument> liste = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableInstrument.getNom());
+            s.setInt(2,searchableInstrument.getFamilleId());
+            s.setInt(3,searchableInstrument.getClassificationId());
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                int id = rs.getInt(1);
+                Instrument instrument = (new Instrument(id,rs.getString(2)));
+
+                //Search the affiliate Famille
+                String strCmd2 = "select id_famille from Instrument_Famille where id_instrument = ?";
+                PreparedStatement s2 = connexion.prepareStatement(strCmd2);
+                s2.setInt(1,id);
+                ResultSet rs2 = s2.executeQuery();
+
+                while (rs2.next()){
+                    instrument.addFamille(DAOFactory.getFamilleDAO().getByID(rs2.getInt(1)));
+                }
+                rs2.close();
+                liste.add(instrument);
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
+
     @Override
     public int insert(Instrument objet) {
         try {

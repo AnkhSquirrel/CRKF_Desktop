@@ -72,7 +72,6 @@ public class FamilleDAO extends DAO<Famille> {
                 strCmd += " where id_classification = " + searchableFamille.getClassification();
             else if(searchableFamille.getClassification() == 0 && !searchableFamille.getNom().isEmpty())
                 strCmd += " where famille like '%" + searchableFamille.getNom() + "%'";
-            if(page > 0)
             strCmd += " order by famille OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
 
             PreparedStatement s = connexion.prepareStatement(strCmd);
@@ -88,6 +87,28 @@ public class FamilleDAO extends DAO<Famille> {
             e.printStackTrace();
         }
         return list;
+    }
+
+    public int getAllFamille(SearchableFamille searchableFamille) {
+        try{
+            String strCmd = "SELECT COUNT(id_famille) from Famille";
+            if(searchableFamille.getClassification() != 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification() + " and famille like '%" + searchableFamille.getNom() + "%'";
+            else if(searchableFamille.getClassification() != 0 && searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification();
+            else if(searchableFamille.getClassification() == 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where famille like '%" + searchableFamille.getNom() + "%'";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int familles = rs.getInt(1);
+            rs.close();
+            return familles;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     @Override

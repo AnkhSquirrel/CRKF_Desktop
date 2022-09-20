@@ -104,6 +104,23 @@ public class DepartementDAO extends DAO<Departement> {
         }
         return list;
     }
+    public int getAllDepartement(String departement) {
+        try{
+            String strCmd = "SELECT COUNT(id_departement) from Departement";
+            if(!departement.isEmpty())
+                strCmd += " where departement like '%" + departement + "%'";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int departements = rs.getInt(1);
+            rs.close();
+            return departements;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 
     public ArrayList<Ville> getVilleByDepartement(int id) {
         ArrayList<Ville> liste = new ArrayList<>();

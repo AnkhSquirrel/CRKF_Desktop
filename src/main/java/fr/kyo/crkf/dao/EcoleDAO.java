@@ -91,6 +91,33 @@ public class EcoleDAO extends DAO<Ecole> {
         return liste;
     }
 
+    public ArrayList<Ecole> getLikeAllEcole(SearchableEcole searchableEcole) {
+        ArrayList<Ecole> liste = new ArrayList<>();
+        try {
+
+            // Determine the column set column
+
+            String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableEcole.getNom());
+            s.setInt(2,searchableEcole.getVille().getId_ville());
+            s.setInt(3, searchableEcole.getDepartement().getId_departement());
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Ecole ecole = (new Ecole(rs.getInt(1),rs.getString(2),rs.getInt(3)));
+
+                liste.add(ecole);
+            }
+            rs.close();
+        }
+        // Handle any errors that may have occurred.
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
     public ArrayList<Ecole> getByDepartement(int id) {
         ArrayList<Ecole> list = new ArrayList<>();
         try{

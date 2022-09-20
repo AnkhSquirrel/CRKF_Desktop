@@ -148,6 +148,24 @@ public class VilleDAO extends DAO<Ville> {
         return list;
     }
 
+    public int getAllVille(String nom, int departement_id) {
+        try{
+            String strCmd = "SELECT COUNT(id_ville) from Ville where ville like '%" + nom + "%'";
+            if(departement_id != 0)
+                strCmd += " and id_departement = " + departement_id;
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int villes = rs.getInt(1);
+            rs.close();
+            return villes;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public ArrayList<Ville> getLikeForGestion(String nom, int departement_id, int page) {
         ArrayList<Ville> list = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()){
@@ -155,7 +173,6 @@ public class VilleDAO extends DAO<Ville> {
             String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
             if(departement_id != 0)
                 strCmd += " and id_departement = " + departement_id;
-            if(page > 0 )
             strCmd += " order by VILLE OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
             ResultSet rs = stmt.executeQuery(strCmd);
 
