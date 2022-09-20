@@ -29,6 +29,9 @@ public class EcoleAroundProfesseurController {
     private TableColumn<Pair<Ecole, Double>,String> villeColumn;
     @FXML
     private TableColumn<Pair<Ecole, Double>,String> distanceColumn;
+    @FXML
+    private TableColumn<Pair<Ecole, Double>,String> tarifColumn;
+
     private Personne personne;
     private ApplicationCRKF applicationCRKF;
     private ArrayList<Pair<Ecole, Double>> ecolesEtDistance;
@@ -40,7 +43,8 @@ public class EcoleAroundProfesseurController {
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getNomStringProperty());
         adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getAdresse().getAdresseStringProperty());
         villeColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getAdresse().getVille().getVilleStringProperty());
-        distanceColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getSecond().toString()));
+        distanceColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getSecond().toString().concat(" km(s)")));
+        tarifColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(String.valueOf(calculIndemnite(personne.getVehiculeCv(), cellData.getValue().getSecond())).concat(" €")));
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
@@ -64,5 +68,16 @@ public class EcoleAroundProfesseurController {
 
     public void setProfesseurController(ProfesseurController professeurController){
         this.professeurController = professeurController;
+    }
+
+    private double calculIndemnite(int cv, double km){
+        double indemnite = km;
+        if (cv < 5)
+            indemnite *= 0.08;
+        else if (cv < 8)
+            indemnite *= 0.10;
+        else
+            indemnite *= 0.06;
+        return Math.round(indemnite * 100.00) / 100.00;
     }
 }
