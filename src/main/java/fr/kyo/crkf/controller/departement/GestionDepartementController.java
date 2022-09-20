@@ -56,6 +56,7 @@ public class GestionDepartementController {
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,0)));
 
         pageTotale = DAOFactory.getDepartementDAO().getAllDepartement(departement) / 25;
+        if (pageTotale == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -71,8 +72,9 @@ public class GestionDepartementController {
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));
 
         pageTotale = DAOFactory.getDepartementDAO().getAllDepartement(departement) / 25;
+        if (pageTotale == 0)
             pageTotale ++;
-        numberOfPage.setText(String.valueOf(pageTotale));
+        numberOfPage.setText(" / " + String.valueOf(pageTotale));
 
         pageNumber.setText("Page " + page);
     }
@@ -145,6 +147,16 @@ public class GestionDepartementController {
             page--;
             filter();
         }
+    }
+    @FXML
+    private void lastPage(){
+        page = pageTotale;
+        filter();
+    }
+    @FXML
+    private void firstPage(){
+        page = 1;
+        filter();
     }
 }
 

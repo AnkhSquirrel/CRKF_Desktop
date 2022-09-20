@@ -71,10 +71,20 @@
       </TableView>
       <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" GridPane.rowIndex="4">
          <children>
+            <Button fx:id="premierePage" mnemonicParsing="false" onAction="#firstPage" text="&lt;&lt;">
+               <HBox.margin>
+                  <Insets right="2.0" />
+               </HBox.margin>
+            </Button>
             <Button fx:id="pageMoins" mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
-            <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" />
-            <Label fx:id="numberOfPage" alignment="CENTER" prefWidth="100.0" text="Page totale" />
+            <Label fx:id="pageNumber" alignment="CENTER_RIGHT" prefWidth="100.0" text="Page 1" />
+            <Label fx:id="numberOfPage" prefWidth="100.0" text="Page totale" />
             <Button fx:id="pagePlus" mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+            <Button fx:id="dernierePage" mnemonicParsing="false" onAction="#lastPage" text="&gt;&gt;">
+               <HBox.margin>
+                  <Insets left="2.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>

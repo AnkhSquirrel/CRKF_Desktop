@@ -78,7 +78,6 @@ public class GestionVilleController {
         libelle.textProperty().addListener(observable -> filter());
 
         pageTotale = DAOFactory.getVilleDAO().getAllVille(ville, departementId) / 25;
-            pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getId_departement(), page)));
@@ -94,11 +93,12 @@ public class GestionVilleController {
         }
 
         pageTotale = DAOFactory.getVilleDAO().getAllVille(ville, departementId) / 25;
-            pageTotale ++;
+        if(pageTotale == 0)
+            pageTotale++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, page)));
-        pageNumber.setText("Page " + page);
+        pageNumber.setText("Page " + page + " / ");
     }
     @FXML
     private void remove(){
@@ -117,6 +117,7 @@ public class GestionVilleController {
     private void reset(){
         libelle.setText("");
         departement.getSelectionModel().select(0);
+        page = 1;
     }
     @FXML
     private void pagePlus(){
@@ -131,5 +132,15 @@ public class GestionVilleController {
             page--;
             filter();
         }
+    }
+    @FXML
+    private void lastPage(){
+        page = pageTotale;
+        filter();
+    }
+    @FXML
+    private void firstPage(){
+        page = 1;
+        filter();
     }
 }
