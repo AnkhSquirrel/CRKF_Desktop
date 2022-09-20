@@ -31,10 +31,11 @@
          </font></Label>
       <TableView fx:id="ecoleTable" maxWidth="480.0" minHeight="50.0" prefHeight="300.0" prefWidth="480.0">
         <columns>
-          <TableColumn fx:id="nomColumn" maxWidth="500.0" minWidth="100.0" prefWidth="150.0" text="Nom" />
-          <TableColumn fx:id="adresseColumn" prefWidth="125.0" text="Adresse" />
+          <TableColumn fx:id="nomColumn" maxWidth="500.0" minWidth="100.0" prefWidth="125.0" text="Nom" />
+          <TableColumn fx:id="adresseColumn" prefWidth="100.0" text="Adresse" />
             <TableColumn fx:id="villeColumn" prefWidth="100.0" text="Ville" />
-            <TableColumn fx:id="distanceColumn" prefWidth="100.0" text="Distance (km)" />
+            <TableColumn fx:id="distanceColumn" text="Distance" />
+            <TableColumn fx:id="tarifColumn" prefWidth="70.0" text="Tarif" />
         </columns>
       </TableView>
    </children>
