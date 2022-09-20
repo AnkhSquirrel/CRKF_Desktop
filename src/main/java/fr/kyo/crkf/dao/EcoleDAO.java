@@ -173,7 +173,7 @@ public class EcoleDAO extends DAO<Ecole> {
             String requete = "INSERT INTO Ecole (Nom,id_adresse) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getNom());
-            preparedStatement.setInt(2, objet.getAdresse().getId_adresse());
+            preparedStatement.setInt(2, objet.getIdAdresse());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int id = 0;

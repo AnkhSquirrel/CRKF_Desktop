@@ -28,6 +28,7 @@ public class Ecole {
     public void setAdresse(Adresse adresse) {
         this.adresse = adresse.getId_adresse();
     }
+    public int getIdAdresse(){return adresse;}
     public String getNom() {
         return nom;
     }

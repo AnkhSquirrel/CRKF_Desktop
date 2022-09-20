@@ -193,7 +193,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
 
-    public void openCreateEcoleModal(){
+    public void openCreateEcoleModal(EcoleController ecoleController){
         Stage modal = new Stage();
         try {
                 FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
@@ -202,6 +202,7 @@ public class ApplicationCRKF extends javafx.application.Application {
 
             EcoleModalController.setModal(modal);
             EcoleModalController.setCreate(true);
+            EcoleModalController.setEcoleController(ecoleController);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);
@@ -215,7 +216,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
 
-    public void openUpdateEcole(Ecole ecole) {
+    public void openUpdateEcole(Ecole ecole, EcoleController ecoleController) {
         Stage modal = new Stage();
         try {
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationCRKF.class.getResource("modal_ecole.fxml"));
@@ -225,7 +226,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             createEcoleModalController.setModal(modal);
             createEcoleModalController.setCreate(false);
             createEcoleModalController.setEcole(ecole);
-            createEcoleModalController.setApplicationCRKF(this);
+            createEcoleModalController.setEcoleController(ecoleController);
 
             modal.setScene(new Scene(modalPane));
             modal.setResizable(false);

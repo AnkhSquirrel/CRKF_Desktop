@@ -1,6 +1,4 @@
 
-u
-Esrc/main/java/fr/kyo/crkf/controller/ecole/DetailEcoleController.java,f\4\f43c8420f1cc7f33629c374fbbbe1b191602eb4c
 k
 ;src/main/java/fr/kyo/crkf/controller/AccueilController.java,f\0\f043af8c0deb003d196adeffe12db6b90c16daf9
 j
@@ -15,8 +13,6 @@ r
 Bsrc/main/java/fr/kyo/crkf/controller/GestionFamilleController.java,0\2\02add2f91c0c1d94fc717371fe224b55d85b5710
 w
 Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48b1a5dbc153c4379c94dca72a3eebac9eb5fd4b
-[
-+src/main/java/fr/kyo/crkf/Entity/Ecole.java,4\6\463c7ba57f7dbcd06f40fc12a27b742607b9793c
 `
 0src/main/java/fr/kyo/crkf/dao/InstrumentDAO.java,6\8\68d7e5e272ca3952f857c4b05be862ef354a0f07
 ]
