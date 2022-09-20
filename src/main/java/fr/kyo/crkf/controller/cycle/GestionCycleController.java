@@ -22,6 +22,13 @@ public class GestionCycleController {
     private TableView<Cycle> cycleTable;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private int page;
     private String cycle;
     private ApplicationCRKF applicationCRKF;
@@ -39,6 +46,10 @@ public class GestionCycleController {
 
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
 
+        pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
+        pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+
         reset();
         filter();
     }
@@ -49,6 +60,11 @@ public class GestionCycleController {
             page = 1;
         }
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
+
+        pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
+        pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+
         pageNumber.setText("Page " + page);
     }
 

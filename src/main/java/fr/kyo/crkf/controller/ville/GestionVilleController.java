@@ -78,7 +78,6 @@ public class GestionVilleController {
         libelle.textProperty().addListener(observable -> filter());
 
         pageTotale = DAOFactory.getVilleDAO().getAllVille(ville, departementId) / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -95,7 +94,6 @@ public class GestionVilleController {
         }
 
         pageTotale = DAOFactory.getVilleDAO().getAllVille(ville, departementId) / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 

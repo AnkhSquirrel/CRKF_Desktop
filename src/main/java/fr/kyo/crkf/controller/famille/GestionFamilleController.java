@@ -54,9 +54,9 @@ public class GestionFamilleController {
         libelle.textProperty().addListener(observable -> filter());
 
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
+
         pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
-        if (pageTotale % 1 == 0)
-            pageTotale ++;
+        pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
         reset();
         filter();
@@ -73,7 +73,6 @@ public class GestionFamilleController {
         }
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
         pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page);
