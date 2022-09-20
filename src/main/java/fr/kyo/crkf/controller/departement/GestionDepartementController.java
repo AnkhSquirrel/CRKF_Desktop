@@ -30,6 +30,13 @@ public class GestionDepartementController {
     private TableView<Departement> departementTable;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private String departement;
     private ApplicationCRKF applicationCRKF;
     private int page;
@@ -46,7 +53,13 @@ public class GestionDepartementController {
 
         libelle.textProperty().addListener(observable -> filter());
 
-        departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));
+        departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,0)));
+
+        pageTotale = DAOFactory.getDepartementDAO().getAllDepartement(departement) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+
 
         filter();
     }
@@ -57,6 +70,10 @@ public class GestionDepartementController {
             page = 1;
         }
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,page)));
+        pageTotale = DAOFactory.getDepartementDAO().getAllDepartement(departement) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page);
     }
 
@@ -117,15 +134,14 @@ public class GestionDepartementController {
 
     @FXML
     private void pagePlus(){
-        if(!departementTable.getItems().isEmpty()){
+        if(!departementTable.getItems().isEmpty() && pageTotale > page){
             page++;
             filter();
         }
-
     }
     @FXML
     private void pageMoins(){
-        if (page > 1){
+        if (page > 1 ){
             page--;
             filter();
         }

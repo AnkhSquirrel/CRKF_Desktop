@@ -24,6 +24,13 @@ public class GestionClassificationController {
     private TableView<Classification> classificationTable;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private int page;
     private String classification;
     private ApplicationCRKF applicationCRKF;
@@ -41,6 +48,11 @@ public class GestionClassificationController {
 
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
 
+        pageTotale = DAOFactory.getClassificationDAO().getAllClassification(classification) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
+
         reset();
         filter();
     }
@@ -51,6 +63,10 @@ public class GestionClassificationController {
             page = 1;
         }
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
+        pageTotale = DAOFactory.getClassificationDAO().getAllClassification(classification) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page);
     }
 
@@ -64,7 +80,7 @@ public class GestionClassificationController {
     }
     @FXML
     private void pagePlus(){
-        if(!classificationTable.getItems().isEmpty()){
+        if(!classificationTable.getItems().isEmpty() && pageTotale > page){
             page++;
             filter();
         }

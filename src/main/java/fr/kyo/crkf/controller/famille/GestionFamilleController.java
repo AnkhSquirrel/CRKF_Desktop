@@ -26,6 +26,13 @@ public class GestionFamilleController {
     private TableView<Famille> familleTable;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private int page;
     private SearchableFamille searchableFamille;
     private ApplicationCRKF applicationCRKF;
@@ -47,7 +54,10 @@ public class GestionFamilleController {
         libelle.textProperty().addListener(observable -> filter());
 
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
-
+        pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         reset();
         filter();
     }
@@ -62,6 +72,10 @@ public class GestionFamilleController {
             page = 1;
         }
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
+        pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page);
     }
 
@@ -76,7 +90,7 @@ public class GestionFamilleController {
     }
     @FXML
     private void pagePlus(){
-        if(!familleTable.getItems().isEmpty()){
+        if(!familleTable.getItems().isEmpty() && pageTotale > page ){
             page++;
             filter();
         }

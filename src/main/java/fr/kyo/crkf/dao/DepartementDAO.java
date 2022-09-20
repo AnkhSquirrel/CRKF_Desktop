@@ -90,6 +90,7 @@ public class DepartementDAO extends DAO<Departement> {
             String strCmd = "SELECT id_departement, numero_departement ,Departement from Departement";
             if(!departement.isEmpty())
                 strCmd += " where departement like '%" + departement + "%'";
+            if(page > 0)
             strCmd += " order by departement OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             ResultSet rs = s.executeQuery();
@@ -102,6 +103,23 @@ public class DepartementDAO extends DAO<Departement> {
             e.printStackTrace();
         }
         return list;
+    }
+    public int getAllDepartement(String departement) {
+        try{
+            String strCmd = "SELECT COUNT(id_departement) from Departement";
+            if(!departement.isEmpty())
+                strCmd += " where departement like '%" + departement + "%'";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int departements = rs.getInt(1);
+            rs.close();
+            return departements;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
     }
 
     public ArrayList<Ville> getVilleByDepartement(int id) {

@@ -148,6 +148,24 @@ public class VilleDAO extends DAO<Ville> {
         return list;
     }
 
+    public int getAllVille(String nom, int departement_id) {
+        try{
+            String strCmd = "SELECT COUNT(id_ville) from Ville where ville like '%" + nom + "%'";
+            if(departement_id != 0)
+                strCmd += " and id_departement = " + departement_id;
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int villes = rs.getInt(1);
+            rs.close();
+            return villes;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     public ArrayList<Ville> getLikeForGestion(String nom, int departement_id, int page) {
         ArrayList<Ville> list = new ArrayList<>();
         try (Statement stmt = connexion.createStatement()){

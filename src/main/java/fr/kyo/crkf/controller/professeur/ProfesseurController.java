@@ -42,6 +42,13 @@ public class ProfesseurController {
     private SearchableComboBox<Departement> departementFiltre;
     @FXML
     private Label pageNumber;
+    @FXML
+    private Label numberOfPage;
+    @FXML
+    private Button pagePlus;
+    @FXML
+    private Button pageMoins;
+    private int pageTotale;
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
@@ -73,6 +80,11 @@ public class ProfesseurController {
         departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
+
+        pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
     private void villeFilter() {
@@ -106,19 +118,23 @@ public class ProfesseurController {
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }
+        pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
+        if (pageTotale % 1 == 0)
+            pageTotale ++;
+        numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page);
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }
     @FXML
     private void pagePlus(){
-        if(professeurTable.getItems().size() > 0){
+        if(professeurTable.getItems().size() > 0 ){
             page++;
             filter();
         }
 
     }
     @FXML
-    private void pageMoin(){
+    private void pageMoins(){
         if (page > 1){
             page--;
             filter();

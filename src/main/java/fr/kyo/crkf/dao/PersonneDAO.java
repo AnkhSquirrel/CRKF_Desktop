@@ -123,6 +123,47 @@ public class PersonneDAO extends DAO<Personne> {
         return liste;
     }
 
+    public ArrayList<Personne> getLikeAllPersonne(SearchableProfesseur searchableProfesseur) {
+        ArrayList<Personne> liste = new ArrayList<>();
+        try {
+            String strCmd = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            s.setString(1,searchableProfesseur.getNomEtPrenom());
+            s.setInt(2,searchableProfesseur.getVehiculeCV());
+            s.setInt(3,searchableProfesseur.getVilleId());
+            s.setInt(4,searchableProfesseur.getDepartementId());
+            ResultSet rs = s.executeQuery();
+
+            while (rs.next()) {
+                Personne personne = new Personne();
+                int id = rs.getInt(1);
+                personne.setId_personne(id);
+                personne.setNom(rs.getString(2));
+                personne.setPrenom(rs.getString(3));
+                personne.setVehiculeCv(rs.getInt(4));
+                personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+                personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+
+                //Search the affiliate Diplome
+                String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
+                PreparedStatement s2 = connexion.prepareStatement(strCmd2);
+                s2.setInt(1,id);
+                ResultSet rs2 = s2.executeQuery();
+
+                while (rs2.next()){
+                    personne.addDiplome(new Diplome(rs2.getInt(1),rs2.getInt(2)));
+                }
+                rs2.close();
+                liste.add(personne);
+            }
+            rs.close();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+        return liste;
+    }
+
     public ArrayList<Personne> getByEcole (int id_ecole) {
         ArrayList<Personne> liste = new ArrayList<>();
         try {

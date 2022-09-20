@@ -120,4 +120,22 @@ public class ClassificationDAO extends DAO<Classification> {
         }
         return list;
     }
+
+    public int getAllClassification(String classification) {
+        try{
+            String strCmd = "SELECT COUNT(id_classification) from Classification";
+            if(!classification.isEmpty())
+                strCmd += " where classification like '%" + classification + "%'";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int classifications = rs.getInt(1);
+            rs.close();
+            return classifications;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
 }

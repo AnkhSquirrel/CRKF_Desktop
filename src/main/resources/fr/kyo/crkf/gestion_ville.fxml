@@ -71,9 +71,10 @@
       </TableView>
       <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" GridPane.rowIndex="4">
          <children>
-            <Button mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
+            <Button fx:id="pageMoins" mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
             <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" />
-            <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+            <Label fx:id="numberOfPage" alignment="CENTER" prefWidth="100.0" text="Page totale" />
+            <Button fx:id="pagePlus" mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
          </children>
       </HBox>
    </children>

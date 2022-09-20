@@ -89,6 +89,28 @@ public class FamilleDAO extends DAO<Famille> {
         return list;
     }
 
+    public int getAllFamille(SearchableFamille searchableFamille) {
+        try{
+            String strCmd = "SELECT COUNT(id_famille) from Famille";
+            if(searchableFamille.getClassification() != 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification() + " and famille like '%" + searchableFamille.getNom() + "%'";
+            else if(searchableFamille.getClassification() != 0 && searchableFamille.getNom().isEmpty())
+                strCmd += " where id_classification = " + searchableFamille.getClassification();
+            else if(searchableFamille.getClassification() == 0 && !searchableFamille.getNom().isEmpty())
+                strCmd += " where famille like '%" + searchableFamille.getNom() + "%'";
+            PreparedStatement s = connexion.prepareStatement(strCmd);
+            ResultSet rs = s.executeQuery();
+            rs.next();
+            int familles = rs.getInt(1);
+            rs.close();
+            return familles;
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return 0;
+        }
+    }
+
     @Override
     public ArrayList<Famille> getAll(int page) {
         ArrayList<Famille> liste = new ArrayList<>();
