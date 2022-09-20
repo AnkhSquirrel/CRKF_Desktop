@@ -1,6 +1,5 @@
 package fr.kyo.crkf.Searchable;
 
-import fr.kyo.crkf.Entity.Departement;
 import fr.kyo.crkf.Entity.Ville;
 import fr.kyo.crkf.dao.DAOFactory;
 

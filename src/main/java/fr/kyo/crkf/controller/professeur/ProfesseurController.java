@@ -64,23 +64,31 @@ public class ProfesseurController {
 
         nomEtPrenomFiltre.textProperty().addListener(observable -> filter());
 
-        departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
-        departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
-        departementFiltre.getSelectionModel().select(0);
-
-        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
         villeFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         villeFiltre.setEditable(true);
         villeFiltre.getEditor().textProperty().addListener(observable -> villeFilter());
-        villeFiltre.getEditor().setText("Ville");
+        villeFiltre.getSelectionModel().select(0);
+
+        departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
+        departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
 
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
     private void villeFilter() {
-        if(searchableProfesseur.getVilleId() != 0 && !villeFiltre.getEditor().getText().equals(searchableProfesseur.getVille().getVille())){
+        if((searchableProfesseur.getVilleId() == 0 && villeFiltre.getSelectionModel().getSelectedItem() == null) || !villeFiltre.getEditor().getText().equals(villeFiltre.getSelectionModel().getSelectedItem().getVille())){
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getDepartementId())));
         }
+    }
+    private void filterDepartement() {
+        filter();
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != 0) {
+            villeFiltre.setDisable(false);
+        } else {
+            villeFiltre.setDisable(true);
+        }
+        villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableProfesseur.getDepartementId())));
+        villeFiltre.getSelectionModel().select(0);
     }
     public void filter() {
         if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
@@ -95,12 +103,7 @@ public class ProfesseurController {
         }
 
         if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getId_ville() != searchableProfesseur.getVilleId()){
-            searchableProfesseur.setDepartementId(villeFiltre.getSelectionModel().getSelectedItem().getDepartementID());
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
-            if(villeFiltre.getSelectionModel().getSelectedItem().getId_ville() == 0)
-                departementFiltre.getSelectionModel().select(0);
-            else
-                departementFiltre.getSelectionModel().select(villeFiltre.getSelectionModel().getSelectedItem().getDepartement());
             page = 1;
         }
         pageNumber.setText("Page " + page);
