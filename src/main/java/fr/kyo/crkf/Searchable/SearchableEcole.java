@@ -1,31 +1,19 @@
 package fr.kyo.crkf.Searchable;
 
-import fr.kyo.crkf.Entity.*;
-import javafx.beans.property.SimpleStringProperty;
-import javafx.beans.value.ObservableValue;
-
+import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.dao.DAOFactory;
 
 public class SearchableEcole {
-    private int id_ecole;
+
     private String nom;
-
-    private Adresse adresse;
-
-    private Ville ville;
-
-    private Departement departement;
+    private int ville;
+    private int departement;
 
     public SearchableEcole() {
-        this.id_ecole = id_ecole;
-        this.nom = nom;
-        ville = new Ville(0, "",0F, 0F, 0);
-        departement = new Departement(0, "Departement", "");
-    }
-    public int getId_ecole() {
-        return id_ecole;
-    }
-    public void setId_ecole(int id_ecole) {
-        this.id_ecole = id_ecole;
+        this.nom = "";
+        ville = 0;
+        departement = 0;
     }
     public String getNom() {
         return nom;
@@ -33,29 +21,22 @@ public class SearchableEcole {
     public void setNom(String nom) {
         this.nom = nom;
     }
-    public Departement getDepartement() {
+    public int getIdDepartement() {
         return departement;
     }
-    public void setDepartement(Departement departement) {
+    public Departement getDepartement(){
+        return DAOFactory.getDepartementDAO().getByID(departement);
+    }
+    public void setIdDepartement(int departement) {
         this.departement = departement;
     }
-    public Adresse getAdresse() {
-        return adresse;
-    }
-
-    public void setAdresse(Adresse adresse) {
-        this.adresse = adresse;
-    }
-
-    public Ville getVille() {
+    public int getIdVille() {
         return ville;
     }
-
-    public void setVille(Ville ville) {
+    public Ville getVille(){
+        return DAOFactory.getVilleDAO().getByID(ville);
+    }
+    public void setIdVille(int ville) {
         this.ville = ville;
     }
-    public ObservableValue<String> getNomStringProperty(){
-        return new SimpleStringProperty(nom);
-    }
-
 }

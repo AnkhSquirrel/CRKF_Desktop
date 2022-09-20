@@ -85,13 +85,13 @@ public class EcoleController {
                 } else {
                         ville.setDisable(true);
                 }
-                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getDepartement().getId_departement())));
+                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getIdDepartement())));
                 ville.getSelectionModel().select(0);
         }
 
         private void villeFilter() {
-                if(!ville.getEditor().getText().equals(searchableEcole.getVille().getVille())){
-                        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
+                if((searchableEcole.getIdVille() == 0 && ville.getSelectionModel().getSelectedItem() == null) || !ville.getEditor().getText().equals(ville.getSelectionModel().getSelectedItem().getVille())){
+                        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getIdDepartement())));
                 }
         }
         @FXML
@@ -109,13 +109,13 @@ public class EcoleController {
                         searchableEcole.setNom(nomEcole.getText());
                         page = 1;
                 }
-                if(!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
-                        searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
+                if(!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem().getId_ville() != searchableEcole.getIdVille()){
+                        searchableEcole.setIdVille(ville.getSelectionModel().getSelectedItem().getId_ville());
                         page = 1;
                 }
 
-                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getDepartement() ){
-                        searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
+                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getId_departement() != searchableEcole.getIdDepartement() ){
+                        searchableEcole.setIdDepartement(departement.getSelectionModel().getSelectedItem().getId_departement());
                         page = 1;
                 }
 

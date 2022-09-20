@@ -107,7 +107,7 @@ public class EcoleModalController {
     @FXML
     private void filter(){
         if(nomDepartement.getSelectionModel().getSelectedItem() != null){
-            searchableEcole.setDepartement(nomDepartement.getSelectionModel().getSelectedItem());
+            searchableEcole.setIdDepartement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement());
         }
     }
 

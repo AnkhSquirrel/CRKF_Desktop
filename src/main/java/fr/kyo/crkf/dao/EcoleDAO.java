@@ -72,8 +72,8 @@ public class EcoleDAO extends DAO<Ecole> {
             String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25, @page = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableEcole.getNom());
-            s.setInt(2,searchableEcole.getVille().getId_ville());
-            s.setInt(3, searchableEcole.getDepartement().getId_departement());
+            s.setInt(2,searchableEcole.getIdVille());
+            s.setInt(3, searchableEcole.getIdDepartement());
             s.setInt(4, page);
             ResultSet rs = s.executeQuery();
 
