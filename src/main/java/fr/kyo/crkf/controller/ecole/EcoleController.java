@@ -174,6 +174,7 @@ public class EcoleController {
                 drawer.setDisable(true);
                 listeEcole.setEffect(null);
                 listeEcole.setDisable(false);
+                ecoleTable.getSelectionModel().clearSelection();
         }
 
         public void openDetail(){
