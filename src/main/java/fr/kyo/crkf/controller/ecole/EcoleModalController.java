@@ -101,15 +101,23 @@ public class EcoleModalController {
     }
 
     private void filterDepartement() {
+        filter();
+        if (nomDepartement.getSelectionModel().getSelectedItem() != null && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+            ville.setDisable(false);
+        } else {
+            ville.setDisable(true);
+        }
         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", searchableEcole.getIdDepartement())));
         ville.getSelectionModel().select(0);
-        filter();
     }
 
-    @FXML
+
     private void filter(){
         if(nomDepartement.getSelectionModel().getSelectedItem() != null){
             searchableEcole.setIdDepartement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement());
+        }
+        if (!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem().getId_ville() != searchableEcole.getIdVille()){
+            searchableEcole.setIdVille(ville.getSelectionModel().getSelectedItem().getId_ville());
         }
     }
 
