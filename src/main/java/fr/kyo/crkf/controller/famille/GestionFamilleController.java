@@ -56,8 +56,11 @@ public class GestionFamilleController {
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
 
         pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        if(pageTotale == 0)
         pageTotale ++;
+
         numberOfPage.setText(String.valueOf(pageTotale));
+
         reset();
         filter();
     }
@@ -72,10 +75,13 @@ public class GestionFamilleController {
             page = 1;
         }
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
+
         pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        if (pageTotale == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
-        pageNumber.setText("Page " + page);
+
+        pageNumber.setText("Page " + page + " / ");
     }
 
     @FXML
@@ -101,6 +107,16 @@ public class GestionFamilleController {
             page--;
             filter();
         }
+    }
+    @FXML
+    private void lastPage(){
+        page = pageTotale;
+        filter();
+    }
+    @FXML
+    private void firstPage(){
+        page = 1;
+        filter();
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){

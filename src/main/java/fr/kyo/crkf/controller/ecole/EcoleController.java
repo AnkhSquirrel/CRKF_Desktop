@@ -85,8 +85,9 @@ public class EcoleController {
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
+                if(pageTotale == 0)
                         pageTotale++;
-                numberOfPage.setText(String.valueOf(pageTotale));
+                numberOfPage.setText(" / " + String.valueOf(pageTotale));
 
         }
 
@@ -134,8 +135,9 @@ public class EcoleController {
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
+                if (pageTotale == 0)
                         pageTotale++;
-                numberOfPage.setText(String.valueOf(pageTotale));
+                numberOfPage.setText( " / " + String.valueOf(pageTotale));
 
                 pageNumber.setText("Page " + page);
         }
@@ -185,7 +187,16 @@ public class EcoleController {
                         filter();
                 }
         }
-
+        @FXML
+        private void lastPage(){
+                page = pageTotale;
+                filter();
+        }
+        @FXML
+        private void firstPage(){
+                page = 1;
+                filter();
+        }
         public void closeDetail(){
                 drawer.close();
                 drawer.setDisable(true);

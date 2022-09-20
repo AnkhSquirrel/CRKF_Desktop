@@ -47,6 +47,7 @@ public class GestionCycleController {
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
 
         pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
+        if (pageTotale == 0)
         pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -62,8 +63,9 @@ public class GestionCycleController {
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
 
         pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
+        if (pageTotale == 0)
         pageTotale ++;
-        numberOfPage.setText(String.valueOf(pageTotale));
+        numberOfPage.setText(" / " + String.valueOf(pageTotale));
 
         pageNumber.setText("Page " + page);
     }
@@ -78,7 +80,7 @@ public class GestionCycleController {
     }
     @FXML
     private void pagePlus(){
-        if(!cycleTable.getItems().isEmpty()){
+        if(!cycleTable.getItems().isEmpty() && pageTotale > page){
             page++;
             filter();
         }
@@ -91,7 +93,16 @@ public class GestionCycleController {
             filter();
         }
     }
-
+    @FXML
+    private void lastPage(){
+        page = pageTotale;
+        filter();
+    }
+    @FXML
+    private void firstPage(){
+        page = 1;
+        filter();
+    }
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }

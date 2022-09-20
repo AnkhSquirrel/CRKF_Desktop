@@ -82,6 +82,7 @@ public class ProfesseurController {
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
 
         pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
+        if (pageTotale == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -120,15 +121,16 @@ public class ProfesseurController {
         }
 
         pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
+        if (pageTotale == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
-        pageNumber.setText("Page " + page);
+        pageNumber.setText("Page " + page + " / ");
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }
     @FXML
     private void pagePlus(){
-        if(professeurTable.getItems().size() > 0 ){
+        if(professeurTable.getItems().size() > 0 && pageTotale > page ){
             page++;
             filter();
         }
@@ -141,6 +143,16 @@ public class ProfesseurController {
             filter();
         }
 
+    }
+    @FXML
+    private void lastPage(){
+        page = pageTotale;
+        filter();
+    }
+    @FXML
+    private void firstPage(){
+        page = 1;
+        filter();
     }
     @FXML
     private void reset(){
