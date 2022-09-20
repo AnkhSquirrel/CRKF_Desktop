@@ -132,17 +132,6 @@ public class ProfesseurController {
         villeFiltre.getSelectionModel().selectFirst();
         departementFiltre.getSelectionModel().selectFirst();
     }
-    private void filterByDepartement() {
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && (departementFiltre.getSelectionModel().getSelectedItem()).getId_departement() != 0) {
-            villeFiltre.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getByDepartementID(departementFiltre.getSelectionModel().getSelectedItem().getId_departement())));
-            villeFiltre.setDisable(false);
-        } else {
-            villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilles()));
-            villeFiltre.setDisable(true);
-        }
-        villeFiltre.getSelectionModel().select(0);
-        filter();
-    }
     private void openDetailProfesseur() {
         if(professeurTable.getSelectionModel().getSelectedItem() != null){
             try {
@@ -182,6 +171,7 @@ public class ProfesseurController {
         drawer.setDisable(true);
         listeProfesseur.setEffect(null);
         listeProfesseur.setDisable(false);
+        professeurTable.getSelectionModel().clearSelection();
     }
     public void openDetail(){
         drawer.setDisable(false);

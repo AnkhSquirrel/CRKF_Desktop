@@ -151,6 +151,7 @@ public class InstrumentController {
         drawer.setDisable(true);
         listeInstrument.setEffect(null);
         listeInstrument.setDisable(false);
+        instrumentTable.getSelectionModel().clearSelection();
     }
 
     public void openDetail(){
