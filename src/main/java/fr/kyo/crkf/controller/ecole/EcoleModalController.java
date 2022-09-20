@@ -21,11 +21,12 @@ public class EcoleModalController {
     @FXML
     private TextField libeleAdresse;
     @FXML
-    private SearchableComboBox<Ville> ville;
+    private ComboBox<Ville> ville;
     @FXML
     private SearchableComboBox<Departement> nomDepartement;
     @FXML
     private Label nomModal;
+    private Ville selectedVille;
     private SearchableEcole searchableEcole;
     private Ecole ecoleUpdate;
     private boolean create;
@@ -37,37 +38,39 @@ public class EcoleModalController {
     private void initialize(){
         filter = new Filter();
 
-        searchableEcole = new SearchableEcole();
-
         nomDepartement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         nomDepartement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
         nomDepartement.getSelectionModel().select(0);
 
-        ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
-        ville.setItems(FXCollections.observableArrayList(filter.getVilles()));
+        ville.setEditable(true);
+        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", 0)));
         ville.getSelectionModel().select(0);
+        ville.getSelectionModel().selectedItemProperty().addListener(a -> selectVille());
+        ville.getEditor().textProperty().addListener(observable -> villeFilter());
+
+        selectedVille = ville.getItems().get(0);
+
     }
     @FXML
     private void addEcole(){
-        Ecole ecole = new Ecole(0, nomEcole.getText(), 0);
-
-        if(!ecole.getNom().equals("") && !libeleAdresse.getText().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
-            Adresse adresse = new Adresse(0, libeleAdresse.getText(), ville.getSelectionModel().getSelectedItem().getId_ville());
-            adresse.setId_adresse(DAOFactory.getAdresseDAO().insert(adresse));
-            ecole.setAdresse(adresse);
-            DAOFactory.getEcoleDAO().insert(ecole);
-            closeModal();
-            ecoleController.filter();
-        }
-        else{
-            Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
-            alertErrorInsert.setTitle("Erreur");
-            alertErrorInsert.setHeaderText("Erreur! Mauvaise(s) donnée(s)");
-            alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
-                if (btnTypeError == ButtonType.OK) {
-                    alertErrorInsert.close();
-                }
-            });
+        Adresse adresseObject = new Adresse(0, libeleAdresse.getText(),selectedVille.getId_ville());
+        int idAdresse = DAOFactory.getAdresseDAO().insert(adresseObject);
+        if (idAdresse != 0){
+            Ecole ecole = new Ecole(0, nomEcole.getText(), idAdresse);
+            if (DAOFactory.getEcoleDAO().insert(ecole) != 0){
+                ecoleController.filter();
+                closeModal();
+            }else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Il y a eu une erreur lors de la création de l'école.\nMerci de vérifier que vous avez entrée des informations valides");
+                alert.showAndWait();
+            }
+        } else{
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Erreur");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de l'adresse.\nMerci de vérifier que vous avez entrée des informations valides");
+            alert.showAndWait();
         }
     }
 
@@ -80,53 +83,56 @@ public class EcoleModalController {
     }
 
     public void updateEcole(){
-        if (!nomEcole.getText().isEmpty() && !libeleAdresse.getText().isEmpty() && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
-            ecoleUpdate.setNom(nomEcole.getText());
-            ecoleUpdate.getAdresse().setAdresse(libeleAdresse.getText());
-            ecoleUpdate.getAdresse().getVille().setVille(ville.getSelectionModel().getSelectedItem().getVille());
-            ecoleUpdate.getAdresse().getVille().getDepartement().setDepartement(nomDepartement.getSelectionModel().getSelectedItem().getDepartement());
-            DAOFactory.getVilleDAO().update(ecoleUpdate.getAdresse().getVille());
-            DAOFactory.getDepartementDAO().update(ecoleUpdate.getAdresse().getVille().getDepartement());
-            DAOFactory.getAdresseDAO().update(ecoleUpdate.getAdresse());
-            DAOFactory.getEcoleDAO().update(ecoleUpdate);
+        Adresse temp = new Adresse(ecoleUpdate.getAdresse().getId_adresse(), libeleAdresse.getText(), selectedVille.getId_ville());
+        if (DAOFactory.getAdresseDAO().update(temp)){
+            ecoleUpdate = new Ecole(ecoleUpdate.getId_ecole(), nomEcole.getText(), temp.getId_adresse());
+            if (DAOFactory.getEcoleDAO().update(ecoleUpdate)){
                 ecoleController.filter();
                 closeModal();
-            }
-            else{
+            } else{
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Il y a eu une erreur lors de la modification de l'école.\n Merci de vérifier que vous avez entrée des informations valides");
+                alert.showAndWait();
+                }
+            } else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("L'école n'a pas pu être modifiée");
+            alert.setHeaderText("\"Il y a eu une erreur lors de la modification de l'adresse.\\n Merci de vérifier que vous avez entrée des informations valides");
             alert.showAndWait();
         }
     }
 
     private void filterDepartement() {
-        filter();
-        if (nomDepartement.getSelectionModel().getSelectedItem() != null && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+        if(nomDepartement.getSelectionModel().getSelectedItem() != null && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
             ville.setDisable(false);
-        } else {
-            ville.setDisable(true);
-        }
-        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", searchableEcole.getIdDepartement())));
-        ville.getSelectionModel().select(0);
-    }
-
-
-    private void filter(){
-        if(nomDepartement.getSelectionModel().getSelectedItem() != null){
-            searchableEcole.setIdDepartement(nomDepartement.getSelectionModel().getSelectedItem().getId_departement());
-        }
-        if (!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem().getId_ville() != searchableEcole.getIdVille()){
-            searchableEcole.setIdVille(ville.getSelectionModel().getSelectedItem().getId_ville());
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", nomDepartement.getSelectionModel().getSelectedItem().getId_departement())));
+            ville.getSelectionModel().select(0);
         }
     }
+
+    private void villeFilter() {
+        if(!ville.getEditor().getText().equals(selectedVille.getVille())){
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),nomDepartement.getSelectionModel().getSelectedItem().getId_departement())));
+        }
+    }
+
+    private void selectVille() {
+        if(ville.getSelectionModel().getSelectedIndex() >= 1 && ville.getSelectionModel().getSelectedItem() != null)
+            selectedVille = ville.getSelectionModel().getSelectedItem();
+    }
+
 
     @FXML
-    private void validate(){
-        if(create)
-            addEcole();
-        else
-            updateEcole();
+    void validate() {
+        boolean adresseComplete = selectedVille != null &&
+                !libeleAdresse.getText().isEmpty();
+        if(adresseComplete ){
+            if(create){
+                addEcole();
+            } else
+                updateEcole();
+        }
     }
     public void setCreate(boolean bool){
         create = bool;
