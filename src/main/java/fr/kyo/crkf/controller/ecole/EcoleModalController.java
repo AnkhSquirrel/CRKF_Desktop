@@ -30,7 +30,7 @@ public class EcoleModalController {
     private Ecole ecoleUpdate;
     private boolean create;
     private Filter filter;
-    private ApplicationCRKF applicationCRKF;
+    private EcoleController ecoleController;
 
 
     @FXML
@@ -51,11 +51,13 @@ public class EcoleModalController {
     private void addEcole(){
         Ecole ecole = new Ecole(0, nomEcole.getText(), 0);
 
-        if(!ecole.getNom().equals("") && !ecole.getAdresse().getAdresse().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
-            int id =  DAOFactory.getAdresseDAO().insert(ecole.getAdresse());
-            ecole.getAdresse().setId_adresse(id);
+        if(!ecole.getNom().equals("") && !libeleAdresse.getText().equals("") && ville.getSelectionModel().getSelectedItem().getId_ville() != 0 && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+            Adresse adresse = new Adresse(0, libeleAdresse.getText(), ville.getSelectionModel().getSelectedItem().getId_ville());
+            adresse.setId_adresse(DAOFactory.getAdresseDAO().insert(adresse));
+            ecole.setAdresse(adresse);
             DAOFactory.getEcoleDAO().insert(ecole);
             closeModal();
+            ecoleController.filter();
         }
         else{
             Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
@@ -87,7 +89,7 @@ public class EcoleModalController {
             DAOFactory.getDepartementDAO().update(ecoleUpdate.getAdresse().getVille().getDepartement());
             DAOFactory.getAdresseDAO().update(ecoleUpdate.getAdresse());
             DAOFactory.getEcoleDAO().update(ecoleUpdate);
-                applicationCRKF.openDetailEcole(ecoleUpdate);
+                ecoleController.filter();
                 closeModal();
             }
             else{
@@ -99,7 +101,7 @@ public class EcoleModalController {
     }
 
     private void filterDepartement() {
-        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", searchableEcole.getDepartement().getId_departement())));
+        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", searchableEcole.getIdDepartement())));
         ville.getSelectionModel().select(0);
         filter();
     }
@@ -127,13 +129,12 @@ public class EcoleModalController {
     public void setModal(Stage modal) {
         this.modal = modal;
     }
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
-    }
     @FXML
     private void closeModal(){
         modal.close();
     }
 
-
+    public void setEcoleController(EcoleController ecoleController) {
+        this.ecoleController = ecoleController;
+    }
 }

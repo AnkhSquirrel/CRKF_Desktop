@@ -113,11 +113,11 @@ public class EcoleController {
                 nomEcole.setText("");
                 departement.getSelectionModel().selectFirst();
                 ville.getSelectionModel().selectFirst();
-                //filter();
+                filter();
         }
 
         @FXML
-        private void filter(){
+        public void filter(){
                 if(!nomEcole.getText().equals(searchableEcole.getNom()) && !nomEcole.getText().isEmpty()) {
                         searchableEcole.setNom(nomEcole.getText());
                         page = 1;
@@ -166,7 +166,7 @@ public class EcoleController {
         }
         @FXML
         private void openCreateModal(){
-                applicationCRKF.openCreateEcoleModal();
+                applicationCRKF.openCreateEcoleModal(this);
         }
         @FXML
         private void openMainMenu(){

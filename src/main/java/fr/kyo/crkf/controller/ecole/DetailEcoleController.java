@@ -48,15 +48,10 @@ public class DetailEcoleController {
     }
 
     @FXML
-    public void openEcoleList() {
-        applicationCRKF.openEcoleList();
-    }
-
-    @FXML
     private void deleteEcole(){
         if(applicationCRKF.deleteModal()){
             DAOFactory.getEcoleDAO().delete(ecole);
-            applicationCRKF.openEcoleList();
+            ecoleController.filter();
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -66,7 +61,7 @@ public class DetailEcoleController {
     }
     @FXML
     private void updateEcole(){
-        applicationCRKF.openUpdateEcole(ecole);
+        applicationCRKF.openUpdateEcole(ecole, ecoleController);
     }
 
     @FXML
