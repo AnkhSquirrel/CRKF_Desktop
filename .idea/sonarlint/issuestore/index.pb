@@ -23,5 +23,3 @@ Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48
 -src/main/java/fr/kyo/crkf/dao/FamilleDAO.java,d\8\d8b01d35c36b0bcd4154387d12af7352bfcb911f
 d
 4src/main/java/fr/kyo/crkf/dao/ClassificationDAO.java,7\5\75f69c5b6776011024cebddd0b4434930152757b
-v
-Fsrc/main/java/fr/kyo/crkf/controller/ville/GestionVilleController.java,d\3\d301f347d2ec7859c753c1e6066708342bcff3d0

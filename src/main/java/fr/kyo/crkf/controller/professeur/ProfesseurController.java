@@ -82,9 +82,9 @@ public class ProfesseurController {
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
 
         pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
+
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
     private void villeFilter() {
@@ -118,10 +118,11 @@ public class ProfesseurController {
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }
+
         pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
+
         pageNumber.setText("Page " + page);
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }

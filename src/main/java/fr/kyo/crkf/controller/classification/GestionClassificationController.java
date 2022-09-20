@@ -49,7 +49,6 @@ public class GestionClassificationController {
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
 
         pageTotale = DAOFactory.getClassificationDAO().getAllClassification(classification) / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -63,10 +62,11 @@ public class GestionClassificationController {
             page = 1;
         }
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
+
         pageTotale = DAOFactory.getClassificationDAO().getAllClassification(classification) / 25;
-        if (pageTotale % 1 == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
+
         pageNumber.setText("Page " + page);
     }
 

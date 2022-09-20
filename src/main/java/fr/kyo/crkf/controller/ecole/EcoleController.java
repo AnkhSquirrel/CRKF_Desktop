@@ -85,7 +85,6 @@ public class EcoleController {
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
 
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
-                if (pageTotale % 1 ==0)
                         pageTotale++;
                 numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -118,7 +117,7 @@ public class EcoleController {
 
         @FXML
         private void filter(){
-                if(!nomEcole.getText().isEmpty() || !nomEcole.getText().equals(searchableEcole.getNom())) {
+                if(!nomEcole.getText().equals(searchableEcole.getNom()) && !nomEcole.getText().isEmpty()) {
                         searchableEcole.setNom(nomEcole.getText());
                         page = 1;
                 }
@@ -133,10 +132,11 @@ public class EcoleController {
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
-                if (pageTotale % 1 ==0)
                         pageTotale++;
                 numberOfPage.setText(String.valueOf(pageTotale));
+
                 pageNumber.setText("Page " + page);
         }
 

@@ -79,6 +79,24 @@ public class CycleDAO extends DAO<Cycle> {
         return list;
     }
 
+    public int getLikeAllCycle(String cycle) {
+            try{
+                String strCmd = "SELECT COUNT(id_libelle) from Cycle";
+                if(!cycle.isEmpty())
+                    strCmd += " where cycle like '%" + cycle + "%'";
+                PreparedStatement s = connexion.prepareStatement(strCmd);
+                ResultSet rs = s.executeQuery();
+                rs.next();
+                int villes = rs.getInt(1);
+                rs.close();
+                return villes;
+            }
+            catch (Exception e) {
+                e.printStackTrace();
+                return 0;
+            }
+    }
+
     public int getHighestCycle() {
         try{
             String strCmd = "SELECT MAX(cycle) from Cycle";
