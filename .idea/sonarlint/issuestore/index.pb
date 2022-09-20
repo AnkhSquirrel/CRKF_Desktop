@@ -13,8 +13,6 @@ N
 src/main/java/module-info.java,1\c\1c89a5491fbfda3fb050196d6a239f20200296e7
 r
 Bsrc/main/java/fr/kyo/crkf/controller/GestionFamilleController.java,0\2\02add2f91c0c1d94fc717371fe224b55d85b5710
-‚
-Rsrc/main/java/fr/kyo/crkf/controller/departement/GestionDepartementController.java,2\c\2c8ba895b98e2e86f73b0ad2ed276ee6b211bcd8
 w
 Gsrc/main/java/fr/kyo/crkf/controller/ClassificationModalController.java,4\8\48b1a5dbc153c4379c94dca72a3eebac9eb5fd4b
 [

@@ -100,8 +100,8 @@ public class EcoleDAO extends DAO<Ecole> {
             String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
             PreparedStatement s = connexion.prepareStatement(strCmd);
             s.setString(1,searchableEcole.getNom());
-            s.setInt(2,searchableEcole.getVille().getId_ville());
-            s.setInt(3, searchableEcole.getDepartement().getId_departement());
+            s.setInt(2,searchableEcole.getIdVille());
+            s.setInt(3, searchableEcole.getIdDepartement());
             ResultSet rs = s.executeQuery();
 
             while (rs.next()) {
