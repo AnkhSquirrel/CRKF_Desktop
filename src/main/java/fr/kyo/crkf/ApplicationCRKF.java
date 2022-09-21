@@ -597,6 +597,13 @@ public class ApplicationCRKF extends javafx.application.Application {
             diplomeModalController.setPersonne(personne);
             diplomeModalController.setGestionDiplomeController(gestionDiplomeController);
 
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
+            modal.setTitle("Ajouter un Diplome");
+
+            modal.show();
         }catch (IOException e) {
             e.printStackTrace();
         }
