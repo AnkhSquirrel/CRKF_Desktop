@@ -80,6 +80,8 @@ public class EcoleModalController {
         libeleAdresse.setText(ecoleUpdate.getAdresse().getAdresse());
         nomDepartement.getSelectionModel().select(ecoleUpdate.getAdresse().getVille().getDepartement());
         ville.getSelectionModel().select(ecoleUpdate.getAdresse().getVille());
+
+        selectedVille = ecoleUpdate.getAdresse().getVille();
     }
 
     public void updateEcole(){
@@ -126,8 +128,11 @@ public class EcoleModalController {
     @FXML
     void validate() {
         boolean adresseComplete = selectedVille != null &&
-                !libeleAdresse.getText().isEmpty();
-        if(adresseComplete ){
+                !libeleAdresse.getText().isEmpty() &&
+                nomDepartement.getSelectionModel().getSelectedItem() != null &&
+                ville.getSelectionModel().getSelectedItem() != null;
+        boolean ecoleComplete = !nomEcole.getText().isEmpty();
+        if(adresseComplete && ecoleComplete){
             if(create){
                 addEcole();
             } else
