@@ -1,7 +1,7 @@
 package fr.kyo.crkf.controller.professeur;
 
-import fr.kyo.crkf.Entity.*;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.*;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,7 +11,7 @@ import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
 
-import java.util.ArrayList;
+import java.util.List;
 
 public class ProfesseurModalController {
     //Professeur
@@ -80,20 +80,20 @@ public class ProfesseurModalController {
     }
 
     private void villeFilter() {
-        if(!ville.getEditor().getText().equals(selectedVille.getVille())){
-            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),departement.getSelectionModel().getSelectedItem().getId_departement())));
+        if(!ville.getEditor().getText().equals(selectedVille.getVilleLibelle())){
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),departement.getSelectionModel().getSelectedItem().getDepartementId())));
         }
     }
 
     private void filterDepartement() {
         if(departement.getSelectionModel().getSelectedItem() != null){
-            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", departement.getSelectionModel().getSelectedItem().getId_departement())));
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", departement.getSelectionModel().getSelectedItem().getDepartementId())));
             ville.getSelectionModel().select(0);
         }
     }
 
     private void ecoleFilter() {
-        if(ecole.getSelectionModel().getSelectedItem() == null || !ecole.getEditor().getText().equals(selectedEcole.getNom())){
+        if(ecole.getSelectionModel().getSelectedItem() == null || !ecole.getEditor().getText().equals(selectedEcole.getEcoleNom())){
             ecole.setItems(FXCollections.observableArrayList(filter.getEcolesLike(ecole.getEditor().getText())));
         }
     }
@@ -116,10 +116,10 @@ public class ProfesseurModalController {
     }
 
     private void updatePersonne() {
-        Adresse temp = new Adresse(professeur.getAdresse().getId_adresse(), adresse.getText(), selectedVille.getId_ville());
+        Adresse temp = new Adresse(professeur.getAdresseId().getAdresseId(), adresse.getText(), selectedVille.getVilleId());
         if(DAOFactory.getAdresseDAO().update(temp)){
-            ArrayList<Diplome> diplomes = professeur.getDiplomes();
-            professeur = new Personne(professeur.getId_personne(),nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()),temp.getId_adresse(),selectedEcole.getId_ecole());
+            List<Diplome> diplomes = professeur.getDiplomes();
+            professeur = new Personne(professeur.getPersonneId(),nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()),temp.getAdresseId(),selectedEcole.getEcoleId());
             professeur.setDiplomes(diplomes);
             if(DAOFactory.getPersonneDAO().update(professeur)){
                 professeurController.filter();
@@ -140,10 +140,10 @@ public class ProfesseurModalController {
     }
 
     private void createPersonne() {
-        Adresse adresseObject = new Adresse(0, adresse.getText(),selectedVille.getId_ville());
+        Adresse adresseObject = new Adresse(0, adresse.getText(),selectedVille.getVilleId());
         int adresseId = DAOFactory.getAdresseDAO().insert(adresseObject);
         if(adresseId != 0){
-            Personne personne = new Personne(0,nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()), adresseId,selectedEcole.getId_ecole());
+            Personne personne = new Personne(0,nom.getText(),prenom.getText(),Integer.parseInt(cv.getText()), adresseId,selectedEcole.getEcoleId());
             if(DAOFactory.getPersonneDAO().insert(personne) != 0){
                 professeurController.filter();
                 modal.close();
@@ -175,16 +175,16 @@ public class ProfesseurModalController {
     }
     public void setProfesseur(Personne personne){
         this.professeur = personne;
-        nom.setText(professeur.getNom());
-        prenom.setText(professeur.getPrenom());
+        nom.setText(professeur.getPersonneNom());
+        prenom.setText(professeur.getPersonnePrenom());
         cv.setText(String.valueOf(professeur.getVehiculeCv()));
-        adresse.setText(professeur.getAdresse().getAdresse());
-        departement.getSelectionModel().select(professeur.getAdresse().getVille().getDepartement());
-        ville.getSelectionModel().select(professeur.getAdresse().getVille());
-        ecole.getSelectionModel().select(professeur.getEcole());
+        adresse.setText(professeur.getAdresseId().getAdresseLibelle());
+        departement.getSelectionModel().select(professeur.getAdresseId().getVille().getDepartement());
+        ville.getSelectionModel().select(professeur.getAdresseId().getVille());
+        ecole.getSelectionModel().select(professeur.getEcoleID());
 
-        selectedEcole = professeur.getEcole();
-        selectedVille = professeur.getAdresse().getVille();
+        selectedEcole = professeur.getEcoleID();
+        selectedVille = professeur.getAdresseId().getVille();
     }
 
     public void setProfesseurController(ProfesseurController professeurController) {

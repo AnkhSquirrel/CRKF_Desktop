@@ -13,7 +13,7 @@ public class NavbarController {
     }
 
     @FXML
-    public void openMainMenu(){
+    protected void openMainMenu(){
         application.openMainMenu();
     }
 

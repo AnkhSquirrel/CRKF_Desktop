@@ -1,6 +1,6 @@
 package fr.kyo.crkf.controller.classification;
 
-import fr.kyo.crkf.Entity.Classification;
+import fr.kyo.crkf.entity.Classification;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -25,7 +25,7 @@ public class ClassificationModalController {
     }
     private void updateFamille() {
         if(!nom.getText().isEmpty())
-            classification.setclassification(nom.getText());
+            classification.setClassificationLibelle(nom.getText());
         if(DAOFactory.getClassificationDAO().update(classification)){
             gestionClassificationController.filter();
             modal.close();
@@ -73,7 +73,7 @@ public class ClassificationModalController {
     }
     public void setClassification(Classification classification) {
             this.classification = classification;
-            nom.setText(classification.getclassification());
+            nom.setText(classification.getClassificationLibelle());
 
     }
 }

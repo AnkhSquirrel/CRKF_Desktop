@@ -1,8 +1,8 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Searchable.SearchableInstrument;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.entity.Instrument;
+import fr.kyo.crkf.searchable.SearchableInstrument;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -164,7 +164,7 @@ public class InstrumentDAO extends DAO<Instrument> {
         try {
             String requete = "INSERT INTO Instrument (Nom) VALUES (?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getNom());
+            preparedStatement.setString( 1 , objet.getInstrumentLibelle());
             preparedStatement.executeUpdate();
 
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -177,7 +177,7 @@ public class InstrumentDAO extends DAO<Instrument> {
                 String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
                 PreparedStatement  preparedStatement2 = connexion().prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement2.setInt( 1, id);
-                preparedStatement2.setInt(2, famille.getId_famille());
+                preparedStatement2.setInt(2, famille.getFamilleId());
                 preparedStatement2.executeUpdate();
                 preparedStatement2.close();
             }
@@ -192,21 +192,21 @@ public class InstrumentDAO extends DAO<Instrument> {
         try {
             String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_instrument());
+            preparedStatement.setInt(1, object.getInstrumentId());
             preparedStatement.executeUpdate();
 
             String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
             PreparedStatement  preparedStatement1 = connexion().prepareStatement(requete1);
-            preparedStatement1.setString(1, object.getNom());
-            preparedStatement1.setInt(2, object.getId_instrument());
+            preparedStatement1.setString(1, object.getInstrumentLibelle());
+            preparedStatement1.setInt(2, object.getInstrumentId());
             preparedStatement1.executeUpdate();
             preparedStatement1.close();
 
             for(Famille famille : object.getFamilles()){
                 String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
                 PreparedStatement  preparedStatement2 = connexion().prepareStatement(requete2);
-                preparedStatement2.setInt( 1, object.getId_instrument());
-                preparedStatement2.setInt(2, famille.getId_famille());
+                preparedStatement2.setInt( 1, object.getInstrumentId());
+                preparedStatement2.setInt(2, famille.getFamilleId());
                 preparedStatement2.executeUpdate();
                 preparedStatement2.close();
             }
@@ -221,12 +221,12 @@ public class InstrumentDAO extends DAO<Instrument> {
         try {
             String requete2 = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
             PreparedStatement preparedStatement2 = connexion().prepareStatement(requete2);
-            preparedStatement2.setInt(1, object.getId_instrument());
+            preparedStatement2.setInt(1, object.getInstrumentId());
             preparedStatement2.executeUpdate();
 
             String requete = "DELETE FROM Instrument WHERE id_instrument=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_instrument());
+            preparedStatement.setInt(1, object.getInstrumentId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

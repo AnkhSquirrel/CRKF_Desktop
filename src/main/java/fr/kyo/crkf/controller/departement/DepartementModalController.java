@@ -1,7 +1,6 @@
 package fr.kyo.crkf.controller.departement;
 
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.controller.departement.GestionDepartementController;
+import fr.kyo.crkf.entity.Departement;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -32,9 +31,9 @@ public class DepartementModalController {
     }
     private void updateDepartement() {
         if(!nomDep.getText().isEmpty())
-            departement.setDepartement(nomDep.getText());
+            departement.setDepartementLibelle(nomDep.getText());
         if(!numDepartement.getText().isEmpty() && !DAOFactory.getDepartementDAO().getNumDepartement().contains(numDepartement.getText()))
-            departement.setNumero_departement(numDepartement.getText());
+            departement.setDepartementNumero(numDepartement.getText());
         else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
@@ -88,7 +87,7 @@ public class DepartementModalController {
     }
     public void setDepartement(Departement departement) {
         this.departement = departement;
-        nomDep.setText(departement.getDepartement());
-        numDepartement.setText(departement.getNumero_departement());
+        nomDep.setText(departement.getDepartementLibelle());
+        numDepartement.setText(departement.getDepartementNumero());
     }
 }

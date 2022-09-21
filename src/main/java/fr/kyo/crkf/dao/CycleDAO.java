@@ -1,7 +1,6 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Cycle;
+import fr.kyo.crkf.entity.Cycle;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -118,8 +117,8 @@ public class CycleDAO extends DAO<Cycle> {
         try {
             String requete = "INSERT INTO Cycle (libelle,cycle) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getLibelle());
-            preparedStatement.setInt(2, objet.getCycle());
+            preparedStatement.setString( 1 , objet.getCycleLibelle());
+            preparedStatement.setInt(2, objet.getCycleNumero());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int id = 0;
@@ -137,9 +136,9 @@ public class CycleDAO extends DAO<Cycle> {
         try {
             String requete = "UPDATE Cycle SET libelle = ?, cycle = ? WHERE id_libelle = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getLibelle());
-            preparedStatement.setInt(2, object.getCycle());
-            preparedStatement.setInt(3, object.getId_cycle());
+            preparedStatement.setString(1, object.getCycleLibelle());
+            preparedStatement.setInt(2, object.getCycleNumero());
+            preparedStatement.setInt(3, object.getCycleId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -153,7 +152,7 @@ public class CycleDAO extends DAO<Cycle> {
         try {
             String requete = "DELETE FROM Cycle WHERE id_libelle=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_cycle());
+            preparedStatement.setInt(1, object.getCycleId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

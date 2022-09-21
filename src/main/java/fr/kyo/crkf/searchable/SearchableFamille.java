@@ -1,6 +1,7 @@
-package fr.kyo.crkf.Searchable;
+package fr.kyo.crkf.searchable;
 
 public class SearchableFamille {
+
     private String nom;
     private int classification;
 

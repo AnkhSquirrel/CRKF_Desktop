@@ -1,12 +1,11 @@
 package fr.kyo.crkf.controller.ecole;
 
-import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Adresse;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Entity.Ville;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableEcole;
+import fr.kyo.crkf.entity.Adresse;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ecole;
+import fr.kyo.crkf.entity.Ville;
+import fr.kyo.crkf.searchable.Filter;
+import fr.kyo.crkf.searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -53,7 +52,7 @@ public class EcoleModalController {
     }
     @FXML
     private void addEcole(){
-        Adresse adresseObject = new Adresse(0, libeleAdresse.getText(),selectedVille.getId_ville());
+        Adresse adresseObject = new Adresse(0, libeleAdresse.getText(),selectedVille.getVilleId());
         int idAdresse = DAOFactory.getAdresseDAO().insert(adresseObject);
         if (idAdresse != 0){
             Ecole ecole = new Ecole(0, nomEcole.getText(), idAdresse);
@@ -76,18 +75,18 @@ public class EcoleModalController {
 
     public void setEcole(Ecole ecole){
         ecoleUpdate = ecole;
-        nomEcole.setText(ecoleUpdate.getNom());
-        libeleAdresse.setText(ecoleUpdate.getAdresse().getAdresse());
-        nomDepartement.getSelectionModel().select(ecoleUpdate.getAdresse().getVille().getDepartement());
-        ville.getSelectionModel().select(ecoleUpdate.getAdresse().getVille());
+        nomEcole.setText(ecoleUpdate.getEcoleNom());
+        libeleAdresse.setText(ecoleUpdate.getEcoleAdresse().getAdresseLibelle());
+        nomDepartement.getSelectionModel().select(ecoleUpdate.getEcoleAdresse().getVille().getDepartement());
+        ville.getSelectionModel().select(ecoleUpdate.getEcoleAdresse().getVille());
 
-        selectedVille = ecoleUpdate.getAdresse().getVille();
+        selectedVille = ecoleUpdate.getEcoleAdresse().getVille();
     }
 
     public void updateEcole(){
-        Adresse temp = new Adresse(ecoleUpdate.getAdresse().getId_adresse(), libeleAdresse.getText(), selectedVille.getId_ville());
+        Adresse temp = new Adresse(ecoleUpdate.getEcoleAdresse().getAdresseId(), libeleAdresse.getText(), selectedVille.getVilleId());
         if (DAOFactory.getAdresseDAO().update(temp)){
-            ecoleUpdate = new Ecole(ecoleUpdate.getId_ecole(), nomEcole.getText(), temp.getId_adresse());
+            ecoleUpdate = new Ecole(ecoleUpdate.getEcoleId(), nomEcole.getText(), temp.getAdresseId());
             if (DAOFactory.getEcoleDAO().update(ecoleUpdate)){
                 ecoleController.filter();
                 closeModal();
@@ -106,16 +105,16 @@ public class EcoleModalController {
     }
 
     private void filterDepartement() {
-        if(nomDepartement.getSelectionModel().getSelectedItem() != null && nomDepartement.getSelectionModel().getSelectedItem().getId_departement() != 0){
+        if(nomDepartement.getSelectionModel().getSelectedItem() != null && nomDepartement.getSelectionModel().getSelectedItem().getDepartementId() != 0){
             ville.setDisable(false);
-            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", nomDepartement.getSelectionModel().getSelectedItem().getId_departement())));
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", nomDepartement.getSelectionModel().getSelectedItem().getDepartementId())));
             ville.getSelectionModel().select(0);
         }
     }
 
     private void villeFilter() {
-        if(!ville.getEditor().getText().equals(selectedVille.getVille())){
-            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),nomDepartement.getSelectionModel().getSelectedItem().getId_departement())));
+        if(!ville.getEditor().getText().equals(selectedVille.getVilleLibelle())){
+            ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),nomDepartement.getSelectionModel().getSelectedItem().getDepartementId())));
         }
     }
 

@@ -1,8 +1,8 @@
 package fr.kyo.crkf.controller.cycle;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Cycle;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.Cycle;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
@@ -40,7 +40,7 @@ public class GestionCycleController {
         Filter filter = new Filter();
         // initialize tableview
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getCycleStringProperty());
-        cycleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCycle()));
+        cycleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCycleNumero()));
 
         libelle.textProperty().addListener(observable -> filter());
 
@@ -118,7 +118,7 @@ public class GestionCycleController {
             alert.setTitle("Supprimer");
             alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
             Optional<ButtonType> result = alert.showAndWait();
-            if(!(result.isPresent() && result.get() == ButtonType.OK) || cycleTable.getSelectionModel().getSelectedItem().getHighestCycle().getValue() > cycleTable.getSelectionModel().getSelectedItem().getCycle()){
+            if(!(result.isPresent() && result.get() == ButtonType.OK) || cycleTable.getSelectionModel().getSelectedItem().getHighestCycle().getValue() > cycleTable.getSelectionModel().getSelectedItem().getCycleNumero()){
                 alert.close();
                 Alert alert1 = new Alert(Alert.AlertType.ERROR);
                 alert1.setTitle("Erreur");

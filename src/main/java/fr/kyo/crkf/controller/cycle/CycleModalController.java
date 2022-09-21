@@ -1,6 +1,6 @@
 package fr.kyo.crkf.controller.cycle;
 
-import fr.kyo.crkf.Entity.Cycle;
+import fr.kyo.crkf.entity.Cycle;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
@@ -38,8 +38,8 @@ public class CycleModalController {
     }
     private void updateCycle() {
         if(!nom.getText().isEmpty()){
-            cycle.setLibelle(nom.getText());
-            cycle.setCycle(Integer.parseInt(cycleTextField.getText()));
+            cycle.setCycleLibelle(nom.getText());
+            cycle.setCycleNumero(Integer.parseInt(cycleTextField.getText()));
         }
         if(DAOFactory.getCycleDAO().update(cycle)){
             gestionCycleController.filter();
@@ -88,8 +88,8 @@ public class CycleModalController {
     }
     public void setCycle(Cycle cycle) {
             this.cycle = cycle;
-            nom.setText(cycle.getLibelle());
-            cycleTextField.setText(String.valueOf(cycle.getCycle()));
+            nom.setText(cycle.getCycleLibelle());
+            cycleTextField.setText(String.valueOf(cycle.getCycleNumero()));
             cycleTextField.setDisable(true);
     }
 }

@@ -1,12 +1,9 @@
 package fr.kyo.crkf.controller.departement;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableFamille;
+import fr.kyo.crkf.entity.Classification;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -49,7 +46,7 @@ public class GestionDepartementController {
         // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
         numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
-        nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartment());
+        nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartement());
 
         libelle.textProperty().addListener(observable -> filter());
 
@@ -100,7 +97,7 @@ public class GestionDepartementController {
     @FXML
     private void remove(){
         if (departementTable.getSelectionModel().getSelectedItem() != null){
-            if (DAOFactory.getDepartementDAO().getVilleByDepartement(departementTable.getSelectionModel().getSelectedItem().getId_departement()) == null){
+            if (DAOFactory.getDepartementDAO().getVilleByDepartement(departementTable.getSelectionModel().getSelectedItem().getDepartementId()) == null){
                 Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
                 alert.setTitle("Supprimer");
                 alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");

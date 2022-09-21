@@ -1,6 +1,6 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Diplome;
+import fr.kyo.crkf.entity.Diplome;
 
 import java.sql.*;
 import java.util.ArrayList;

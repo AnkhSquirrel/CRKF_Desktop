@@ -1,8 +1,8 @@
 package fr.kyo.crkf.controller.famille;
 
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.Classification;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -41,7 +41,7 @@ public class FamilleModalController {
     private void updateFamille() {
         if(!nom.getText().isEmpty())
             famille.setfamille(nom.getText());
-        if(classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getId_classification() != 0)
+        if(classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getClassificationId() != 0)
             famille.setclassification(classification.getSelectionModel().getSelectedItem());
         if(DAOFactory.getFamilleDAO().update(famille)){
             gestionFamilleController.filter();
@@ -56,8 +56,8 @@ public class FamilleModalController {
     }
 
     private void createFamille(){
-        if(!nom.getText().isEmpty() && classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getId_classification() != 0){
-            Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem().getId_classification());
+        if(!nom.getText().isEmpty() && classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getClassificationId() != 0){
+            Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem().getClassificationId());
             if(DAOFactory.getFamilleDAO().insert(famille) != 0){
                 gestionFamilleController.filter();
                 modal.close();

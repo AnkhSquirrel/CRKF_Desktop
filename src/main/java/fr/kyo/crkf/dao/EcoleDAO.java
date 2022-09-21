@@ -1,8 +1,8 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Tools.Pair;
-import fr.kyo.crkf.Searchable.SearchableEcole;
+import fr.kyo.crkf.entity.Ecole;
+import fr.kyo.crkf.tools.Pair;
+import fr.kyo.crkf.searchable.SearchableEcole;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -172,7 +172,7 @@ public class EcoleDAO extends DAO<Ecole> {
         try {
             String requete = "INSERT INTO Ecole (Nom,id_adresse) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getNom());
+            preparedStatement.setString( 1 , objet.getEcoleNom());
             preparedStatement.setInt(2, objet.getIdAdresse());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -191,9 +191,9 @@ public class EcoleDAO extends DAO<Ecole> {
         try {
             String requete = "UPDATE Ecole SET Nom = ?, id_adresse = ? WHERE id_ecole = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getNom());
-            preparedStatement.setInt(2, object.getAdresse().getId_adresse());
-            preparedStatement.setInt(3, object.getId_ecole());
+            preparedStatement.setString(1, object.getEcoleNom());
+            preparedStatement.setInt(2, object.getEcoleAdresse().getAdresseId());
+            preparedStatement.setInt(3, object.getEcoleId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -207,7 +207,7 @@ public class EcoleDAO extends DAO<Ecole> {
         try {
             String requete = "DELETE FROM Ecole WHERE id_ecole=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_ecole());
+            preparedStatement.setInt(1, object.getEcoleId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

@@ -1,7 +1,7 @@
 package fr.kyo.crkf.controller.ecole;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.*;
+import fr.kyo.crkf.entity.*;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -40,11 +40,11 @@ public class DetailEcoleController {
 
     public void setEcole(Ecole ecole) {
         this.ecole = ecole;
-        labelAdresse.setText(ecole.getAdresse().getAdresse());
-        labelVille.setText(ecole.getAdresse().getVille().getVille());
-        labelDepartement.setText(ecole.getAdresse().getVille().getDepartement().toString());
-        labelNomEcole.setText("Ecole : " + ecole.getNom());
-        profEmbauche.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getId_ecole())));
+        labelAdresse.setText(ecole.getEcoleAdresse().getAdresseLibelle());
+        labelVille.setText(ecole.getEcoleAdresse().getVille().getVilleLibelle());
+        labelDepartement.setText(ecole.getEcoleAdresse().getVille().getDepartement().toString());
+        labelNomEcole.setText("Ecole : " + ecole.getEcoleNom());
+        profEmbauche.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())));
     }
 
     @FXML

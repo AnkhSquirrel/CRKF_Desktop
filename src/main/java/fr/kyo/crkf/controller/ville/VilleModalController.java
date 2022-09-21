@@ -1,7 +1,7 @@
 package fr.kyo.crkf.controller.ville;
 
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ville;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -71,14 +71,14 @@ public class VilleModalController {
     }
     public void setVille(Ville ville) {
         this.ville = ville;
-        nomVille.setText(ville.getVille());
+        nomVille.setText(ville.getVilleLibelle());
         nomDepartement.getSelectionModel().select(ville.getDepartement());
         latitude.setText(String.valueOf(ville.getLatitude()));
         longitude.setText(String.valueOf(ville.getLongitude()));
     }
     private void createVille(){
         if(!nomVille.getText().isEmpty() && !nomDepartement.getSelectionModel().isEmpty() && !longitude.getText().isEmpty() && !latitude.getText().isEmpty()){
-            ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem().getId_departement());
+            ville = new Ville(0 , nomVille.getText() , Float.parseFloat(longitude.getText()) , Float.parseFloat(latitude.getText()) , nomDepartement.getSelectionModel().getSelectedItem().getDepartementId());
             DAOFactory.getVilleDAO().insert(ville);
             gestionVilleController.filter();
             closeModal();
@@ -97,13 +97,13 @@ public class VilleModalController {
 
     private void updateVille() {
         if(!nomVille.getText().isEmpty())
-            ville.setVille(nomVille.getText());
+            ville.setVilleLibelle(nomVille.getText());
         if(!latitude.getText().isEmpty())
             ville.setLatitude(Float.parseFloat(latitude.getText()));
         if(!longitude.getText().isEmpty())
             ville.setLongitude(Float.parseFloat(longitude.getText()));
         if(!nomDepartement.getSelectionModel().isEmpty())
-            ville.setDepartement(nomDepartement.getSelectionModel().getSelectedItem());
+            ville.setDepartementId(nomDepartement.getSelectionModel().getSelectedItem());
         if(DAOFactory.getVilleDAO().update(ville)){
             gestionVilleController.filter();
             modal.close();

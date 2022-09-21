@@ -1,6 +1,6 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.entity.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -80,10 +80,10 @@ public class VilleDAO extends DAO<Ville> {
         try {
             String requete = "INSERT INTO Ville (ville,longitude,latitude,id_departement) VALUES (?,?,?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getVille());
+            preparedStatement.setString( 1 , objet.getVilleLibelle());
             preparedStatement.setFloat(2,objet.getLongitude());
             preparedStatement.setFloat(3,objet.getLatitude());
-            preparedStatement.setInt(4, objet.getDepartement().getId_departement());
+            preparedStatement.setInt(4, objet.getDepartement().getDepartementId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int id = 0;
@@ -101,11 +101,11 @@ public class VilleDAO extends DAO<Ville> {
         try {
             String requete = "UPDATE Ville SET ville = ?,longitude = ? ,latitude = ?,id_departement = ? WHERE id_ville = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getVille());
+            preparedStatement.setString(1, object.getVilleLibelle());
             preparedStatement.setFloat(2,object.getLongitude());
             preparedStatement.setFloat(3,object.getLatitude());
-            preparedStatement.setInt(4, object.getDepartement().getId_departement());
-            preparedStatement.setInt(5, object.getId_ville());
+            preparedStatement.setInt(4, object.getDepartement().getDepartementId());
+            preparedStatement.setInt(5, object.getVilleId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -119,7 +119,7 @@ public class VilleDAO extends DAO<Ville> {
         try {
             String requete = "DELETE FROM Ville WHERE id_ville=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_ville());
+            preparedStatement.setInt(1, object.getVilleId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

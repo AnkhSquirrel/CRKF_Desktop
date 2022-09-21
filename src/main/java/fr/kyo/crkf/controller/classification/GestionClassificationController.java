@@ -1,15 +1,12 @@
 package fr.kyo.crkf.controller.classification;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableFamille;
+import fr.kyo.crkf.entity.Classification;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.controlsfx.control.SearchableComboBox;
 
 import java.util.Optional;
 

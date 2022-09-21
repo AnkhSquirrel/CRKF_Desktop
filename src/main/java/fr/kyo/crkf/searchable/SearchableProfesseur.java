@@ -1,22 +1,20 @@
-package fr.kyo.crkf.Searchable;
+package fr.kyo.crkf.searchable;
 
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.entity.Ville;
 import fr.kyo.crkf.dao.DAOFactory;
 
 public class SearchableProfesseur {
-    private int id_professeur;
+
     private String nomEtPrenom;
-    private int vehiculeCV;
+    private final int vehiculeCV;
     private int ville;
     private int departement;
 
     public SearchableProfesseur() {
-        this.id_professeur = 0;
         this.nomEtPrenom = "";
         this.vehiculeCV = 0;
         ville = 0;
         departement = 0;
-
     }
 
     public String getNomEtPrenom() {
@@ -32,7 +30,7 @@ public class SearchableProfesseur {
     }
 
     public void setVille(Ville ville) {
-        this.ville = ville.getId_ville();
+        this.ville = ville.getVilleId();
     }
 
     public Ville getVille() {

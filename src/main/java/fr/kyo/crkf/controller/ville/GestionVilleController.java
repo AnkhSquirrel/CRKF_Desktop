@@ -1,12 +1,10 @@
 package fr.kyo.crkf.controller.ville;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ville;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableVille;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ville;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
-import fr.kyo.crkf.dao.VilleDAO;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -80,15 +78,15 @@ public class GestionVilleController {
         pageTotale = DAOFactory.getVilleDAO().getAllVille(ville, departementId) / 25;
         numberOfPage.setText(String.valueOf(pageTotale));
 
-        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getId_departement(), page)));
+        villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getDepartementId(), page)));
     }
     public void filter(){
        if(!libelle.getText().equals(ville)){
            ville = libelle.getText();
            page = 1;
        }
-        if(departement.getSelectionModel().getSelectedItem() != null && departementId != departement.getSelectionModel().getSelectedItem().getId_departement()){
-           departementId = departement.getSelectionModel().getSelectedItem().getId_departement();
+        if(departement.getSelectionModel().getSelectedItem() != null && departementId != departement.getSelectionModel().getSelectedItem().getDepartementId()){
+           departementId = departement.getSelectionModel().getSelectedItem().getDepartementId();
             page = 1;
         }
 

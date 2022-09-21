@@ -1,8 +1,8 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Searchable.SearchableProfesseur;
+import fr.kyo.crkf.entity.Diplome;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.searchable.SearchableProfesseur;
 import java.sql.*;
 import java.util.ArrayList;
 
@@ -96,12 +96,12 @@ public class PersonneDAO extends DAO<Personne> {
             while (rs.next()) {
                 Personne personne = new Personne();
                 int id = rs.getInt(1);
-                personne.setId_personne(id);
-                personne.setNom(rs.getString(2));
-                personne.setPrenom(rs.getString(3));
+                personne.setPersonneId(id);
+                personne.setPersonneNom(rs.getString(2));
+                personne.setPersonnePrenom(rs.getString(3));
                 personne.setVehiculeCv(rs.getInt(4));
-                personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
-                personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+                personne.setAdresseId(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+                personne.setEcoleID(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
 
                 //Search the affiliate Diplome
                 String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
@@ -137,12 +137,12 @@ public class PersonneDAO extends DAO<Personne> {
             while (rs.next()) {
                 Personne personne = new Personne();
                 int id = rs.getInt(1);
-                personne.setId_personne(id);
-                personne.setNom(rs.getString(2));
-                personne.setPrenom(rs.getString(3));
+                personne.setPersonneId(id);
+                personne.setPersonneNom(rs.getString(2));
+                personne.setPersonnePrenom(rs.getString(3));
                 personne.setVehiculeCv(rs.getInt(4));
-                personne.setAdresse(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
-                personne.setEcole(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
+                personne.setAdresseId(DAOFactory.getAdresseDAO().getByID(rs.getInt(5)));
+                personne.setEcoleID(DAOFactory.getEcoleDAO().getByID(rs.getInt(6)));
 
                 //Search the affiliate Diplome
                 String strCmd2 = "select id_libelle, id_instrument from Personne_Diplome where id_personne = ?";
@@ -174,8 +174,8 @@ public class PersonneDAO extends DAO<Personne> {
 
             while (rs.next()) {
                 Personne personne = new Personne();
-                personne.setNom(rs.getString(1));
-                personne.setPrenom(rs.getString(2));
+                personne.setPersonneNom(rs.getString(1));
+                personne.setPersonnePrenom(rs.getString(2));
 
                 liste.add(personne);
             }
@@ -192,11 +192,11 @@ public class PersonneDAO extends DAO<Personne> {
         try {
             String requete = "INSERT INTO Personne (Nom,Prenom,VehiculeCV,id_adresse,id_ecole) VALUES (?,?,?,?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getNom());
-            preparedStatement.setString(2,objet.getPrenom());
+            preparedStatement.setString( 1 , objet.getPersonneNom());
+            preparedStatement.setString(2,objet.getPersonnePrenom());
             preparedStatement.setInt(3,objet.getVehiculeCv());
-            preparedStatement.setInt(4,objet.getAdresse().getId_adresse());
-            preparedStatement.setInt(5,objet.getEcole().getId_ecole());
+            preparedStatement.setInt(4,objet.getAdresseId().getAdresseId());
+            preparedStatement.setInt(5,objet.getEcoleID().getEcoleId());
             preparedStatement.executeUpdate();
 
             ResultSet rs = preparedStatement.getGeneratedKeys();
@@ -209,8 +209,8 @@ public class PersonneDAO extends DAO<Personne> {
                 String requete2 = "INSERT INTO Personne_Diplome (id_cycle,id_personne,id_instrument) VALUES (?,?,?)";
                 PreparedStatement  preparedStatement2 = connexion().prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS);
                 preparedStatement2.setInt( 1, id);
-                preparedStatement2.setInt(2, diplome.getCycle().getId_cycle());
-                preparedStatement2.setInt(3, diplome.getInstrument().getId_instrument());
+                preparedStatement2.setInt(2, diplome.getCycle().getCycleId());
+                preparedStatement2.setInt(3, diplome.getInstrument().getInstrumentId());
                 preparedStatement2.executeUpdate();
                 preparedStatement2.close();
             }
@@ -225,12 +225,12 @@ public class PersonneDAO extends DAO<Personne> {
         try {
             String requete = "UPDATE Personne SET Nom = ?, Prenom = ?, VehiculeCV = ?, id_adresse = ?, id_ecole = ? WHERE id_personne = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getNom());
-            preparedStatement.setString(2, object.getPrenom());
+            preparedStatement.setString(1, object.getPersonneNom());
+            preparedStatement.setString(2, object.getPersonnePrenom());
             preparedStatement.setInt(3, object.getVehiculeCv());
-            preparedStatement.setInt(4, object.getAdresse().getId_adresse());
-            preparedStatement.setInt(5, object.getEcole().getId_ecole());
-            preparedStatement.setInt(6, object.getId_personne());
+            preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
+            preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
+            preparedStatement.setInt(6, object.getPersonneId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -244,12 +244,12 @@ public class PersonneDAO extends DAO<Personne> {
         try {
             String requete = "DELETE FROM Personne WHERE id_personne=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_personne());
+            preparedStatement.setInt(1, object.getPersonneId());
             preparedStatement.executeUpdate();
 
             String requete2 = "DELETE FROM Personne_Diplome WHERE id_personne=?";
             PreparedStatement preparedStatement2 = connexion().prepareStatement(requete2);
-            preparedStatement2.setInt(1, object.getId_personne());
+            preparedStatement2.setInt(1, object.getPersonneId());
             preparedStatement2.executeUpdate();
             return true;
         } catch (SQLException e) {

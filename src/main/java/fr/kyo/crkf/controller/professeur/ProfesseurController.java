@@ -1,11 +1,11 @@
 package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Entity.Ville;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableProfesseur;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.entity.Ville;
+import fr.kyo.crkf.searchable.Filter;
+import fr.kyo.crkf.searchable.SearchableProfesseur;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
@@ -66,8 +66,8 @@ public class ProfesseurController {
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
 
-        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
-        departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
+        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresseId().getVille().getVilleStringProperty());
+        departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresseId().getVille().getDepartement().getDepartementStringProperty());
 
         nomEtPrenomFiltre.textProperty().addListener(observable -> filter());
 
@@ -89,13 +89,13 @@ public class ProfesseurController {
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
     private void villeFilter() {
-        if((searchableProfesseur.getVilleId() == 0 && villeFiltre.getSelectionModel().getSelectedItem() == null) || !villeFiltre.getEditor().getText().equals(villeFiltre.getSelectionModel().getSelectedItem().getVille())){
+        if((searchableProfesseur.getVilleId() == 0 && villeFiltre.getSelectionModel().getSelectedItem() == null) || !villeFiltre.getEditor().getText().equals(villeFiltre.getSelectionModel().getSelectedItem().getVilleLibelle())){
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getDepartementId())));
         }
     }
     private void filterDepartement() {
         filter();
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != 0) {
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != 0) {
             villeFiltre.setDisable(false);
         } else {
             villeFiltre.setDisable(true);
@@ -109,13 +109,13 @@ public class ProfesseurController {
             page = 1;
         }
 
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != searchableProfesseur.getDepartementId()){
-            searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getId_departement());
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != searchableProfesseur.getDepartementId()){
+            searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getDepartementId());
             villeFiltre.getSelectionModel().select(0);
             page = 1;
         }
 
-        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getId_ville() != searchableProfesseur.getVilleId()){
+        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getVilleId() != searchableProfesseur.getVilleId()){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }

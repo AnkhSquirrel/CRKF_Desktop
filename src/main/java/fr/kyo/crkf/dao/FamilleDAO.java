@@ -1,7 +1,7 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Searchable.SearchableFamille;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.searchable.SearchableFamille;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -139,7 +139,7 @@ public class FamilleDAO extends DAO<Famille> {
             String requete = "INSERT INTO Famille (famille,id_classification) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
             preparedStatement.setString( 1 , objet.getfamille());
-            preparedStatement.setInt(2, objet.getclassification().getId_classification());
+            preparedStatement.setInt(2, objet.getclassification().getClassificationId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int id = 0;
@@ -158,8 +158,8 @@ public class FamilleDAO extends DAO<Famille> {
             String requete = "UPDATE Famille SET famille = ?, id_classification = ? WHERE id_famille = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
             preparedStatement.setString(1, object.getfamille());
-            preparedStatement.setInt(2, object.getclassification().getId_classification());
-            preparedStatement.setInt(3, object.getId_famille());
+            preparedStatement.setInt(2, object.getclassification().getClassificationId());
+            preparedStatement.setInt(3, object.getFamilleId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -173,7 +173,7 @@ public class FamilleDAO extends DAO<Famille> {
         try {
             String requete = "DELETE FROM Famille WHERE id_famille=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_famille());
+            preparedStatement.setInt(1, object.getFamilleId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {

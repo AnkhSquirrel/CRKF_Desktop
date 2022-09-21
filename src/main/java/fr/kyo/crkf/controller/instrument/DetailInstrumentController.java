@@ -1,9 +1,8 @@
 package fr.kyo.crkf.controller.instrument;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.controller.ecole.EcoleController;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -38,8 +37,8 @@ public class DetailInstrumentController {
 
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
-        nom.setText(instrument.getNom());
-        classification.setText(instrument.getFamilles().get(0).getclassification().getclassification());
+        nom.setText(instrument.getInstrumentLibelle());
+        classification.setText(instrument.getFamilles().get(0).getclassification().getClassificationLibelle());
         familleTableView.setItems(FXCollections.observableArrayList(instrument.getFamilles()));
     }
 

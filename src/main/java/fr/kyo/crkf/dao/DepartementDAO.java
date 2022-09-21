@@ -1,8 +1,7 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ville;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -145,8 +144,8 @@ public class DepartementDAO extends DAO<Departement> {
         try {
             String requete = "INSERT INTO Departement (numero_departement, departement) VALUES (?,?)";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getNumero_departement());
-            preparedStatement.setString( 2 , objet.getDepartement());
+            preparedStatement.setString( 1 , objet.getDepartementNumero());
+            preparedStatement.setString( 2 , objet.getDepartementLibelle());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             int id = 0;
@@ -164,9 +163,9 @@ public class DepartementDAO extends DAO<Departement> {
         try {
             String requete = "UPDATE Departement SET numero_departement = ?, departement = ? WHERE id_departement = ?";
             PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1,object.getNumero_departement());
-            preparedStatement.setString(2, object.getDepartement());
-            preparedStatement.setInt(3, object.getId_departement());
+            preparedStatement.setString(1,object.getDepartementNumero());
+            preparedStatement.setString(2, object.getDepartementLibelle());
+            preparedStatement.setInt(3, object.getDepartementId());
             preparedStatement.executeUpdate();
             preparedStatement.close();
             return true;
@@ -180,7 +179,7 @@ public class DepartementDAO extends DAO<Departement> {
         try {
             String requete = "DELETE FROM Departement WHERE id_departement=?";
             PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_departement());
+            preparedStatement.setInt(1, object.getDepartementId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
