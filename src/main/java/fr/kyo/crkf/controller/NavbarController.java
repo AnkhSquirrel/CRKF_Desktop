@@ -13,6 +13,11 @@ public class NavbarController {
     }
 
     @FXML
+    public void openMainMenu(){
+        application.openMainMenu();
+    }
+
+    @FXML
     protected void openProfesseurList() {
         application.openProfesseurList();
     }
@@ -32,9 +37,15 @@ public class NavbarController {
         application.openAboutModal();
     }
     @FXML
-    protected void openFamilleGestion(){application.openFamilleGestion();}
+    protected void openFamilleGestion(){
+        application.openFamilleGestion();
+    }
+
     @FXML
-    protected void openClassificationGestion(){application.openClassificationGestion();}
+    protected void openClassificationGestion(){
+        application.openClassificationGestion();
+    }
+
     @FXML
     protected void openVilleGestion(){
         application.openVilleGestion();
