@@ -42,12 +42,15 @@ public class ApplicationCRKF extends javafx.application.Application {
     AccueilController accueilController;
     BorderPane mainWindow = new BorderPane();
 
+    Stage stage;
+
     public static void main(String[] args) {
         launch();
     }
 
     @Override
     public void start(Stage stage) {
+        this.stage = stage;
         try {
             FXMLLoader fxmlLoaderNavbar = new FXMLLoader();
             fxmlLoaderNavbar.setLocation(ApplicationCRKF.class.getResource("navbar.fxml"));
@@ -61,7 +64,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             Scene scene = new Scene(mainWindow);
             scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
 
-            stage.setTitle("CRKF");
             stage.setMinWidth(760);
             stage.setMinHeight(620);
             stage.setResizable(false);
@@ -80,6 +82,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             accueilController = fxmlLoaderAccueil.getController();
             accueilController.setMainApp(this);
             mainWindow.setCenter(accueil);
+            setTitle("CRKF");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -93,6 +96,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             ProfesseurController professeurController = fxmlLoaderListeProfesseur.getController();
             professeurController.setApplicationCRKF(this);
             mainWindow.setCenter(listeProfesseur);
+            setTitle("Gestion des professeurs");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -106,6 +110,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             EcoleController ecoleController = fxmlLoaderListeEcole.getController();
             ecoleController.setApplicationCRKF(this);
             mainWindow.setCenter(listeEcole);
+            setTitle("Gestion des écoles");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -119,6 +124,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
             instrumentController.setApplicationCRKF(this);
             mainWindow.setCenter(listeInstrument);
+            setTitle("Gestion des instruments");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -259,6 +265,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionVilleController gestionVilleController = fxmlLoader.getController();
             gestionVilleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionVille);
+            setTitle("Gestion des villes");
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -271,6 +278,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionFamilleController gestionFamilleController = fxmlLoader.getController();
             gestionFamilleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionFamille);
+            setTitle("Gestion des familles");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -328,6 +336,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GridPane gestionDepartement = fxmlLoader.load();
             GestionDepartementController gestionDepartementController = fxmlLoader.getController();
             gestionDepartementController.setApplicationCRKF(this);
+            setTitle("Gestion des départements");
 
             mainWindow.setCenter(gestionDepartement);
         }catch (IOException e) {
@@ -420,7 +429,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.setResizable(false);
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
-            modal.setTitle("Modifier un département");
+            modal.setTitle("Modifier une ville");
 
             modal.show();
         } catch (IOException e) {
@@ -435,6 +444,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GridPane gestionClassification = fxmlLoader.load();
             GestionClassificationController gestionClassificationController = fxmlLoader.getController();
             gestionClassificationController.setApplicationCRKF(this);
+            setTitle("Gestion des classifications");
 
             mainWindow.setCenter(gestionClassification);
         } catch (IOException e) {
@@ -547,6 +557,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             diplomeModalController.setCreate(true);
             diplomeModalController.setPersonne(personne);
             diplomeModalController.setGestionDiplomeController(gestionDiplomeController);
+            modal.setTitle("Ajout d'un diplome");
 
         }catch (IOException e) {
             e.printStackTrace();
@@ -606,9 +617,15 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionCycleController gestionCycleController = fxmlLoader.getController();
             gestionCycleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionCycle);
+            setTitle("Gestion des cycles");
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    public String setTitle(String title){
+        stage.setTitle(title);
+        return "ok";
     }
 
 }
