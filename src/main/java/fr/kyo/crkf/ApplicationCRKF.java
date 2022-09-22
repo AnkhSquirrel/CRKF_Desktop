@@ -82,7 +82,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             accueilController = fxmlLoaderAccueil.getController();
             accueilController.setMainApp(this);
             mainWindow.setCenter(accueil);
-            setTitle("CRKF");
+            setTitle("CRKF - Accueil");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -96,7 +96,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             ProfesseurController professeurController = fxmlLoaderListeProfesseur.getController();
             professeurController.setApplicationCRKF(this);
             mainWindow.setCenter(listeProfesseur);
-            setTitle("Gestion des professeurs");
+            setTitle("CRKF - Gestion des professeurs");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -110,7 +110,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             EcoleController ecoleController = fxmlLoaderListeEcole.getController();
             ecoleController.setApplicationCRKF(this);
             mainWindow.setCenter(listeEcole);
-            setTitle("Gestion des écoles");
+            setTitle("CRKF - Gestion des écoles");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -124,7 +124,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             InstrumentController instrumentController = fxmlLoaderListeInstrument.getController();
             instrumentController.setApplicationCRKF(this);
             mainWindow.setCenter(listeInstrument);
-            setTitle("Gestion des instruments");
+            setTitle("CRKF - Gestion des instruments");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -265,7 +265,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionVilleController gestionVilleController = fxmlLoader.getController();
             gestionVilleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionVille);
-            setTitle("Gestion des villes");
+            setTitle("CRKF - Gestion des villes");
         }catch (IOException e) {
             e.printStackTrace();
         }
@@ -278,7 +278,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionFamilleController gestionFamilleController = fxmlLoader.getController();
             gestionFamilleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionFamille);
-            setTitle("Gestion des familles");
+            setTitle("CRKF - Gestion des familles");
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -336,7 +336,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GridPane gestionDepartement = fxmlLoader.load();
             GestionDepartementController gestionDepartementController = fxmlLoader.getController();
             gestionDepartementController.setApplicationCRKF(this);
-            setTitle("Gestion des départements");
+            setTitle("CRKF - Gestion des départements");
 
             mainWindow.setCenter(gestionDepartement);
         }catch (IOException e) {
@@ -444,7 +444,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GridPane gestionClassification = fxmlLoader.load();
             GestionClassificationController gestionClassificationController = fxmlLoader.getController();
             gestionClassificationController.setApplicationCRKF(this);
-            setTitle("Gestion des classifications");
+            setTitle("CRKF - Gestion des classifications");
 
             mainWindow.setCenter(gestionClassification);
         } catch (IOException e) {
@@ -617,7 +617,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             GestionCycleController gestionCycleController = fxmlLoader.getController();
             gestionCycleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionCycle);
-            setTitle("Gestion des cycles");
+            setTitle("CRKF - Gestion des cycles");
         } catch (IOException e) {
             e.printStackTrace();
         }
