@@ -623,9 +623,8 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
 
-    public String setTitle(String title){
+    private void setTitle(String title){
         stage.setTitle(title);
-        return "ok";
     }
 
 }
