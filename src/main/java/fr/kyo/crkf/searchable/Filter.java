@@ -2,17 +2,16 @@ package fr.kyo.crkf.searchable;
 
 import fr.kyo.crkf.entity.*;
 import fr.kyo.crkf.dao.DAOFactory;
-import java.util.ArrayList;
 import java.util.List;
 
 public class Filter {
 
     private final List<Classification> classifications;
-    private final ArrayList<Famille> familles;
-    private final ArrayList<Departement> departements;
-    private final ArrayList<Ville> villes;
-    private final ArrayList<Instrument> instruments;
-    private final ArrayList<Cycle> cycles;
+    private final List<Famille> familles;
+    private final List<Departement> departements;
+    private final List<Ville> villes;
+    private final List<Instrument> instruments;
+    private final List<Cycle> cycles;
 
     public Filter(){
         classifications = DAOFactory.getClassificationDAO().getAll(1);
@@ -54,7 +53,7 @@ public class Filter {
     }
 
     public List<Ville> getVilleLike(String text, int departementId){
-        ArrayList<Ville> villesLike = DAOFactory.getVilleDAO().getLike(text, departementId);
+        List<Ville> villesLike = DAOFactory.getVilleDAO().getLike(text, departementId);
         villesLike.add(0, new Ville(0,"Ville", 0F, 0F, 0));
         return villes;
     }
@@ -62,7 +61,7 @@ public class Filter {
     public List<Ecole> getEcolesLike(String nomEcole) {
         SearchableEcole searchableEcole = new SearchableEcole();
         searchableEcole.setNom(nomEcole);
-        ArrayList<Ecole> ecoles = DAOFactory.getEcoleDAO().getLike(searchableEcole,1);
+        List<Ecole> ecoles = DAOFactory.getEcoleDAO().getLike(searchableEcole,1);
         ecoles.add(new Ecole(0,"Ecole",0));
         return ecoles;
     }

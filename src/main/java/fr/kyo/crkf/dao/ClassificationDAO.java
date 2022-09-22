@@ -14,8 +14,8 @@ public class ClassificationDAO extends DAO<Classification> {
 
     @Override
     public Classification getByID(int id) {
-        String strCmd = "SELECT id_classification, classification from Classification where id_classification = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)){
+        String requete = "SELECT id_classification, classification from Classification where id_classification = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) return new Classification(rs.getInt(1), rs.getString(2));
@@ -28,15 +28,8 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public List<Classification> getAll(int page) {
         List<Classification> liste = new ArrayList<>();
-        String strCmd = "SELECT id_classification, classification from Classification order by classification";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)) {
-            ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) liste.add(new Classification(rs.getInt(1), rs.getString(2)));
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return liste;
+        String requete = "SELECT id_classification, classification from Classification order by classification";
+        return getClassifications(liste, requete);
     }
 
     @Override
@@ -82,11 +75,28 @@ public class ClassificationDAO extends DAO<Classification> {
 
     public List<Classification> getLike(String classification, int page) {
         List<Classification> list = new ArrayList<>();
-        String strCmd = "SELECT id_classification, classification from Classification";
+        StringBuilder requete = new StringBuilder("SELECT id_classification, classification from Classification");
         if(!classification.isEmpty())
-            strCmd += " where classification like '%" + classification + "%'";
-        strCmd += " order by classification OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)){
+            requete.append(" where classification like '%").append(classification).append("%'");
+        requete.append(" order by classification OFFSET 25 * (").append(page).append(" - 1)  ROWS FETCH NEXT 25 ROWS ONLY");
+        return getClassifications(list, requete.toString());
+    }
+
+    public int getAllClassification(String classification) {
+        StringBuilder requete = new StringBuilder("SELECT COUNT(id_classification) from Classification");
+        if(!classification.isEmpty())
+            requete.append(" where classification like '%").append(classification).append("%'");
+        try (PreparedStatement s = connexion.prepareStatement(requete.toString())){
+            ResultSet rs = s.executeQuery();
+            if(rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return 0;
+    }
+
+    private List<Classification> getClassifications(List<Classification> list, String requete) {
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()) list.add(new Classification(rs.getInt(1), rs.getString(2)));
         } catch (Exception e) {
@@ -95,16 +105,4 @@ public class ClassificationDAO extends DAO<Classification> {
         return list;
     }
 
-    public int getAllClassification(String classification) {
-        String strCmd = "SELECT COUNT(id_classification) from Classification";
-        if(!classification.isEmpty())
-            strCmd += " where classification like '%" + classification + "%'";
-        try (PreparedStatement s = connexion.prepareStatement(strCmd)){
-            ResultSet rs = s.executeQuery();
-            if(rs.next()) return rs.getInt(1);
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        return 0;
-    }
 }

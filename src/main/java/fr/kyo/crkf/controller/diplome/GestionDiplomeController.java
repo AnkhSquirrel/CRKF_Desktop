@@ -13,6 +13,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GestionDiplomeController {
@@ -82,7 +83,7 @@ public class GestionDiplomeController {
     @FXML
     void remove() {
         if(diplomeTable.getSelectionModel().getSelectedItem() != null){
-            ArrayList<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId());
+            List<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId());
             if(!diplomesSuperior.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Attention");

@@ -16,6 +16,7 @@ import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class InstrumentModalController {
     @FXML
@@ -102,7 +103,7 @@ public class InstrumentModalController {
             HBox hBox = (HBox) grid.getChildren().get(0);
             ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
             if(comboBoxTemp.getSelectionModel().getSelectedItem().getFamilleId() != 0){
-                ArrayList<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getClassificationId());
+                List<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getClassificationId());
                 familles.add(0,new Famille(0,"Famille",0));
                 comboBox.setItems(FXCollections.observableArrayList(familles));
                 comboBox.getSelectionModel().select(0);

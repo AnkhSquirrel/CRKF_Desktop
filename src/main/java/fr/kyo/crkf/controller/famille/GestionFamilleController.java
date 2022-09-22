@@ -55,7 +55,7 @@ public class GestionFamilleController {
 
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
 
-        pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        pageTotale =DAOFactory.getFamilleDAO().getNumberOfFamilles(searchableFamille) / 25;
         if(pageTotale == 0)
         pageTotale ++;
 
@@ -76,7 +76,7 @@ public class GestionFamilleController {
         }
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
 
-        pageTotale =DAOFactory.getFamilleDAO().getAllFamille(searchableFamille) / 25;
+        pageTotale =DAOFactory.getFamilleDAO().getNumberOfFamilles(searchableFamille) / 25;
         if (pageTotale == 0)
             pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
