@@ -21,6 +21,7 @@ public class DetailInstrumentController {
     private ApplicationCRKF applicationCRKF;
     private Instrument instrument;
     private InstrumentController instrumentController;
+
     @FXML
     private void initialize(){
         familleColumn.setCellValueFactory(cellData -> cellData.getValue().getFamilleStringProperty());
@@ -28,11 +29,6 @@ public class DetailInstrumentController {
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
-    }
-
-    @FXML
-    private void openInstrumentList(){
-        applicationCRKF.openInstrumentList();
     }
 
     public void setInstrument(Instrument instrument) {
@@ -47,13 +43,14 @@ public class DetailInstrumentController {
         if(applicationCRKF.deleteModal()){
             DAOFactory.getInstrumentDAO().delete(instrument);
             applicationCRKF.openInstrumentList();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une érreur lors de la suppression de l'instrument.");
+            alert.setHeaderText("Il y a eu une erreur lors de la suppression de l'instrument.");
             alert.showAndWait();
         }
     }
+
     @FXML
     private void updateInstrument(){
         applicationCRKF.openUpdateInstrumentModal(instrument);
@@ -67,4 +64,5 @@ public class DetailInstrumentController {
     public void setInstrumentController(InstrumentController instrumentController) {
         this.instrumentController = instrumentController;
     }
+
 }

@@ -10,10 +10,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.util.Optional;
 
 public class GestionFamilleController {
+
     @FXML
     private TableColumn<Famille,String> libelleColumn;
     @FXML
@@ -28,10 +28,6 @@ public class GestionFamilleController {
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
-    @FXML
-    private Button pagePlus;
-    @FXML
-    private Button pageMoins;
     private int pageTotale;
     private int page;
     private SearchableFamille searchableFamille;
@@ -42,11 +38,10 @@ public class GestionFamilleController {
         searchableFamille = new SearchableFamille();
         page = 1;
         Filter filter = new Filter();
-        // initialize tableview
+
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getFamilleStringProperty());
         classificationColumn.setCellValueFactory(cellData ->cellData.getValue().getclassification().getClassificationStringProperty());
 
-        // Initialisation des comboBox
         classification.setItems(FXCollections.observableArrayList(filter.getClassifications()));
         classification.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         classification.getSelectionModel().select(0);
@@ -57,7 +52,7 @@ public class GestionFamilleController {
 
         pageTotale =DAOFactory.getFamilleDAO().getNumberOfFamilles(searchableFamille) / 25;
         if(pageTotale == 0)
-        pageTotale ++;
+            pageTotale ++;
 
         numberOfPage.setText(String.valueOf(pageTotale));
 
@@ -88,18 +83,19 @@ public class GestionFamilleController {
     private void openCreateModal(){
         applicationCRKF.openModalCreateFamille(this);
     }
+
     @FXML
     private void reset(){
         libelle.setText("");
         classification.getSelectionModel().select(0);
     }
+
     @FXML
     private void pagePlus(){
         if(!familleTable.getItems().isEmpty() && pageTotale > page ){
             page++;
             filter();
         }
-
     }
     @FXML
     private void pageMoins(){
@@ -108,11 +104,13 @@ public class GestionFamilleController {
             filter();
         }
     }
+
     @FXML
     private void lastPage(){
         page = pageTotale;
         filter();
     }
+
     @FXML
     private void firstPage(){
         page = 1;
@@ -122,6 +120,7 @@ public class GestionFamilleController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }
+
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
@@ -132,17 +131,19 @@ public class GestionFamilleController {
         if (familleTable.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Supprimer");
-            alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
+            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK)
                 DAOFactory.getFamilleDAO().delete(familleTable.getSelectionModel().getSelectedItem());
             filter();
         }
     }
+
     @FXML
     private void update(){
         if (familleTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openModalUpdateFamille(this, familleTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openModalUpdateFamille(this, familleTable.getSelectionModel().getSelectedItem());
     }
+
 }
 

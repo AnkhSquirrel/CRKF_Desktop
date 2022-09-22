@@ -2,16 +2,15 @@ package fr.kyo.crkf.controller.cycle;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Cycle;
-import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-
 import java.util.Optional;
 
 public class GestionCycleController {
+
     @FXML
     private TableColumn<Cycle,String> libelleColumn;
     @FXML
@@ -24,10 +23,6 @@ public class GestionCycleController {
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
-    @FXML
-    private Button pagePlus;
-    @FXML
-    private Button pageMoins;
     private int pageTotale;
     private int page;
     private String cycle;
@@ -37,8 +32,6 @@ public class GestionCycleController {
     private void initialize(){
         cycle = "";
         page = 1;
-        Filter filter = new Filter();
-        // initialize tableview
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getCycleStringProperty());
         cycleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCycleNumero()));
 
@@ -47,8 +40,9 @@ public class GestionCycleController {
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
 
         pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
+
         if (pageTotale == 0)
-        pageTotale ++;
+            pageTotale ++;
         numberOfPage.setText(String.valueOf(pageTotale));
 
         reset();
@@ -64,8 +58,8 @@ public class GestionCycleController {
 
         pageTotale = DAOFactory.getCycleDAO().getLikeAllCycle(cycle) / 25;
         if (pageTotale == 0)
-        pageTotale ++;
-        numberOfPage.setText(" / " + String.valueOf(pageTotale));
+            pageTotale ++;
+        numberOfPage.setText(" / " + pageTotale);
 
         pageNumber.setText("Page " + page);
     }
@@ -74,18 +68,20 @@ public class GestionCycleController {
     private void openCreateModal(){
         applicationCRKF.openCreateCycleModal(this);
     }
+
     @FXML
     private void reset(){
         libelle.setText("");
     }
+
     @FXML
     private void pagePlus(){
         if(!cycleTable.getItems().isEmpty() && pageTotale > page){
             page++;
             filter();
         }
-
     }
+
     @FXML
     private void pageMoins(){
         if (page > 1){
@@ -93,19 +89,23 @@ public class GestionCycleController {
             filter();
         }
     }
+
     @FXML
     private void lastPage(){
         page = pageTotale;
         filter();
     }
+
     @FXML
     private void firstPage(){
         page = 1;
         filter();
     }
+
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }
+
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
@@ -124,10 +124,9 @@ public class GestionCycleController {
                 alert1.setTitle("Erreur");
                 alert1.setHeaderText("Il y a eu une erreur lors de la suppresion du cycle.\nIl est impossible de supprimer un cycle qui a des cycles supérieurs");
                 alert1.showAndWait();
-            }else{
+            } else {
                 DAOFactory.getCycleDAO().delete(cycleTable.getSelectionModel().getSelectedItem());
                 filter();
-
             }
         }
     }
@@ -136,5 +135,6 @@ public class GestionCycleController {
         if (cycleTable.getSelectionModel().getSelectedItem() != null)
             applicationCRKF.openUpdateCycleModal(this, cycleTable.getSelectionModel().getSelectedItem());
     }
+
 }
 

@@ -10,11 +10,10 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.util.List;
 
 public class ProfesseurModalController {
-    //Professeur
+
     @FXML
     private TextField nom;
     @FXML
@@ -36,7 +35,6 @@ public class ProfesseurModalController {
     private Filter filter;
     private Ville selectedVille;
     private Ecole selectedEcole;
-    private DetailProfesseurController detailProfesseurController;
     private Personne professeur;
 
     @FXML
@@ -99,15 +97,13 @@ public class ProfesseurModalController {
     }
 
     @FXML
-    void validate() {
-        System.out.println("validate");
+    private void validate() {
         boolean adresseComplete = selectedVille != null &&
                 !adresse.getText().isEmpty();
         boolean professeurComplete =!nom.getText().isEmpty() &&
                 !prenom.getText().isEmpty() && !cv.getText().isEmpty() &&
                 selectedEcole != null;
         if(adresseComplete && professeurComplete){
-            System.out.println("ok");
             if(create){
                 createPersonne();
             } else
@@ -128,13 +124,13 @@ public class ProfesseurModalController {
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur");
-                alert.setHeaderText("Il y a eu une erreur lors de la modification du professeur.\n Merci de vérifier que vous avez entrée des informations valides");
+                alert.setHeaderText("Il y a eu une erreur lors de la modification du professeur.\n Merci de vérifier que vous avez entré des informations valides");
                 alert.showAndWait();
             }
-        } else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'adresse.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'adresse.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -150,13 +146,13 @@ public class ProfesseurModalController {
             }else{
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Erreur");
-                alert.setHeaderText("Il y a eu une erreur lors de la création du professeur.\n Merci de vérifier que vous avez entrée des informations valides");
+                alert.setHeaderText("Il y a eu une erreur lors de la création du professeur.\n Merci de vérifier que vous avez entré des informations valides");
                 alert.showAndWait();
             }
         } else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la création de l'adresse.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de l'adresse.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -173,6 +169,7 @@ public class ProfesseurModalController {
     public void setCreate(boolean bool) {
         this.create = bool;
     }
+
     public void setProfesseur(Personne personne){
         this.professeur = personne;
         nom.setText(professeur.getPersonneNom());
@@ -190,5 +187,6 @@ public class ProfesseurModalController {
     public void setProfesseurController(ProfesseurController professeurController) {
         this.professeurController = professeurController;
     }
+
 }
 

@@ -12,21 +12,17 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class InstrumentModalController {
+
     @FXML
     private GridPane grid;
     @FXML
     private TextField nom;
     @FXML
     private Label nomModal;
-    @FXML
-    private VBox modalVbox;
     private HBox add;
     private Stage modal;
     private int rowsId;
@@ -99,7 +95,7 @@ public class InstrumentModalController {
             comboBox.setItems(FXCollections.observableArrayList(filter.getFamilles()));
             comboBox.getSelectionModel().select(0);
             return true;
-        }else{
+        } else {
             HBox hBox = (HBox) grid.getChildren().get(0);
             ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
             if(comboBoxTemp.getSelectionModel().getSelectedItem().getFamilleId() != 0){
@@ -156,7 +152,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -172,25 +168,23 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la création de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
 
     private boolean getAllFamille(Instrument instrument) {
-        boolean allFamilleSet = true;
         for(Node node : grid.getChildren()){
             HBox hBox = (HBox) node;
             if(!hBox.getId().equals("add")){
                 ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
-                if(comboBox.getSelectionModel().getSelectedItem().getFamilleId() != 0){
+                if(comboBox.getSelectionModel().getSelectedItem().getFamilleId() != 0)
                     instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
-                }else{
-                    allFamilleSet = false;
-                }
+                else
+                    return false;
             }
         }
-        return  allFamilleSet;
+        return true;
     }
 
     @FXML
@@ -205,12 +199,13 @@ public class InstrumentModalController {
     public void setInstrumentController(InstrumentController instrumentController) {
         this.instrumentController = instrumentController;
     }
+
     public void setCreate(boolean bool){
         create = bool;
         if(!create)
             nomModal.setText("Modifier un instrument");
-
     }
+
     public void setInstrumentUpdate(Instrument instrument){
         instrumentUpdate = instrument;
         nom.setText(instrumentUpdate.getInstrumentLibelle());
@@ -222,4 +217,5 @@ public class InstrumentModalController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+
 }

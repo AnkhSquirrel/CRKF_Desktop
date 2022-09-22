@@ -2,7 +2,6 @@ package fr.kyo.crkf.controller.classification;
 
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Classification;
-import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -11,6 +10,7 @@ import javafx.scene.control.*;
 import java.util.Optional;
 
 public class GestionClassificationController {
+
     @FXML
     private TableColumn<Classification,String> libelleColumn;
     @FXML
@@ -23,10 +23,6 @@ public class GestionClassificationController {
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
-    @FXML
-    private Button pagePlus;
-    @FXML
-    private Button pageMoins;
     private int pageTotale;
     private int page;
     private String classification;
@@ -36,8 +32,6 @@ public class GestionClassificationController {
     private void initialize(){
         classification = "";
         page = 1;
-        Filter filter = new Filter();
-        // initialize tableview
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificationStringProperty());
         famillesColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberFamilles());
 
@@ -73,10 +67,12 @@ public class GestionClassificationController {
     private void openCreateModal(){
         applicationCRKF.openCreateClassificationModal(this);
     }
+
     @FXML
     private void reset(){
         libelle.setText("");
     }
+
     @FXML
     private void pagePlus(){
         if(!classificationTable.getItems().isEmpty() && pageTotale > page){
@@ -85,6 +81,7 @@ public class GestionClassificationController {
         }
 
     }
+
     @FXML
     private void pageMoins(){
         if (page > 1){
@@ -98,6 +95,7 @@ public class GestionClassificationController {
         page = pageTotale;
         filter();
     }
+
     @FXML
     private void firstPage(){
         page = 1;
@@ -107,6 +105,7 @@ public class GestionClassificationController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }
+
     @FXML
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
@@ -114,7 +113,6 @@ public class GestionClassificationController {
 
     @FXML
     private void remove(){
-
         if (classificationTable.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Supprimer");
@@ -137,7 +135,7 @@ public class GestionClassificationController {
     @FXML
     private void update(){
         if (classificationTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openUpdateClassificationModal(this, classificationTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openUpdateClassificationModal(this, classificationTable.getSelectionModel().getSelectedItem());
     }
 }
 

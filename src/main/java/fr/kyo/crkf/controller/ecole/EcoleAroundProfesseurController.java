@@ -1,6 +1,5 @@
 package fr.kyo.crkf.controller.ecole;
 
-import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Ecole;
 import fr.kyo.crkf.tools.Pair;
 import fr.kyo.crkf.entity.Personne;
@@ -12,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.util.ArrayList;
 
 public class EcoleAroundProfesseurController {
 
@@ -31,12 +28,8 @@ public class EcoleAroundProfesseurController {
     private TableColumn<Pair<Ecole, Double>,String> distanceColumn;
     @FXML
     private TableColumn<Pair<Ecole, Double>,String> tarifColumn;
-
     private Personne personne;
-    private ApplicationCRKF applicationCRKF;
-    private ArrayList<Pair<Ecole, Double>> ecolesEtDistance;
     private ProfesseurController professeurController;
-
 
     @FXML
     private void initialize(){
@@ -45,10 +38,6 @@ public class EcoleAroundProfesseurController {
         villeColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getEcoleAdresse().getVille().getVilleStringProperty());
         distanceColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getSecond().toString().concat(" km(s)")));
         tarifColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(String.valueOf(calculIndemnite(personne.getVehiculeCv(), cellData.getValue().getSecond())).concat(" €")));
-    }
-
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
-        this.applicationCRKF = applicationCRKF;
     }
 
     public void setPersonne(Personne personne){
@@ -80,4 +69,5 @@ public class EcoleAroundProfesseurController {
             indemnite *= 0.06;
         return Math.round(indemnite * 100.00) / 100.00;
     }
+
 }

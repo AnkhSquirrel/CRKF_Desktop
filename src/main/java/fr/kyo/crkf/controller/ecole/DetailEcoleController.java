@@ -10,7 +10,6 @@ import javafx.scene.control.*;
 public class DetailEcoleController {
     @FXML
     private Label labelDepartement;
-
     @FXML
     private Label labelVille;
     @FXML
@@ -30,8 +29,8 @@ public class DetailEcoleController {
 
     @FXML
     private void initialize(){
-        profEmbaucheNom.setCellValueFactory(CellData -> CellData.getValue().getNomStringProperty());
-        profEmbauchePrenom.setCellValueFactory(CellData -> CellData.getValue().getPrenomStringProperty());
+        profEmbaucheNom.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
+        profEmbauchePrenom.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
@@ -52,7 +51,7 @@ public class DetailEcoleController {
         if(applicationCRKF.deleteModal()){
             DAOFactory.getEcoleDAO().delete(ecole);
             ecoleController.filter();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("L'école n'a pas été supprimée");
@@ -72,4 +71,5 @@ public class DetailEcoleController {
     public void setEcoleController(EcoleController ecoleController) {
         this.ecoleController = ecoleController;
     }
+
 }

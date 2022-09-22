@@ -51,4 +51,5 @@ public class AccueilController {
     protected void openGestionCycle() {
         application.openCycleGestion();
     }
+
 }

@@ -70,10 +70,10 @@
                   <Insets right="2.0" />
                </HBox.margin>
             </Button>
-            <Button fx:id="pageMoins" mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
+            <Button mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
             <Label fx:id="pageNumber" alignment="CENTER_RIGHT" prefWidth="100.0" text="Page 1" />
             <Label fx:id="numberOfPage" alignment="BOTTOM_LEFT" prefWidth="100.0" text="/ Page totale" />
-            <Button fx:id="pagePlus" mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+            <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
             <Button fx:id="dernierePage" mnemonicParsing="false" onAction="#lastPage" text="&gt;&gt;">
                <HBox.margin>
                   <Insets left="2.0" />

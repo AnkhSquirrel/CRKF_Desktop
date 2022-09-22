@@ -29,10 +29,6 @@ public class GestionDepartementController {
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
-    @FXML
-    private Button pagePlus;
-    @FXML
-    private Button pageMoins;
     private int pageTotale;
     private String departement;
     private ApplicationCRKF applicationCRKF;

@@ -9,10 +9,10 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.util.Optional;
 
 public class GestionVilleController {
+
     @FXML
     private TableView<Ville> villeTable;
     @FXML
@@ -27,10 +27,6 @@ public class GestionVilleController {
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
-    @FXML
-    private Button pagePlus;
-    @FXML
-    private Button pageMoins;
     private int pageTotale;
     private String ville;
     private int page;
@@ -43,7 +39,6 @@ public class GestionVilleController {
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
-
         this.applicationCRKF = applicationCRKF;
     }
 
@@ -51,10 +46,11 @@ public class GestionVilleController {
     private void openCreateModal(){
         applicationCRKF.openModalCreateVille(this);
     }
+
     @FXML
     private void openUpdateModal(){
         if (villeTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openModalUpdateVille(this, villeTable.getSelectionModel().getSelectedItem());
     }
 
     @FXML
@@ -64,11 +60,9 @@ public class GestionVilleController {
         page = 1;
         Filter filter = new Filter();
 
-        // intialize TableView
         villeColumn.setCellValueFactory(cellDate -> cellDate.getValue().getVilleStringProperty());
         departementColumn.setCellValueFactory(cellDate -> cellDate.getValue().getDepartement().getDepartementStringProperty());
 
-        // initialize Combobox
         departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         departement.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         departement.getSelectionModel().select(0);
@@ -80,11 +74,12 @@ public class GestionVilleController {
 
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departement.getSelectionModel().getSelectedItem().getDepartementId(), page)));
     }
+
     public void filter(){
-       if(!libelle.getText().equals(ville)){
+        if(!libelle.getText().equals(ville)){
            ville = libelle.getText();
            page = 1;
-       }
+        }
         if(departement.getSelectionModel().getSelectedItem() != null && departementId != departement.getSelectionModel().getSelectedItem().getDepartementId()){
            departementId = departement.getSelectionModel().getSelectedItem().getDepartementId();
             page = 1;
@@ -98,12 +93,13 @@ public class GestionVilleController {
         villeTable.setItems(FXCollections.observableArrayList(DAOFactory.getVilleDAO().getLikeForGestion(ville, departementId, page)));
         pageNumber.setText("Page " + page + " / ");
     }
+
     @FXML
     private void remove(){
         if (villeTable.getSelectionModel().getSelectedItem() != null){
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
             alert.setTitle("Supprimer");
-            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+            alert.setHeaderText("Voulez-vous vraiment supprimer cet élément?");
             Optional<ButtonType> result = alert.showAndWait();
             if(result.isPresent() && result.get() == ButtonType.OK)
                 DAOFactory.getVilleDAO().delete(villeTable.getSelectionModel().getSelectedItem());
@@ -117,6 +113,7 @@ public class GestionVilleController {
         departement.getSelectionModel().select(0);
         page = 1;
     }
+
     @FXML
     private void pagePlus(){
         if(!villeTable.getItems().isEmpty() && pageTotale > page ){
@@ -124,6 +121,7 @@ public class GestionVilleController {
             filter();
         }
     }
+
     @FXML
     private void pageMoins(){
         if (page > 1){
@@ -131,14 +129,17 @@ public class GestionVilleController {
             filter();
         }
     }
+
     @FXML
     private void lastPage(){
         page = pageTotale;
         filter();
     }
+
     @FXML
     private void firstPage(){
         page = 1;
         filter();
     }
+
 }

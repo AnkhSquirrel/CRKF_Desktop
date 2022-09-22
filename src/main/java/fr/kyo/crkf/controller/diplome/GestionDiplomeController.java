@@ -12,7 +12,6 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import org.controlsfx.control.SearchableComboBox;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -110,13 +109,9 @@ public class GestionDiplomeController {
     }
 
     public void filter(){
-        int instrument_id = 0;
-        int cycle_id = 0;
-        if( instrument.getSelectionModel().getSelectedItem() != null)
-            instrument_id =  instrument.getSelectionModel().getSelectedItem().getInstrumentId();
-        if(cycle.getSelectionModel().getSelectedItem() != null)
-            cycle_id = cycle.getSelectionModel().getSelectedItem().getCycleId();
-        diplomeTable.setItems(FXCollections.observableArrayList(DAOFactory.getDiplomeDAO().getPersonneDiplomeLike(personne.getPersonneId(),instrument_id, cycle_id)));
+        int instrumentId = instrument.getSelectionModel().getSelectedItem() != null ? instrument.getSelectionModel().getSelectedItem().getInstrumentId() : 0;
+        int cycleId = cycle.getSelectionModel().getSelectedItem() != null ? cycle.getSelectionModel().getSelectedItem().getCycleId() : 0;
+        diplomeTable.setItems(FXCollections.observableArrayList(DAOFactory.getDiplomeDAO().getPersonneDiplomeLike(personne.getPersonneId(),instrumentId, cycleId)));
     }
 
     public void setPersonne(Personne personne){
@@ -131,4 +126,5 @@ public class GestionDiplomeController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+
 }

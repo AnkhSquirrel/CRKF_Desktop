@@ -15,10 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 
 public class DetailProfesseurController {
+
     @FXML
     private Label nom;
     @FXML
@@ -42,9 +42,11 @@ public class DetailProfesseurController {
         instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().getInstrument().getNomStringProperty());
         cycleColumn.setCellValueFactory(cellData -> cellData.getValue().getCycle().getCycleStringProperty());
     }
+
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }
+
     public void setPersonne(Personne personne){
         this.personne = personne;
         nom.setText(personne.getPersonnePrenom() + " " + personne.getPersonneNom());
@@ -53,6 +55,7 @@ public class DetailProfesseurController {
 
         diplomeTable.setItems(FXCollections.observableArrayList(personne.getDiplomes()));
     }
+
     @FXML
     private void openEcoleAroundPage() {
         try {
@@ -60,7 +63,6 @@ public class DetailProfesseurController {
             fxmlLoaderEcoleAroundPage.setLocation(ApplicationCRKF.class.getResource("ecole_around_page.fxml"));
             VBox ecoleAroundProf = fxmlLoaderEcoleAroundPage.load();
             EcoleAroundProfesseurController ecoleAroundProfesseurController = fxmlLoaderEcoleAroundPage.getController();
-            ecoleAroundProfesseurController.setApplicationCRKF(applicationCRKF);
             ecoleAroundProfesseurController.setPersonne(personne);
             ecoleAroundProfesseurController.setProfesseurController(professeurController);
             drawer.setSidePane(ecoleAroundProf);
@@ -74,11 +76,13 @@ public class DetailProfesseurController {
     private void closeDetail(){
         professeurController.closeDetail();
     }
+
     @FXML
     private void openUpdateModal(){
         applicationCRKF.openUpdateProfesseurModal(professeurController, personne);
         professeurController.filter();
     }
+
     @FXML
     private void delete(){
         if(applicationCRKF.deleteModal()){
@@ -113,4 +117,5 @@ public class DetailProfesseurController {
             e.printStackTrace();
         }
     }
+
 }

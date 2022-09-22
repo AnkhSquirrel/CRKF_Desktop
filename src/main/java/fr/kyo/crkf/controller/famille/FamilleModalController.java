@@ -10,6 +10,7 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 public class FamilleModalController {
+
     @FXML
     private Label nomModal;
     @FXML
@@ -21,11 +22,9 @@ public class FamilleModalController {
     private GestionFamilleController gestionFamilleController;
     private Famille famille;
 
-
     @FXML
     private void initialize(){
         Filter filter = new Filter();
-
         classification.setItems(FXCollections.observableArrayList(filter.getClassifications()));
         classification.getSelectionModel().select(0);
     }
@@ -46,27 +45,25 @@ public class FamilleModalController {
         if(DAOFactory.getFamilleDAO().update(famille)){
             gestionFamilleController.filter();
             modal.close();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de la famille.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de la famille.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
-
     }
 
     private void createFamille(){
         if(!nom.getText().isEmpty() && classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getClassificationId() != 0){
-            Famille famille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem().getClassificationId());
-            if(DAOFactory.getFamilleDAO().insert(famille) != 0){
+            Famille nouvelleFamille = new Famille(0,nom.getText(),classification.getSelectionModel().getSelectedItem().getClassificationId());
+            if(DAOFactory.getFamilleDAO().insert(nouvelleFamille) != 0){
                 gestionFamilleController.filter();
                 modal.close();
             }
-        }
-        else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la création de la famille.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de la famille.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
 
@@ -75,17 +72,16 @@ public class FamilleModalController {
     private void closeModal(){
         modal.close();
     }
+
     public void setModal(Stage stage){
         modal = stage;
     }
 
-    public void setCreate(boolean bool) {
-        create = bool;
-        if(create){
+    public void setCreate(boolean create) {
+        if(create)
             nomModal.setText("Création d'une nouvelle famille");
-        }else{
+        else
             nomModal.setText("Modification d'une nouvelle famille");
-        }
     }
 
     public void setGestionFamilleController(GestionFamilleController gestionFamilleController) {
@@ -97,4 +93,5 @@ public class FamilleModalController {
         nom.setText(famille.getfamille());
         classification.getSelectionModel().select(famille.getclassification());
     }
+
 }

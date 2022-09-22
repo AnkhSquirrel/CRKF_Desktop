@@ -13,13 +13,9 @@ import javafx.stage.Stage;
 public class DiplomeModalController {
 
     @FXML
-    private Button buttonAnnuler;
-    @FXML
     private ComboBox<Cycle> cycle;
     @FXML
     private ComboBox<Instrument> instrument;
-    @FXML
-    private Label nomModal;
     private Stage modal;
     private Personne personne;
     private GestionDiplomeController gestionDiplomeController;
@@ -49,10 +45,10 @@ public class DiplomeModalController {
                 DAOFactory.getDiplomeDAO().personneAddDiplome(personne.getPersonneId(), instrument.getSelectionModel().getSelectedItem().getInstrumentId(), DAOFactory.getCycleDAO().getByCycle(i).getCycleId());
             gestionDiplomeController.filter();
             modal.close();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de l'ajout du diplome.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de l'ajout du diplome.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -72,4 +68,5 @@ public class DiplomeModalController {
     public void setCreate(boolean bool) {
         create = bool;
     }
+
 }

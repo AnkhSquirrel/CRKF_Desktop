@@ -19,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.io.IOException;
 
 public class EcoleController {
@@ -45,22 +44,18 @@ public class EcoleController {
         @FXML
         private Label numberOfPage;
         @FXML
-        private Button pagePlus;
+        private GridPane listeEcole;
         @FXML
-        private Button pageMoins;
+        private JFXDrawer drawer;
         private int pageTotale;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
-        private Ecole ecole;
-        @FXML
-        private JFXDrawer drawer;
+
         private int page;
-        @FXML
-        private GridPane listeEcole;
 
         @FXML
-        private void initialize() throws IOException {
+        private void initialize() {
                 page = 1;
                 filter = new Filter();
                 searchableEcole = new SearchableEcole();
@@ -87,17 +82,12 @@ public class EcoleController {
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
                 if(pageTotale == 0)
                         pageTotale++;
-                numberOfPage.setText(" / " + String.valueOf(pageTotale));
-
+                numberOfPage.setText(" / " + pageTotale);
         }
 
         private void filterDepartement() {
                 filter();
-                if (departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getDepartementId() != 0) {
-                        ville.setDisable(false);
-                } else {
-                        ville.setDisable(true);
-                }
+                ville.setDisable(departement.getSelectionModel().getSelectedItem() == null || departement.getSelectionModel().getSelectedItem().getDepartementId() == 0);
                 ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getIdDepartement())));
                 ville.getSelectionModel().select(0);
         }
@@ -107,6 +97,7 @@ public class EcoleController {
                         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getIdDepartement())));
                 }
         }
+
         @FXML
         private void reset(){
                 page = 1;
@@ -137,7 +128,7 @@ public class EcoleController {
                 pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
                 if (pageTotale == 0)
                         pageTotale++;
-                numberOfPage.setText( " / " + String.valueOf(pageTotale));
+                numberOfPage.setText( " / " + pageTotale);
 
                 pageNumber.setText("Page " + page);
         }
@@ -164,10 +155,12 @@ public class EcoleController {
         public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
                 this.applicationCRKF = applicationCRKF;
         }
+
         @FXML
         private void openCreateModal(){
                 applicationCRKF.openCreateEcoleModal(this);
         }
+
         @FXML
         private void openMainMenu(){
                 applicationCRKF.openMainMenu();
@@ -175,11 +168,12 @@ public class EcoleController {
 
         @FXML
         private void pagePlus(){
-                if(ecoleTable.getItems().size() > 0 && pageTotale > page){
+                if(!ecoleTable.getItems().isEmpty() && pageTotale > page){
                         page++;
                         filter();
                 }
         }
+
         @FXML
         private void pageMoins(){
                 if (page > 1){
@@ -187,16 +181,19 @@ public class EcoleController {
                         filter();
                 }
         }
+
         @FXML
         private void lastPage(){
                 page = pageTotale;
                 filter();
         }
+
         @FXML
         private void firstPage(){
                 page = 1;
                 filter();
         }
+
         public void closeDetail(){
                 drawer.close();
                 drawer.setDisable(true);
@@ -211,6 +208,5 @@ public class EcoleController {
                 listeEcole.setEffect(new GaussianBlur());
                 listeEcole.setDisable(true);
         }
-
 
 }
