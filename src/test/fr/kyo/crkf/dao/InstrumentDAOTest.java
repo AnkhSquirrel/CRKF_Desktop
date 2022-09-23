@@ -1,9 +1,9 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Searchable.SearchableInstrument;
+import fr.kyo.crkf.entity.Classification;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.entity.Instrument;
+import fr.kyo.crkf.searchable.SearchableInstrument;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

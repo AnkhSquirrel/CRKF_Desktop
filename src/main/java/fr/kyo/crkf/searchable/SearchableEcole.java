@@ -1,7 +1,7 @@
-package fr.kyo.crkf.Searchable;
+package fr.kyo.crkf.searchable;
 
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ville;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ville;
 import fr.kyo.crkf.dao.DAOFactory;
 
 public class SearchableEcole {

@@ -1,38 +1,28 @@
 package fr.kyo.crkf.controller.instrument;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Classification;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.entity.Instrument;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
 import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.Optional;
+import java.util.List;
 
 public class InstrumentModalController {
+
     @FXML
     private GridPane grid;
     @FXML
     private TextField nom;
     @FXML
     private Label nomModal;
-    @FXML
-    private VBox modalVbox;
     private HBox add;
     private Stage modal;
     private int rowsId;
@@ -80,7 +70,7 @@ public class InstrumentModalController {
             Button button = new Button();
             int id = rowsId;
             button.setOnAction(a -> removeRow(id));
-            button.setText("Delete");
+            button.setText("Supprimer");
 
             HBox hBox = new HBox();
             hBox.getChildren().setAll(label,comboBox,button);
@@ -105,11 +95,11 @@ public class InstrumentModalController {
             comboBox.setItems(FXCollections.observableArrayList(filter.getFamilles()));
             comboBox.getSelectionModel().select(0);
             return true;
-        }else{
+        } else {
             HBox hBox = (HBox) grid.getChildren().get(0);
             ComboBox<Famille> comboBoxTemp = (ComboBox<Famille>) hBox.getChildren().get(1);
-            if(comboBoxTemp.getSelectionModel().getSelectedItem().getId_famille() != 0){
-                ArrayList<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getId_classification());
+            if(comboBoxTemp.getSelectionModel().getSelectedItem().getFamilleId() != 0){
+                List<Famille> familles = DAOFactory.getFamilleDAO().getByClassification(comboBoxTemp.getSelectionModel().getSelectedItem().getclassification().getClassificationId());
                 familles.add(0,new Famille(0,"Famille",0));
                 comboBox.setItems(FXCollections.observableArrayList(familles));
                 comboBox.getSelectionModel().select(0);
@@ -153,7 +143,7 @@ public class InstrumentModalController {
         instrumentUpdate.getFamilles().clear();
         boolean allFamilleSet = getAllFamille(instrumentUpdate);
         if(!nom.getText().equals(""))
-            instrumentUpdate.setNom(nom.getText());
+            instrumentUpdate.setInstrumentLibelle(nom.getText());
         if(allFamilleSet && !instrumentUpdate.getFamilles().isEmpty()){
             if(DAOFactory.getInstrumentDAO().update(instrumentUpdate)){
                 applicationCRKF.openDetailInstrument(instrumentUpdate);
@@ -162,7 +152,7 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la modification de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -170,7 +160,7 @@ public class InstrumentModalController {
     private void addInstrument(){
         Instrument instrument = new Instrument(0,nom.getText());
         boolean allFamilleSet = getAllFamille(instrument);
-        if(!instrument.getNom().equals("") && allFamilleSet && !instrument.getFamilles().isEmpty()){
+        if(!instrument.getInstrumentLibelle().equals("") && allFamilleSet && !instrument.getFamilles().isEmpty()){
             if(DAOFactory.getInstrumentDAO().insert(instrument) != 0){
                 instrumentController.filter();
                 closeModal();
@@ -178,25 +168,23 @@ public class InstrumentModalController {
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la création de l'instrument.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de la création de l'instrument.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
 
     private boolean getAllFamille(Instrument instrument) {
-        boolean allFamilleSet = true;
         for(Node node : grid.getChildren()){
             HBox hBox = (HBox) node;
             if(!hBox.getId().equals("add")){
                 ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
-                if(comboBox.getSelectionModel().getSelectedItem().getId_famille() != 0){
+                if(comboBox.getSelectionModel().getSelectedItem().getFamilleId() != 0)
                     instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
-                }else{
-                    allFamilleSet = false;
-                }
+                else
+                    return false;
             }
         }
-        return  allFamilleSet;
+        return true;
     }
 
     @FXML
@@ -211,15 +199,16 @@ public class InstrumentModalController {
     public void setInstrumentController(InstrumentController instrumentController) {
         this.instrumentController = instrumentController;
     }
+
     public void setCreate(boolean bool){
         create = bool;
         if(!create)
             nomModal.setText("Modifier un instrument");
-
     }
+
     public void setInstrumentUpdate(Instrument instrument){
         instrumentUpdate = instrument;
-        nom.setText(instrumentUpdate.getNom());
+        nom.setText(instrumentUpdate.getInstrumentLibelle());
         for(Famille famille : instrumentUpdate.getFamilles()){
             addFamilleChoice(famille);
         }
@@ -228,4 +217,5 @@ public class InstrumentModalController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+
 }

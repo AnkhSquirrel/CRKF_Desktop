@@ -1,6 +1,6 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Departement;
+import fr.kyo.crkf.entity.Departement;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;

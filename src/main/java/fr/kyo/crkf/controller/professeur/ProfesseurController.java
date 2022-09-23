@@ -1,11 +1,11 @@
 package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Entity.Ville;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableProfesseur;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.entity.Ville;
+import fr.kyo.crkf.searchable.Filter;
+import fr.kyo.crkf.searchable.SearchableProfesseur;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
@@ -18,11 +18,10 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.io.IOException;
 
-
 public class ProfesseurController {
+
     @FXML
     private TableView<Personne> professeurTable;
     @FXML
@@ -33,7 +32,6 @@ public class ProfesseurController {
     private TableColumn<Personne, String> villeColumn;
     @FXML
     private TableColumn<Personne, String> departementColumn;
-
     @FXML
     private TextField nomEtPrenomFiltre;
     @FXML
@@ -45,18 +43,15 @@ public class ProfesseurController {
     @FXML
     private Label numberOfPage;
     @FXML
-    private Button pagePlus;
+    private GridPane listeProfesseur;
     @FXML
-    private Button pageMoins;
+    private JFXDrawer drawer;
     private int pageTotale;
     private SearchableProfesseur searchableProfesseur;
     private Filter filter;
     private ApplicationCRKF applicationCRKF;
     private int page;
-    @FXML
-    private GridPane listeProfesseur;
-    @FXML
-    private JFXDrawer drawer;
+
     @FXML
      private void initialize(){
         page = 1;
@@ -66,8 +61,8 @@ public class ProfesseurController {
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
         prenomColumn.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
 
-        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
-        departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
+        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresseId().getVille().getVilleStringProperty());
+        departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresseId().getVille().getDepartement().getDepartementStringProperty());
 
         nomEtPrenomFiltre.textProperty().addListener(observable -> filter());
 
@@ -88,34 +83,31 @@ public class ProfesseurController {
 
         professeurTable.getSelectionModel().selectedItemProperty().addListener(cellData -> openDetailProfesseur());
      }
+
     private void villeFilter() {
-        if((searchableProfesseur.getVilleId() == 0 && villeFiltre.getSelectionModel().getSelectedItem() == null) || !villeFiltre.getEditor().getText().equals(villeFiltre.getSelectionModel().getSelectedItem().getVille())){
+        if((searchableProfesseur.getVilleId() == 0 && villeFiltre.getSelectionModel().getSelectedItem() == null) || !villeFiltre.getEditor().getText().equals(villeFiltre.getSelectionModel().getSelectedItem().getVilleLibelle())){
             villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike(villeFiltre.getEditor().getText(),searchableProfesseur.getDepartementId())));
         }
     }
+
     private void filterDepartement() {
         filter();
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != 0) {
-            villeFiltre.setDisable(false);
-        } else {
-            villeFiltre.setDisable(true);
-        }
+        villeFiltre.setDisable(departementFiltre.getSelectionModel().getSelectedItem() == null || departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() == 0);
         villeFiltre.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableProfesseur.getDepartementId())));
         villeFiltre.getSelectionModel().select(0);
     }
+
     public void filter() {
         if(!nomEtPrenomFiltre.getText().isEmpty() || !nomEtPrenomFiltre.getText().equals(searchableProfesseur.getNomEtPrenom())){
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
             page = 1;
         }
-
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getId_departement() != searchableProfesseur.getDepartementId()){
-            searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getId_departement());
+        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != searchableProfesseur.getDepartementId()){
+            searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getDepartementId());
             villeFiltre.getSelectionModel().select(0);
             page = 1;
         }
-
-        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getId_ville() != searchableProfesseur.getVilleId()){
+        if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getVilleId() != searchableProfesseur.getVilleId()){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
         }
@@ -130,30 +122,32 @@ public class ProfesseurController {
     }
     @FXML
     private void pagePlus(){
-        if(professeurTable.getItems().size() > 0 && pageTotale > page ){
+        if(!professeurTable.getItems().isEmpty() && pageTotale > page ){
             page++;
             filter();
         }
-
     }
+
     @FXML
     private void pageMoins(){
         if (page > 1){
             page--;
             filter();
         }
-
     }
+
     @FXML
     private void lastPage(){
         page = pageTotale;
         filter();
     }
+
     @FXML
     private void firstPage(){
         page = 1;
         filter();
     }
+
     @FXML
     private void reset(){
         page = 1;
@@ -161,6 +155,7 @@ public class ProfesseurController {
         villeFiltre.getSelectionModel().selectFirst();
         departementFiltre.getSelectionModel().selectFirst();
     }
+
     private void openDetailProfesseur() {
         if(professeurTable.getSelectionModel().getSelectedItem() != null){
             try {
@@ -190,6 +185,7 @@ public class ProfesseurController {
     private void openMainMenu(){
         applicationCRKF.openMainMenu();
     }
+
     @FXML
     private void openCreateModal(){
         applicationCRKF.openCreateProfesseurModal(this);
@@ -202,6 +198,7 @@ public class ProfesseurController {
         listeProfesseur.setDisable(false);
         professeurTable.getSelectionModel().clearSelection();
     }
+
     public void openDetail(){
         drawer.setDisable(false);
         drawer.open();
@@ -216,4 +213,5 @@ public class ProfesseurController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+
 }

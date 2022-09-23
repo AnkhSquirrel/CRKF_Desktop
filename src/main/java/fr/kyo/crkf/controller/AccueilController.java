@@ -28,17 +28,28 @@ public class AccueilController {
     }
 
     @FXML
-    protected void openGestionVille() { application.openVilleGestion(); }
+    protected void openGestionVille() {
+        application.openVilleGestion();
+    }
 
     @FXML
-    protected void openGestionDepartement() { application.openDepartementGestion(); }
+    protected void openGestionDepartement() {
+        application.openDepartementGestion();
+    }
 
     @FXML
-    protected void openGestionFamille() { application.openFamilleGestion(); }
+    protected void openGestionFamille() {
+        application.openFamilleGestion();
+    }
 
     @FXML
-    protected void openGestionClassification() { application.openClassificationGestion(); }
+    protected void openGestionClassification() {
+        application.openClassificationGestion();
+    }
 
     @FXML
-    protected void openGestionCycle() { application.openCycleGestion(); }
+    protected void openGestionCycle() {
+        application.openCycleGestion();
+    }
+
 }

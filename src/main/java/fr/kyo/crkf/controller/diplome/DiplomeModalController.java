@@ -1,30 +1,21 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.diplome;
 
-import fr.kyo.crkf.Entity.Cycle;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.Cycle;
+import fr.kyo.crkf.entity.Instrument;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 
-
 public class DiplomeModalController {
 
     @FXML
-    private Button buttonAnnuler;
-
-    @FXML
     private ComboBox<Cycle> cycle;
-
     @FXML
     private ComboBox<Instrument> instrument;
-
-    @FXML
-    private Label nomModal;
     private Stage modal;
     private Personne personne;
     private GestionDiplomeController gestionDiplomeController;
@@ -33,32 +24,31 @@ public class DiplomeModalController {
     @FXML
     private void initialize(){
         Filter filter = new Filter();
-
         cycle.setItems(FXCollections.observableArrayList(filter.getCycles()));
         instrument.setItems(FXCollections.observableArrayList(filter.getInstrument()));
     }
 
     @FXML
-    void closeModal(ActionEvent event) {
+    void closeModal() {
         modal.close();
     }
 
     @FXML
-    void validate(ActionEvent event) {
+    void validate() {
         if (create)
             addDiplome();
     }
 
     private void addDiplome() {
-        if(cycle.getSelectionModel().getSelectedItem() != null && cycle.getSelectionModel().getSelectedItem().getId_cycle() != 0 && instrument.getSelectionModel().getSelectedItem() != null && instrument.getSelectionModel().getSelectedItem().getId_instrument() != 0){
-            for(int i = 1; i <= cycle.getSelectionModel().getSelectedItem().getCycle(); i++)
-                DAOFactory.getDiplomeDAO().personneAddDiplome(personne.getId_personne(), instrument.getSelectionModel().getSelectedItem().getId_instrument(), DAOFactory.getCycleDAO().getByCycle(i).getId_cycle());
+        if(cycle.getSelectionModel().getSelectedItem() != null && cycle.getSelectionModel().getSelectedItem().getCycleId() != 0 && instrument.getSelectionModel().getSelectedItem() != null && instrument.getSelectionModel().getSelectedItem().getInstrumentId() != 0){
+            for(int i = 1; i <= cycle.getSelectionModel().getSelectedItem().getCycleNumero(); i++)
+                DAOFactory.getDiplomeDAO().personneAddDiplome(personne.getPersonneId(), instrument.getSelectionModel().getSelectedItem().getInstrumentId(), DAOFactory.getCycleDAO().getByCycle(i).getCycleId());
             gestionDiplomeController.filter();
             modal.close();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de l'ajout du diplome.\n Merci de vérifier que vous avez entrée des informations valides");
+            alert.setHeaderText("Il y a eu une erreur lors de l'ajout du diplome.\n Merci de vérifier que vous avez entré des informations valides");
             alert.showAndWait();
         }
     }
@@ -78,4 +68,5 @@ public class DiplomeModalController {
     public void setCreate(boolean bool) {
         create = bool;
     }
+
 }

@@ -1,4 +1,4 @@
-package fr.kyo.crkf.Tools;
+package fr.kyo.crkf.tools;
 
 public class Pair<U, V> {
 

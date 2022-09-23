@@ -1,40 +1,32 @@
-package fr.kyo.crkf.controller;
+package fr.kyo.crkf.controller.diplome;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Cycle;
-import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.Searchable.Filter;
+import fr.kyo.crkf.entity.Cycle;
+import fr.kyo.crkf.entity.Diplome;
+import fr.kyo.crkf.entity.Instrument;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.controller.professeur.ProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
-
-import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 
 public class GestionDiplomeController {
 
     @FXML
     private SearchableComboBox<Cycle> cycle;
-
     @FXML
     private TableColumn<Diplome, String> cylceColumn;
-
     @FXML
     private TableView<Diplome> diplomeTable;
-
     @FXML
     private SearchableComboBox<Instrument> instrument;
-
     @FXML
     private TableColumn<Diplome, String> instrumentColumn;
-
     @FXML
     private Label pageNumber;
     private int page;
@@ -60,17 +52,17 @@ public class GestionDiplomeController {
     }
 
     @FXML
-    void openCreateModal(ActionEvent event) {
+    void openCreateModal() {
         applicationCRKF.openAddDiplomeModal(this, personne);
     }
 
     @FXML
-    void openDetailProfesseur(ActionEvent event) {
-        professeurController.openDetailProfesseur(DAOFactory.getPersonneDAO().getByID(personne.getId_personne()));
+    void openDetailProfesseur() {
+        professeurController.openDetailProfesseur(DAOFactory.getPersonneDAO().getByID(personne.getPersonneId()));
     }
 
     @FXML
-    void pageMoins(ActionEvent event) {
+    void pageMoins() {
         if(page > 1){
             page--;
             pageNumber.setText("Page : " + page);
@@ -79,7 +71,7 @@ public class GestionDiplomeController {
     }
 
     @FXML
-    void pagePlus(ActionEvent event) {
+    void pagePlus() {
         if(!diplomeTable.getItems().isEmpty()){
             page++;
             pageNumber.setText("Page : " + page);
@@ -88,9 +80,9 @@ public class GestionDiplomeController {
     }
 
     @FXML
-    void remove(ActionEvent event) {
+    void remove() {
         if(diplomeTable.getSelectionModel().getSelectedItem() != null){
-            ArrayList<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getId_personne(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getId_instrument(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getId_cycle());
+            List<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId());
             if(!diplomesSuperior.isEmpty()){
                 Alert alert = new Alert(Alert.AlertType.ERROR);
                 alert.setTitle("Attention");
@@ -98,43 +90,28 @@ public class GestionDiplomeController {
                 Optional<ButtonType> result = alert.showAndWait();
                 if(result.isPresent() && result.get() == ButtonType.OK){
                     for (Diplome diplome : diplomesSuperior){
-                        DAOFactory.getDiplomeDAO().deleteDiplome(personne.getId_personne() , diplome.getCycle().getId_cycle(), diplome.getInstrument().getId_instrument());
+                        DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId() , diplome.getCycle().getCycleId(), diplome.getInstrument().getInstrumentId());
                     }
-                    DAOFactory.getDiplomeDAO().deleteDiplome(personne.getId_personne(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getId_cycle(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getId_instrument());
+                    DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
                     filter();
                 }
-            }else if(applicationCRKF.deleteModal()){
-                DAOFactory.getDiplomeDAO().deleteDiplome(personne.getId_personne(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getId_cycle(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getId_instrument());
+            } else if (applicationCRKF.deleteModal()){
+                DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
                 filter();
             }
-
-
-
         }
-
-    }
-    @FXML
-    void update(ActionEvent event){
-
     }
 
     @FXML
-    void reset(ActionEvent event) {
+    void reset() {
         instrument.getSelectionModel().select(0);
         cycle.getSelectionModel().select(0);
     }
 
     public void filter(){
-        int instrument_id = 0;
-        int cycle_id = 0;
-
-        if( instrument.getSelectionModel().getSelectedItem() != null)
-            instrument_id =  instrument.getSelectionModel().getSelectedItem().getId_instrument();
-        if(cycle.getSelectionModel().getSelectedItem() != null)
-            cycle_id = cycle.getSelectionModel().getSelectedItem().getId_cycle();
-
-        diplomeTable.setItems(FXCollections.observableArrayList(DAOFactory.getDiplomeDAO().getPersonneDiplomeLike(personne.getId_personne(),instrument_id, cycle_id)));
-
+        int instrumentId = instrument.getSelectionModel().getSelectedItem() != null ? instrument.getSelectionModel().getSelectedItem().getInstrumentId() : 0;
+        int cycleId = cycle.getSelectionModel().getSelectedItem() != null ? cycle.getSelectionModel().getSelectedItem().getCycleId() : 0;
+        diplomeTable.setItems(FXCollections.observableArrayList(DAOFactory.getDiplomeDAO().getPersonneDiplomeLike(personne.getPersonneId(),instrumentId, cycleId)));
     }
 
     public void setPersonne(Personne personne){
@@ -149,4 +126,5 @@ public class GestionDiplomeController {
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
         this.applicationCRKF = applicationCRKF;
     }
+
 }

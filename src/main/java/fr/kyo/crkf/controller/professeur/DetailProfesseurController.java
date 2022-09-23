@@ -2,9 +2,9 @@ package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Diplome;
-import fr.kyo.crkf.Entity.Personne;
-import fr.kyo.crkf.controller.GestionDiplomeController;
+import fr.kyo.crkf.entity.Diplome;
+import fr.kyo.crkf.entity.Personne;
+import fr.kyo.crkf.controller.diplome.GestionDiplomeController;
 import fr.kyo.crkf.controller.ecole.EcoleAroundProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
@@ -15,10 +15,10 @@ import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
-
 import java.io.IOException;
 
 public class DetailProfesseurController {
+
     @FXML
     private Label nom;
     @FXML
@@ -42,17 +42,20 @@ public class DetailProfesseurController {
         instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().getInstrument().getNomStringProperty());
         cycleColumn.setCellValueFactory(cellData -> cellData.getValue().getCycle().getCycleStringProperty());
     }
+
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
         this.applicationCRKF = applicationCRKF;
     }
+
     public void setPersonne(Personne personne){
         this.personne = personne;
-        nom.setText(personne.getPrenom() + " " + personne.getNom());
+        nom.setText(personne.getPersonnePrenom() + " " + personne.getPersonneNom());
         cv.setText(String.valueOf(personne.getVehiculeCv()));
-        ecole.setText(personne.getEcole().getNom());
+        ecole.setText(personne.getEcoleID().getEcoleNom());
 
         diplomeTable.setItems(FXCollections.observableArrayList(personne.getDiplomes()));
     }
+
     @FXML
     private void openEcoleAroundPage() {
         try {
@@ -60,7 +63,6 @@ public class DetailProfesseurController {
             fxmlLoaderEcoleAroundPage.setLocation(ApplicationCRKF.class.getResource("ecole_around_page.fxml"));
             VBox ecoleAroundProf = fxmlLoaderEcoleAroundPage.load();
             EcoleAroundProfesseurController ecoleAroundProfesseurController = fxmlLoaderEcoleAroundPage.getController();
-            ecoleAroundProfesseurController.setApplicationCRKF(applicationCRKF);
             ecoleAroundProfesseurController.setPersonne(personne);
             ecoleAroundProfesseurController.setProfesseurController(professeurController);
             drawer.setSidePane(ecoleAroundProf);
@@ -74,11 +76,13 @@ public class DetailProfesseurController {
     private void closeDetail(){
         professeurController.closeDetail();
     }
+
     @FXML
     private void openUpdateModal(){
         applicationCRKF.openUpdateProfesseurModal(professeurController, personne);
         professeurController.filter();
     }
+
     @FXML
     private void delete(){
         if(applicationCRKF.deleteModal()){
@@ -113,4 +117,5 @@ public class DetailProfesseurController {
             e.printStackTrace();
         }
     }
+
 }

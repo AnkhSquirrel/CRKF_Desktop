@@ -1,9 +1,8 @@
 package fr.kyo.crkf.controller.ecole;
 
-import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Tools.Pair;
-import fr.kyo.crkf.Entity.Personne;
+import fr.kyo.crkf.entity.Ecole;
+import fr.kyo.crkf.tools.Pair;
+import fr.kyo.crkf.entity.Personne;
 import fr.kyo.crkf.controller.professeur.ProfesseurController;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.beans.property.ReadOnlyObjectWrapper;
@@ -12,8 +11,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-
-import java.util.ArrayList;
 
 public class EcoleAroundProfesseurController {
 
@@ -31,24 +28,16 @@ public class EcoleAroundProfesseurController {
     private TableColumn<Pair<Ecole, Double>,String> distanceColumn;
     @FXML
     private TableColumn<Pair<Ecole, Double>,String> tarifColumn;
-
     private Personne personne;
-    private ApplicationCRKF applicationCRKF;
-    private ArrayList<Pair<Ecole, Double>> ecolesEtDistance;
     private ProfesseurController professeurController;
-
 
     @FXML
     private void initialize(){
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getNomStringProperty());
-        adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getAdresse().getAdresseStringProperty());
-        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getAdresse().getVille().getVilleStringProperty());
+        adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getEcoleAdresse().getAdresseStringProperty());
+        villeColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getEcoleAdresse().getVille().getVilleStringProperty());
         distanceColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getSecond().toString().concat(" km(s)")));
         tarifColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(String.valueOf(calculIndemnite(personne.getVehiculeCv(), cellData.getValue().getSecond())).concat(" €")));
-    }
-
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF){
-        this.applicationCRKF = applicationCRKF;
     }
 
     public void setPersonne(Personne personne){
@@ -57,8 +46,8 @@ public class EcoleAroundProfesseurController {
     }
 
     public void fillInfos(){
-        ville.setText(personne.getAdresse().getVille().getVille());
-        ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getByDistance(personne.getAdresse().getVille().getLatitude(), personne.getAdresse().getVille().getLongitude(), 1)));
+        ville.setText(personne.getAdresseId().getVille().getVilleLibelle());
+        ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getByDistance(personne.getAdresseId().getVille().getLatitude(), personne.getAdresseId().getVille().getLongitude())));
     }
 
     @FXML
@@ -80,4 +69,5 @@ public class EcoleAroundProfesseurController {
             indemnite *= 0.06;
         return Math.round(indemnite * 100.00) / 100.00;
     }
+
 }
