@@ -17,7 +17,7 @@ Application JavaFX de gestion de conservatoires :
 * [OpenJFX 18](https://gluonhq.com/products/javafx/openjfx-18-release-notes/)
 * [ControlsFX 11.1.1](https://github.com/controlsfx/controlsfx/releases/tag/11.1.1)
 * [JFoenix 9.0.10](https://github.com/sshahine/JFoenix)
-* [Microsoft JDBC 11.2.1](https://learn.microsoft.com/fr-fr/sql/connect/jdbc/release-notes-for-the-jdbc-driver?view=sql-server-ver16#102)
+* [Microsoft JDBC 10.2.1](https://learn.microsoft.com/fr-fr/sql/connect/jdbc/release-notes-for-the-jdbc-driver?view=sql-server-ver16#102)
 * [Docker image](https://hub.docker.com/r/orelienthomas/crkf)
 
 # Screenshots
