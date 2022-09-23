@@ -61,6 +61,8 @@ public class DetailEcoleController {
     @FXML
     private void updateEcole(){
         applicationCRKF.openUpdateEcole(ecole, ecoleController);
+        ecoleController.filter();
+        ecoleController.closeDetail();
     }
 
     @FXML
