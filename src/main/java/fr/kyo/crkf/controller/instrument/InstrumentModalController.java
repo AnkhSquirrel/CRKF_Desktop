@@ -70,7 +70,7 @@ public class InstrumentModalController {
             Button button = new Button();
             int id = rowsId;
             button.setOnAction(a -> removeRow(id));
-            button.setText("Delete");
+            button.setText("Supprimer");
 
             HBox hBox = new HBox();
             hBox.getChildren().setAll(label,comboBox,button);
