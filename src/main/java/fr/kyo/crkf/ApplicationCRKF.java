@@ -26,6 +26,7 @@ import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.MenuBar;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.layout.GridPane;
@@ -41,7 +42,6 @@ public class ApplicationCRKF extends javafx.application.Application {
     NavbarController navbarController;
     AccueilController accueilController;
     BorderPane mainWindow = new BorderPane();
-
     Stage stage;
 
     public static void main(String[] args) {
@@ -68,6 +68,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             stage.setMinHeight(620);
             stage.setResizable(false);
             stage.setScene(scene);
+            stage.getIcons().add(new Image(Objects.requireNonNull(ApplicationCRKF.class.getResourceAsStream("icon.png"))));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -557,8 +558,14 @@ public class ApplicationCRKF extends javafx.application.Application {
             diplomeModalController.setCreate(true);
             diplomeModalController.setPersonne(personne);
             diplomeModalController.setGestionDiplomeController(gestionDiplomeController);
+
+            modal.setScene(new Scene(modalPane));
+            modal.setResizable(false);
+            modal.initModality(Modality.WINDOW_MODAL);
+            modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajout d'un diplome");
 
+            modal.show();
         }catch (IOException e) {
             e.printStackTrace();
         }

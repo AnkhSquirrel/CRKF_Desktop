@@ -39,11 +39,11 @@ public class DiplomeDAO {
     }
 
     public List<Diplome> getPersonneDiplomeLike (int id, int instrumentId, int cycleId) {
-        StringBuilder requete = new StringBuilder("SELECT id_libelle, instrumentId from Personne_Diplome where id_personne = " + id);
+        StringBuilder requete = new StringBuilder("SELECT id_libelle, id_instrument from Personne_Diplome where id_personne = " + id);
         if(cycleId != 0)
             requete.append(" and id_libelle = ").append(cycleId);
         if(instrumentId != 0)
-            requete.append(" and instrumentId = ").append(instrumentId);
+            requete.append(" and id_instrument = ").append(instrumentId);
         ArrayList<Diplome> liste = new ArrayList<>();
         try (PreparedStatement preparedStatement = connexion.prepareStatement(requete.toString())){
             ResultSet rs = preparedStatement.executeQuery();
