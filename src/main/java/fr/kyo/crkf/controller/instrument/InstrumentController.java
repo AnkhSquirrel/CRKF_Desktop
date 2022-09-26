@@ -81,7 +81,7 @@ public class InstrumentController {
          this.applicationCRKF = applicationCRKF;
      }
 
-    private void openDetailInstrument(){
+    public void openDetailInstrument(){
         if(instrumentTable.getSelectionModel().getSelectedItem() != null){
             try {
                 FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
@@ -98,6 +98,11 @@ public class InstrumentController {
                 e.printStackTrace();
             }
         }
+    }
+    public void openDetailInstrument(Instrument instrument){
+         filter();
+         instrumentTable.getSelectionModel().select(instrument);
+         openDetailInstrument();
     }
 
     public void filter(){

@@ -53,7 +53,7 @@ public class DetailInstrumentController {
 
     @FXML
     private void updateInstrument(){
-        applicationCRKF.openUpdateInstrumentModal(instrument);
+        applicationCRKF.openUpdateInstrumentModal(instrument, instrumentController);
     }
 
     @FXML

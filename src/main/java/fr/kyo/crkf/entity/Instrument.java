@@ -9,7 +9,7 @@ import java.util.List;
 public class Instrument {
     private final int instrumentId;
     private String instrumentLibelle;
-    private final List<Integer> familles;
+    private List<Integer> familles;
 
     public Instrument(int instrumentId, String instrumentLibelle) {
         this.instrumentId = instrumentId;
@@ -35,7 +35,9 @@ public class Instrument {
             list.add(DAOFactory.getFamilleDAO().getByID(i));
         return list;
     }
-
+    public void setFamilles(List<Integer> familles){
+        this.familles = familles;
+    }
     public void addFamille(Famille famille){
         familles.add(famille.getFamilleId());
     }
