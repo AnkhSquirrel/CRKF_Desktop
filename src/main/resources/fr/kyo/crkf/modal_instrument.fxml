@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox fx:id="modalVbox" alignment="CENTER" minHeight="200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.instrument.InstrumentModalController">
+<VBox alignment="CENTER" fillWidth="false" minHeight="200.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.instrument.InstrumentModalController">
    <children>
       <Label fx:id="nomModal" alignment="CENTER" contentDisplay="CENTER" text="Création d'un nouvel instrument">
          <font>

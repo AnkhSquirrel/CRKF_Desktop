@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.DetailProfesseurController">
+<VBox alignment="TOP_CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.professeur.DetailProfesseurController">
    <children>
       <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="500.0">
          <children>
@@ -76,10 +76,14 @@
             </TableView>
          </children>
       </HBox>
-      <Button mnemonicParsing="false" onAction="#openEcoleAroundPage" text="Écoles associées">
-         <VBox.margin>
-            <Insets bottom="10.0" top="10.0" />
-         </VBox.margin></Button>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="363.0">
+         <children>
+            <Button mnemonicParsing="false" onAction="#delete" text="Supprimer" />
+            <Button mnemonicParsing="false" onAction="#openEcoleAroundPage" text="Écoles associées" />
+            <Button mnemonicParsing="false" onAction="#openUpdateModal" text="Modifier" />
+            <Button mnemonicParsing="false" onAction="#openGestionDiplome" text="Gestion Diplomes" />
+         </children>
+      </HBox>
    </children>
    <opaqueInsets>
       <Insets />

@@ -1,9 +1,8 @@
 package fr.kyo.crkf.controller.instrument;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Famille;
-import fr.kyo.crkf.Entity.Instrument;
-import fr.kyo.crkf.controller.ecole.EcoleController;
+import fr.kyo.crkf.entity.Famille;
+import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -22,6 +21,7 @@ public class DetailInstrumentController {
     private ApplicationCRKF applicationCRKF;
     private Instrument instrument;
     private InstrumentController instrumentController;
+
     @FXML
     private void initialize(){
         familleColumn.setCellValueFactory(cellData -> cellData.getValue().getFamilleStringProperty());
@@ -31,15 +31,10 @@ public class DetailInstrumentController {
         this.applicationCRKF = applicationCRKF;
     }
 
-    @FXML
-    private void openInstrumentList(){
-        applicationCRKF.openInstrumentList();
-    }
-
     public void setInstrument(Instrument instrument) {
         this.instrument = instrument;
-        nom.setText(instrument.getNom());
-        classification.setText(instrument.getFamilles().get(0).getclassification().getclassification());
+        nom.setText(instrument.getInstrumentLibelle());
+        classification.setText(instrument.getFamilles().get(0).getclassification().getClassificationLibelle());
         familleTableView.setItems(FXCollections.observableArrayList(instrument.getFamilles()));
     }
 
@@ -48,13 +43,14 @@ public class DetailInstrumentController {
         if(applicationCRKF.deleteModal()){
             DAOFactory.getInstrumentDAO().delete(instrument);
             applicationCRKF.openInstrumentList();
-        }else{
+        } else {
             Alert alert = new Alert(Alert.AlertType.ERROR);
             alert.setTitle("Erreur");
             alert.setHeaderText("Il y a eu une erreur lors de la suppression de l'instrument.");
             alert.showAndWait();
         }
     }
+
     @FXML
     private void updateInstrument(){
         applicationCRKF.openUpdateInstrumentModal(instrument);
@@ -68,4 +64,5 @@ public class DetailInstrumentController {
     public void setInstrumentController(InstrumentController instrumentController) {
         this.instrumentController = instrumentController;
     }
+
 }

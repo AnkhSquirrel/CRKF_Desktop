@@ -14,7 +14,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.GestionFamilleController">
+<GridPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.famille.GestionFamilleController">
   <columnConstraints>
     <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
   </columnConstraints>
@@ -80,9 +80,20 @@
       </TableView>
       <HBox alignment="CENTER" maxHeight="50.0" minHeight="50.0" prefHeight="50.0" prefWidth="200.0" GridPane.rowIndex="4">
          <children>
+            <Button fx:id="premierePage" mnemonicParsing="false" onAction="#firstPage" text="&lt;&lt;">
+               <HBox.margin>
+                  <Insets right="2.0" />
+               </HBox.margin>
+            </Button>
             <Button mnemonicParsing="false" onAction="#pageMoins" text="&lt;" />
-            <Label fx:id="pageNumber" alignment="CENTER" prefWidth="100.0" text="Page 1" />
+            <Label fx:id="pageNumber" alignment="CENTER_RIGHT" prefWidth="100.0" text="Page 1 / " />
+            <Label fx:id="numberOfPage" alignment="BOTTOM_LEFT" prefWidth="100.0" text="Page totale" />
             <Button mnemonicParsing="false" onAction="#pagePlus" text="&gt;" />
+            <Button fx:id="dernierePage" mnemonicParsing="false" onAction="#lastPage" text="&gt;&gt;">
+               <HBox.margin>
+                  <Insets left="2.0" />
+               </HBox.margin>
+            </Button>
          </children>
       </HBox>
    </children>

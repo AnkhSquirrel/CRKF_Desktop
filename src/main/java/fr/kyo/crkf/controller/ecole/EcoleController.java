@@ -3,11 +3,11 @@ package fr.kyo.crkf.controller.ecole;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.Entity.Departement;
-import fr.kyo.crkf.Entity.Ecole;
-import fr.kyo.crkf.Entity.Ville;
-import fr.kyo.crkf.Searchable.Filter;
-import fr.kyo.crkf.Searchable.SearchableEcole;
+import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Ecole;
+import fr.kyo.crkf.entity.Ville;
+import fr.kyo.crkf.searchable.Filter;
+import fr.kyo.crkf.searchable.SearchableEcole;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.event.Event;
@@ -19,7 +19,6 @@ import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
-
 import java.io.IOException;
 
 public class EcoleController {
@@ -42,26 +41,29 @@ public class EcoleController {
         private TextField nomEcole;
         @FXML
         private Label pageNumber;
+        @FXML
+        private Label numberOfPage;
+        @FXML
+        private GridPane listeEcole;
+        @FXML
+        private JFXDrawer drawer;
+        private int pageTotale;
         private SearchableEcole searchableEcole;
         private Filter filter;
         private ApplicationCRKF applicationCRKF;
-        private Ecole ecole;
-        @FXML
-        private JFXDrawer drawer;
+
         private int page;
-        @FXML
-        private GridPane listeEcole;
 
         @FXML
-        private void initialize() throws IOException {
+        private void initialize() {
                 page = 1;
                 filter = new Filter();
                 searchableEcole = new SearchableEcole();
 
                 nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
-                villeColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getVilleStringProperty());
-                adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getAdresseStringProperty());
-                departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresse().getVille().getDepartement().getDepartementStringProperty());
+                villeColumn.setCellValueFactory(cellData -> cellData.getValue().getEcoleAdresse().getVille().getVilleStringProperty());
+                adresseColumn.setCellValueFactory(cellData -> cellData.getValue().getEcoleAdresse().getAdresseStringProperty());
+                departementColumn.setCellValueFactory(cellData -> cellData.getValue().getEcoleAdresse().getVille().getDepartement().getDepartementStringProperty());
 
                 villeFilter();
                 ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
@@ -76,45 +78,58 @@ public class EcoleController {
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
+                pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
+                if(pageTotale == 0)
+                        pageTotale++;
+                numberOfPage.setText(" / " + pageTotale);
         }
 
         private void filterDepartement() {
                 filter();
-                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getDepartement().getId_departement())));
+                ville.setDisable(departement.getSelectionModel().getSelectedItem() == null || departement.getSelectionModel().getSelectedItem().getDepartementId() == 0);
+                ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("",searchableEcole.getIdDepartement())));
                 ville.getSelectionModel().select(0);
         }
 
         private void villeFilter() {
-                if(!ville.getEditor().getText().equals(searchableEcole.getVille().getVille())){
-                        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getDepartement().getId_departement())));
+                if((searchableEcole.getIdVille() == 0 && ville.getSelectionModel().getSelectedItem() == null) || !ville.getEditor().getText().equals(ville.getSelectionModel().getSelectedItem().getVilleLibelle())){
+                        ville.setItems(FXCollections.observableArrayList(filter.getVilleLike(ville.getEditor().getText(),searchableEcole.getIdDepartement())));
                 }
         }
+
         @FXML
         private void reset(){
                 page = 1;
                 nomEcole.setText("");
                 departement.getSelectionModel().selectFirst();
                 ville.getSelectionModel().selectFirst();
-                //filter();
+                filter();
         }
 
         @FXML
-        private void filter(){
-                if(!nomEcole.getText().isEmpty() || !nomEcole.getText().equals(searchableEcole.getNom())) {
+        public void filter(){
+                if(!nomEcole.getText().equals(searchableEcole.getNom()) && !nomEcole.getText().isEmpty()) {
                         searchableEcole.setNom(nomEcole.getText());
                         page = 1;
                 }
-                if(!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem() != searchableEcole.getVille()){
-                        searchableEcole.setVille(ville.getSelectionModel().getSelectedItem());
+                if(!ville.getSelectionModel().isEmpty() && ville.getSelectionModel().getSelectedItem() != null && ville.getSelectionModel().getSelectedItem().getVilleId() != searchableEcole.getIdVille()){
+                        searchableEcole.setIdVille(ville.getSelectionModel().getSelectedItem().getVilleId());
                         page = 1;
                 }
 
-                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem() != searchableEcole.getDepartement() ){
-                        searchableEcole.setDepartement(departement.getSelectionModel().getSelectedItem());
+                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getDepartementId() != searchableEcole.getIdDepartement() ){
+                        searchableEcole.setIdDepartement(departement.getSelectionModel().getSelectedItem().getDepartementId());
                         page = 1;
                 }
 
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
+
+                pageTotale = DAOFactory.getEcoleDAO().getLikeAllEcole(searchableEcole).size() / 25;
+                if (pageTotale == 0)
+                        pageTotale++;
+                numberOfPage.setText( " / " + pageTotale);
+
                 pageNumber.setText("Page " + page);
         }
 
@@ -140,10 +155,12 @@ public class EcoleController {
         public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
                 this.applicationCRKF = applicationCRKF;
         }
+
         @FXML
         private void openCreateModal(){
-                applicationCRKF.openCreateEcoleModal();
+                applicationCRKF.openCreateEcoleModal(this);
         }
+
         @FXML
         private void openMainMenu(){
                 applicationCRKF.openMainMenu();
@@ -151,11 +168,12 @@ public class EcoleController {
 
         @FXML
         private void pagePlus(){
-                if(ecoleTable.getItems().size() > 0){
+                if(!ecoleTable.getItems().isEmpty() && pageTotale > page){
                         page++;
                         filter();
                 }
         }
+
         @FXML
         private void pageMoins(){
                 if (page > 1){
@@ -164,11 +182,24 @@ public class EcoleController {
                 }
         }
 
+        @FXML
+        private void lastPage(){
+                page = pageTotale;
+                filter();
+        }
+
+        @FXML
+        private void firstPage(){
+                page = 1;
+                filter();
+        }
+
         public void closeDetail(){
                 drawer.close();
                 drawer.setDisable(true);
                 listeEcole.setEffect(null);
                 listeEcole.setDisable(false);
+                ecoleTable.getSelectionModel().clearSelection();
         }
 
         public void openDetail(){
@@ -177,6 +208,5 @@ public class EcoleController {
                 listeEcole.setEffect(new GaussianBlur());
                 listeEcole.setDisable(true);
         }
-
 
 }

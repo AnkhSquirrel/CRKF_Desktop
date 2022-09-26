@@ -1,75 +1,40 @@
 package fr.kyo.crkf.dao;
 
-import fr.kyo.crkf.Entity.Ville;
-
+import fr.kyo.crkf.entity.Ville;
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.List;
 
 public class VilleDAO extends DAO<Ville> {
-    private final int lgpage = 25;
+
+    private static final int LG_PAGE = 25;
+
     protected VilleDAO(Connection connexion) {
         super(connexion);
     }
 
     @Override
     public Ville getByID(int id) {
-        Ville ville = null;
-        try {
-
-            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_ville = ?";
-
-            PreparedStatement s = connexion.prepareStatement(strCmd);
-            s.setInt(1,id);
-            ResultSet rs = s.executeQuery();
-
-            rs.next();
-            ville =  new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4), rs.getInt(5));
-            rs.close();
-        }
-        catch (Exception e) {
+        String requete = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_ville = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+            preparedStatement.setInt(1,id);
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) return new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4), rs.getInt(5));
+        } catch (Exception e) {
             e.printStackTrace();
         }
-        return ville;
+        return null;
     }
-
-    public ArrayList<Ville> gettByDepartementID(int id) {
-        ArrayList<Ville> liste = new ArrayList<>();
-        try {
-            PreparedStatement ps = connexion.prepareStatement("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_departement = ? ");
-            ps.setInt(1,id);
-
-            ResultSet rs = ps.executeQuery();
-
-            while (rs.next())
-                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
-            rs.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return liste;
-    }
-
 
     @Override
-    public ArrayList<Ville> getAll(int page) {
-        ArrayList<Ville> liste = new ArrayList<>();
-        try (Statement stmt = connexion.createStatement()) {
-
-            // Determine the column set column
-
-            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville order by ville OFFSET " + lgpage + " * (? - 1)  ROWS FETCH NEXT " + lgpage + " ROWS ONLY";
-            PreparedStatement s = connexion.prepareStatement(strCmd);
-            s.setInt(1,page);
-            ResultSet rs = s.executeQuery();
-
-            while (rs.next()) {
-                liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
-            }
-            rs.close();
-        }
-        // Handle any errors that may have occurred.
-        catch (Exception e) {
+    public List<Ville> getAll(int page) {
+        List<Ville> liste = new ArrayList<>();
+        String requete = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville order by ville OFFSET " + LG_PAGE + " * (? - 1)  ROWS FETCH NEXT " + LG_PAGE + " ROWS ONLY";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+            preparedStatement.setInt(1,page);
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return liste;
@@ -77,95 +42,90 @@ public class VilleDAO extends DAO<Ville> {
 
     @Override
     public int insert(Ville objet) {
-        try {
-            String requete = "INSERT INTO Ville (ville,longitude,latitude,id_departement) VALUES (?,?,?,?)";
-            PreparedStatement  preparedStatement = connexion().prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);
-            preparedStatement.setString( 1 , objet.getVille());
+        String requete = "INSERT INTO Ville (ville,longitude,latitude,id_departement) VALUES (?,?,?,?)";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+            preparedStatement.setString( 1 , objet.getVilleLibelle());
             preparedStatement.setFloat(2,objet.getLongitude());
             preparedStatement.setFloat(3,objet.getLatitude());
-            preparedStatement.setInt(4, objet.getDepartement().getId_departement());
+            preparedStatement.setInt(4, objet.getDepartement().getDepartementId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
-            int id = 0;
-            if(rs.next())
-                id = rs.getInt(1);
-            preparedStatement.close();
-            return id;
-        }catch (SQLException e) {
-            return 0;
+            if(rs.next()) return rs.getInt(1);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
+        return 0;
     }
 
     @Override
     public boolean update(Ville object) {
-        try {
-            String requete = "UPDATE Ville SET ville = ?,longitude = ? ,latitude = ?,id_departement = ? WHERE id_ville = ?";
-            PreparedStatement  preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setString(1, object.getVille());
+        String requete = "UPDATE Ville SET ville = ?,longitude = ? ,latitude = ?,id_departement = ? WHERE id_ville = ?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+            preparedStatement.setString(1, object.getVilleLibelle());
             preparedStatement.setFloat(2,object.getLongitude());
             preparedStatement.setFloat(3,object.getLatitude());
-            preparedStatement.setInt(4, object.getDepartement().getId_departement());
-            preparedStatement.setInt(5, object.getId_ville());
+            preparedStatement.setInt(4, object.getDepartement().getDepartementId());
+            preparedStatement.setInt(5, object.getVilleId());
             preparedStatement.executeUpdate();
-            preparedStatement.close();
             return true;
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 
     @Override
     public boolean delete(Ville object) {
-        try {
-            String requete = "DELETE FROM Ville WHERE id_ville=?";
-            PreparedStatement preparedStatement = connexion().prepareStatement(requete);
-            preparedStatement.setInt(1, object.getId_ville());
+        String requete = "DELETE FROM Ville WHERE id_ville=?";
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+            preparedStatement.setInt(1, object.getVilleId());
             preparedStatement.executeUpdate();
             return true;
         } catch (SQLException e) {
-            return false;
+            e.printStackTrace();
         }
+        return false;
     }
 
-    public ArrayList<Ville> getLike(String nom, int departement_id) {
-        ArrayList<Ville> list = new ArrayList<>();
-        try (Statement stmt = connexion.createStatement()){
+    public List<Ville> getLike(String nom, int departementId) {
+        List<Ville> list = new ArrayList<>();
+        StringBuilder requete = new StringBuilder("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'");
+        if(departementId != 0)
+            requete.append(" and id_departement = ").append(departementId);
+        requete.append(" ORDER BY VILLE OFFSET 0 ROWS FETCH NEXT 25 ROWS ONLY");
+        return getVilles(list, requete);
+    }
 
-            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
-            if(departement_id != 0)
-                strCmd += " and id_departement = " + departement_id;
-            strCmd += " ORDER BY VILLE OFFSET 0 ROWS FETCH NEXT 25 ROWS ONLY";
-            ResultSet rs = stmt.executeQuery(strCmd);
-
-
-            while(rs.next())
-                list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
-            rs.close();
+    public int getNumberOfVilles(String nom, int departementId) {
+        StringBuilder requete = new StringBuilder("SELECT COUNT(id_ville) from Ville where ville like '%" + nom + "%'");
+        if(departementId != 0)
+            requete.append(" and id_departement = ").append(departementId);
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete.toString())){
+            ResultSet rs = preparedStatement.executeQuery();
+            if (rs.next()) return rs.getInt(1);
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        catch (Exception e) {
+        return 0;
+    }
+
+    public List<Ville> getLikeForGestion(String nom, int departementId, int page) {
+        List<Ville> list = new ArrayList<>();
+        StringBuilder requete = new StringBuilder("SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'");
+        if(departementId != 0)
+            requete.append(" and id_departement = ").append(departementId);
+        requete.append(" order by VILLE OFFSET 25 * (").append(page).append(" - 1)  ROWS FETCH NEXT 25 ROWS ONLY");
+        return getVilles(list, requete);
+    }
+
+    private List<Ville> getVilles(List<Ville> list, StringBuilder requete) {
+        try (Statement stmt = connexion.createStatement()){
+            ResultSet rs = stmt.executeQuery(requete.toString());
+            while(rs.next()) list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return list;
     }
 
-    public ArrayList<Ville> getLikeForGestion(String nom, int departement_id, int page) {
-        ArrayList<Ville> list = new ArrayList<>();
-        try (Statement stmt = connexion.createStatement()){
-
-            String strCmd = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where ville like '%" + nom + "%'";
-            if(departement_id != 0)
-                strCmd += " and id_departement = " + departement_id;
-            strCmd += " order by VILLE OFFSET 25 * (" + page + " - 1)  ROWS FETCH NEXT 25 ROWS ONLY";
-            ResultSet rs = stmt.executeQuery(strCmd);
-
-
-            while(rs.next())
-                list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
-            rs.close();
-        }
-        catch (Exception e) {
-            e.printStackTrace();
-        }
-        return list;
-    }
 }

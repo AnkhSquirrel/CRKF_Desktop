@@ -3,20 +3,30 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" minWidth="500.0" prefHeight="200.0" prefWidth="500.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
+<VBox alignment="CENTER" minWidth="500.0" prefHeight="600.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
    <children>
+      <ImageView fitHeight="228.0" fitWidth="398.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@logo.png" />
+         </image>
+      </ImageView>
       <Label text="Recherche par ..." textAlignment="CENTER">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <VBox.margin>
-            <Insets />
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
          <children>
             <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openInstrumentList" text="Instrument" textAlignment="CENTER">
@@ -36,30 +46,55 @@
             </Button>
          </children>
       </HBox>
-      <Label text="Gestion :" textAlignment="CENTER">
+      <Label text="Gestion  ..." textAlignment="CENTER">
          <font>
             <Font name="System Italic" size="18.0" />
          </font>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </Label>
       <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
          <children>
             <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionFamille" text="Famille" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
             <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionClassification" text="Classification" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
             <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionVille" text="Ville" textAlignment="CENTER">
                <HBox.margin>
-                  <Insets left="5.0" right="5.0" />
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
                </HBox.margin>
             </Button>
-            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionDepartement" text="Département" textAlignment="CENTER" />
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionDepartement" text="Département" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
+            <Button alignment="CENTER" minWidth="100.0" mnemonicParsing="false" onAction="#openGestionCycle" text="Cycle" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+               </HBox.margin>
+            </Button>
          </children>
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
       </HBox>
    </children>
 </VBox>
