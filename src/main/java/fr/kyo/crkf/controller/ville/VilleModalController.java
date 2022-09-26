@@ -26,6 +26,16 @@ public class VilleModalController {
     private Stage modal;
     private boolean create;
     private GestionVilleController gestionVilleController;
+    @FXML
+    private void validate(){
+        if(create){
+            createVille();
+        }
+        else{
+            updateVille();
+        }
+    }
+
     private Ville ville;
 
     @FXML
@@ -44,14 +54,6 @@ public class VilleModalController {
     }
 
     @FXML
-    private void validate(){
-        if(create)
-            createVille();
-        else
-            updateVille();
-    }
-
-    @FXML
     private void closeModal(){
         modal.close();
     }
@@ -60,7 +62,8 @@ public class VilleModalController {
         modal = stage;
     }
 
-    public void setCreate(boolean create) {
+    public void setCreate(boolean bool) {
+        this.create = bool;
         if(create)
             nomModal.setText("Créer une ville");
         else
