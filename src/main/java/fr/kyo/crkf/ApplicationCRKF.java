@@ -139,19 +139,6 @@ public class ApplicationCRKF extends javafx.application.Application {
         alert.showAndWait();
     }
 
-    public void openDetailInstrument(Instrument instrument){
-        try {
-            FXMLLoader fxmlLoaderListeInstrument = new FXMLLoader();
-            fxmlLoaderListeInstrument.setLocation(ApplicationCRKF.class.getResource("detail_instrument.fxml"));
-            AnchorPane detailInstrument = fxmlLoaderListeInstrument.load();
-            DetailInstrumentController detailInstrumentController = fxmlLoaderListeInstrument.getController();
-            detailInstrumentController.setApplicationCRKF(this);
-            detailInstrumentController.setInstrument(instrument);
-            mainWindow.setCenter(detailInstrument);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
 
     public void openCreateInstrumentModal(InstrumentController instrumentController) {
         Stage modal = new Stage();
@@ -223,7 +210,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         }
     }
     
-    public void openUpdateInstrumentModal(Instrument instrument) {
+    public void openUpdateInstrumentModal(Instrument instrument, InstrumentController instrumentController) {
         Stage modal = new Stage();
         modal.setResizable(true);
         try {
@@ -235,6 +222,7 @@ public class ApplicationCRKF extends javafx.application.Application {
             instrumentModalController.setCreate(false);
             instrumentModalController.setInstrumentUpdate(instrument);
             instrumentModalController.setApplicationCRKF(this);
+            instrumentModalController.setInstrumentController(instrumentController);
 
             modal.setScene(new Scene(modalPane));
             modal.initModality(Modality.WINDOW_MODAL);

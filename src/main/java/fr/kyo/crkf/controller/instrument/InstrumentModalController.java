@@ -13,6 +13,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.stage.Stage;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class InstrumentModalController {
@@ -140,14 +142,16 @@ public class InstrumentModalController {
     }
 
     private void updateInstrument() {
-        instrumentUpdate.getFamilles().clear();
+        ArrayList<Integer> list = new ArrayList<>();
+        instrumentUpdate.setFamilles((ArrayList<Integer>) list);
         boolean allFamilleSet = getAllFamille(instrumentUpdate);
         if(!nom.getText().equals(""))
             instrumentUpdate.setInstrumentLibelle(nom.getText());
-        if(allFamilleSet && !instrumentUpdate.getFamilles().isEmpty()){
-            if(DAOFactory.getInstrumentDAO().update(instrumentUpdate)){
-                applicationCRKF.openDetailInstrument(instrumentUpdate);
-                closeModal();
+        instrumentUpdate.setInstrumentLibelle(nom.getText());
+        if(allFamilleSet && !instrumentUpdate.getFamilles().isEmpty()) {
+            if (DAOFactory.getInstrumentDAO().update(instrumentUpdate)) {
+                modal.close();
+                instrumentController.openDetailInstrument(instrumentUpdate);
             }
         }else{
             Alert alert = new Alert(Alert.AlertType.ERROR);
