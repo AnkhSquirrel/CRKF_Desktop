@@ -21,5 +21,3 @@ n
 .src/main/java/fr/kyo/crkf/entity/Personne.java,a\a\aa1fa197ab1cb7c3e5deea072248124d219eff17
 [
 +src/main/java/fr/kyo/crkf/entity/Ville.java,6\5\65515bee21be0a38b6c069903e14a2bf0050a61f
-^
-.src/main/java/fr/kyo/crkf/ApplicationCRKF.java,0\8\0851fee7dfa2fbdc8c48e468acccb38e2dfbddc8

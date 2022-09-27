@@ -1,26 +1,21 @@
 package fr.kyo.crkf.controller.departement;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.entity.Classification;
 import fr.kyo.crkf.entity.Departement;
-import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.controlsfx.control.SearchableComboBox;
-
 import java.util.Optional;
 
 public class GestionDepartementController {
+
     @FXML
     private TableColumn<Departement,String> departementColumn;
     @FXML
     private TableColumn<Departement,Integer> nbreEcoleColumn;
     @FXML
     private TableColumn<Departement, String> numDepColumn;
-    @FXML
-    private SearchableComboBox<Classification> classification;
     @FXML
     private TextField libelle;
     @FXML
@@ -38,8 +33,6 @@ public class GestionDepartementController {
     private void initialize(){
         departement="";
         page = 1;
-        Filter filter = new Filter();
-        // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
         numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
         nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartement());
@@ -67,7 +60,7 @@ public class GestionDepartementController {
         pageTotale = DAOFactory.getDepartementDAO().getNumberOfDepartements(departement) / 25;
         if (pageTotale == 0)
             pageTotale ++;
-        numberOfPage.setText(" / " + String.valueOf(pageTotale));
+        numberOfPage.setText(" / " +pageTotale);
 
         pageNumber.setText("Page " + page);
     }
@@ -83,7 +76,7 @@ public class GestionDepartementController {
     @FXML
     private void update(){
         if (departementTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openModalUpdateDepartement(this, departementTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openModalUpdateDepartement(this, departementTable.getSelectionModel().getSelectedItem());
     }
     @FXML
     private void openCreateModal(){
