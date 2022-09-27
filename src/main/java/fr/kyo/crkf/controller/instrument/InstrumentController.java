@@ -2,6 +2,7 @@ package fr.kyo.crkf.controller.instrument;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
+import fr.kyo.crkf.controller.AccueilController;
 import fr.kyo.crkf.entity.Classification;
 import fr.kyo.crkf.entity.Famille;
 import fr.kyo.crkf.entity.Instrument;
@@ -19,9 +20,10 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
 import java.io.IOException;
+import java.util.Objects;
 
 public class InstrumentController {
-
+    AccueilController accueilController;
     @FXML
     private TableColumn<Instrument, String> libelleColumn;
     @FXML
@@ -180,6 +182,11 @@ public class InstrumentController {
         drawer.open();
         listeInstrument.setEffect(new GaussianBlur());
         listeInstrument.setDisable(true);
+
+        if(accueilController.isLightMode() == true)
+        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
+        else
+        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
     }
 
 }

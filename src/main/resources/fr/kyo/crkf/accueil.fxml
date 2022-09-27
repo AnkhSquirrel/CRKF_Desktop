@@ -8,12 +8,13 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
+<?import org.controlsfx.control.ToggleSwitch?>
 
-<VBox alignment="CENTER" minWidth="500.0" prefHeight="600.0" prefWidth="600.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
+<VBox alignment="CENTER" minWidth="500.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
    <children>
-      <ImageView fitHeight="228.0" fitWidth="398.0" pickOnBounds="true" preserveRatio="true">
+      <ImageView fx:id="logo" fitHeight="228.0" fitWidth="398.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@logo.png" />
+            <Image url="@logo_light_mode.png" />
          </image>
       </ImageView>
       <Label text="Recherche par ..." textAlignment="CENTER">
@@ -95,6 +96,9 @@
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
+         <children>
+            <ToggleSwitch fx:id="themeMode" />
+         </children>
       </HBox>
    </children>
 </VBox>

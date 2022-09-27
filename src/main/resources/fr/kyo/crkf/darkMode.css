@@ -12,6 +12,10 @@
     -fx-color-1:#1976D2;
 }
 
+#logo{
+    -fx-image: url("logo.png");
+}
+
 .root{
     -fx-background-color: -fx-primary;
 }

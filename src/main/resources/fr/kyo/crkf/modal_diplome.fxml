@@ -11,7 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<VBox alignment="CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.diplome.DiplomeModalController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.diplome.DiplomeModalController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="36.0" prefWidth="539.0" text="Ajout d'un diplome" textAlignment="CENTER">
          <font>

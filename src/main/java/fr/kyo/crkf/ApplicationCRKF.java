@@ -43,7 +43,6 @@ public class ApplicationCRKF extends javafx.application.Application {
     AccueilController accueilController;
     BorderPane mainWindow = new BorderPane();
     Stage stage;
-
     public static void main(String[] args) {
         launch();
     }
@@ -62,7 +61,8 @@ public class ApplicationCRKF extends javafx.application.Application {
             mainWindow.setTop(navbar);
 
             Scene scene = new Scene(mainWindow);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("lightMode.css")).toExternalForm());
+            accueilController.initialize(scene);
 
             stage.setMinWidth(760);
             stage.setMinHeight(620);
@@ -632,6 +632,12 @@ public class ApplicationCRKF extends javafx.application.Application {
 
     private void setTitle(String title){
         stage.setTitle(title);
+    }
+    public Boolean isLightMode(){
+       if (accueilController.isLightMode())
+           return true;
+       else
+           return false;
     }
 
 }
