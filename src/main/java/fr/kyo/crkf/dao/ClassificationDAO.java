@@ -8,14 +8,14 @@ import java.util.List;
 
 public class ClassificationDAO extends DAO<Classification> {
 
-    protected ClassificationDAO(Connection connexion) {
-        super(connexion);
+    protected ClassificationDAO(Connection connection) {
+        super(connection);
     }
 
     @Override
     public Classification getByID(int id) {
         String requete = "SELECT id_classification, classification from Classification where id_classification = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             if(rs.next()) return new Classification(rs.getInt(1), rs.getString(2));
@@ -35,13 +35,19 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public int insert(Classification objet) {
         String requete = "INSERT INTO Classification (classification) VALUES (?)";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getClassificationLibelle());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return 0;
     }
@@ -49,13 +55,19 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public boolean update(Classification object) {
         String requete = "UPDATE Classification SET classification = ? WHERE id_classification = ?";
-        try (PreparedStatement  preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement  preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, object.getClassificationLibelle());
             preparedStatement.setInt(2, object.getClassificationId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -63,12 +75,18 @@ public class ClassificationDAO extends DAO<Classification> {
     @Override
     public boolean delete(Classification object) {
         String requete = "DELETE FROM Classification WHERE id_classification=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, object.getClassificationId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -86,7 +104,7 @@ public class ClassificationDAO extends DAO<Classification> {
         StringBuilder requete = new StringBuilder("SELECT COUNT(id_classification) from Classification");
         if(!classification.isEmpty())
             requete.append(" where classification like '%").append(classification).append("%'");
-        try (PreparedStatement s = connexion.prepareStatement(requete.toString())){
+        try (PreparedStatement s = connection.prepareStatement(requete.toString())){
             ResultSet rs = s.executeQuery();
             if(rs.next()) return rs.getInt(1);
         } catch (Exception e) {
@@ -96,7 +114,7 @@ public class ClassificationDAO extends DAO<Classification> {
     }
 
     private List<Classification> getClassifications(List<Classification> list, String requete) {
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while(rs.next()) list.add(new Classification(rs.getInt(1), rs.getString(2)));
         } catch (Exception e) {

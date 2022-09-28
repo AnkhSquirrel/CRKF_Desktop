@@ -16,7 +16,7 @@ public class VilleDAO extends DAO<Ville> {
     @Override
     public Ville getByID(int id) {
         String requete = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville where id_ville = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) return new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4), rs.getInt(5));
@@ -30,7 +30,7 @@ public class VilleDAO extends DAO<Ville> {
     public List<Ville> getAll(int page) {
         List<Ville> liste = new ArrayList<>();
         String requete = "SELECT id_ville, ville, longitude,latitude,id_departement from Ville order by ville OFFSET " + LG_PAGE + " * (? - 1)  ROWS FETCH NEXT " + LG_PAGE + " ROWS ONLY";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
             preparedStatement.setInt(1,page);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) liste.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
@@ -43,7 +43,8 @@ public class VilleDAO extends DAO<Ville> {
     @Override
     public int insert(Ville objet) {
         String requete = "INSERT INTO Ville (ville,longitude,latitude,id_departement) VALUES (?,?,?,?)";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getVilleLibelle());
             preparedStatement.setFloat(2,objet.getLongitude());
             preparedStatement.setFloat(3,objet.getLatitude());
@@ -51,8 +52,13 @@ public class VilleDAO extends DAO<Ville> {
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return 0;
     }
@@ -60,16 +66,22 @@ public class VilleDAO extends DAO<Ville> {
     @Override
     public boolean update(Ville object) {
         String requete = "UPDATE Ville SET ville = ?,longitude = ? ,latitude = ?,id_departement = ? WHERE id_ville = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, object.getVilleLibelle());
             preparedStatement.setFloat(2,object.getLongitude());
             preparedStatement.setFloat(3,object.getLatitude());
             preparedStatement.setInt(4, object.getDepartement().getDepartementId());
             preparedStatement.setInt(5, object.getVilleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -77,12 +89,18 @@ public class VilleDAO extends DAO<Ville> {
     @Override
     public boolean delete(Ville object) {
         String requete = "DELETE FROM Ville WHERE id_ville=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, object.getVilleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -100,7 +118,7 @@ public class VilleDAO extends DAO<Ville> {
         StringBuilder requete = new StringBuilder("SELECT COUNT(id_ville) from Ville where ville like '%" + nom + "%'");
         if(departementId != 0)
             requete.append(" and id_departement = ").append(departementId);
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete.toString())){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) return rs.getInt(1);
         } catch (Exception e) {
@@ -119,7 +137,7 @@ public class VilleDAO extends DAO<Ville> {
     }
 
     private List<Ville> getVilles(List<Ville> list, StringBuilder requete) {
-        try (Statement stmt = connexion.createStatement()){
+        try (Statement stmt = connection.createStatement()){
             ResultSet rs = stmt.executeQuery(requete.toString());
             while(rs.next()) list.add(new Ville(rs.getInt(1), rs.getString(2),rs.getFloat(3),rs.getFloat(4) ,rs.getInt(5)));
         } catch (Exception e) {

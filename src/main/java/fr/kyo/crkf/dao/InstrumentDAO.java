@@ -9,14 +9,14 @@ import java.util.List;
 
 public class InstrumentDAO extends DAO<Instrument> {
     
-    protected InstrumentDAO(Connection connexion) {
-        super(connexion);
+    protected InstrumentDAO(Connection connection) {
+        super(connection);
     }
 
     @Override
     public Instrument getByID(int id) {
         String requete = "select id_instrument,Nom from Instrument where id_instrument = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()){
@@ -34,7 +34,7 @@ public class InstrumentDAO extends DAO<Instrument> {
     public List<Instrument> getAll(int page) {
         List<Instrument> liste = new ArrayList<>();
         String strCmd = "SELECT id_instrument, Nom from Instrument order by Nom";
-        try (Statement stmt = connexion.createStatement()) {
+        try (Statement stmt = connection.createStatement()) {
             ResultSet rs = stmt.executeQuery(strCmd);
             while (rs.next()) {
                 Instrument instrument = (new Instrument(rs.getInt(1), rs.getString(2)));
@@ -50,7 +50,7 @@ public class InstrumentDAO extends DAO<Instrument> {
     public List<Instrument> getLike(SearchableInstrument searchableInstrument, int page) {
         String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?, @lgpage = 25, @page = ?";
         List<Instrument> liste = new ArrayList<>();
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd);){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(strCmd);){
             preparedStatement.setString(1,searchableInstrument.getNom());
             preparedStatement.setInt(2,searchableInstrument.getFamilleId());
             preparedStatement.setInt(3,searchableInstrument.getClassificationId());
@@ -70,7 +70,7 @@ public class InstrumentDAO extends DAO<Instrument> {
     public List<Instrument> getLikeAllInstrument(SearchableInstrument searchableInstrument) {
         List<Instrument> liste = new ArrayList<>();
         String strCmd = "exec SP_INSTRUMENT_FILTER  @nom = ?, @famille = ?, @classification = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(strCmd)){
             preparedStatement.setString(1,searchableInstrument.getNom());
             preparedStatement.setInt(2,searchableInstrument.getFamilleId());
             preparedStatement.setInt(3,searchableInstrument.getClassificationId());
@@ -86,29 +86,31 @@ public class InstrumentDAO extends DAO<Instrument> {
         return liste;
     }
 
-
     @Override
     public int insert(Instrument objet) {
         int id = 0;
         String requete = "INSERT INTO Instrument (Nom) VALUES (?)";
-        try (PreparedStatement  preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement  preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getInstrumentLibelle());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) id = rs.getInt(1);
-        } catch (SQLException e) {
-           e.printStackTrace();
-            return 0;
-        }
-        for(Famille famille : objet.getFamilles()){
-            String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
-            try (PreparedStatement preparedStatement2 = connexion.prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS)){
-                preparedStatement2.setInt( 1, id);
-                preparedStatement2.setInt(2, famille.getFamilleId());
-                preparedStatement2.executeUpdate();
-            } catch (SQLException e){
-                e.printStackTrace();
-                return 0;
+
+            for(Famille famille : objet.getFamilles()){
+                String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS)) {
+                    preparedStatement2.setInt(1, id);
+                    preparedStatement2.setInt(2, famille.getFamilleId());
+                    preparedStatement2.executeUpdate();
+                }
+            }
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
             }
         }
         return id;
@@ -116,32 +118,34 @@ public class InstrumentDAO extends DAO<Instrument> {
 
     @Override
     public boolean update(Instrument object) {
-        String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
-            preparedStatement.setInt(1, object.getInstrumentId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
-        try (PreparedStatement preparedStatement1 = connexion.prepareStatement(requete1)){
-            preparedStatement1.setString(1, object.getInstrumentLibelle());
-            preparedStatement1.setInt(2, object.getInstrumentId());
-            preparedStatement1.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
-        String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
-        for(Famille famille : object.getFamilles()){
-            try (PreparedStatement preparedStatement2 = connexion.prepareStatement(requete2)){
-                preparedStatement2.setInt( 1, object.getInstrumentId());
-                preparedStatement2.setInt(2, famille.getFamilleId());
-                preparedStatement2.executeUpdate();
-            } catch (SQLException e){
-                e.printStackTrace();
+        try {
+            String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+                connection.setAutoCommit(false);
+                preparedStatement.setInt(1, object.getInstrumentId());
+                preparedStatement.executeUpdate();
+            }
+            String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
+            try (PreparedStatement preparedStatement1 = connection.prepareStatement(requete1)){
+                preparedStatement1.setString(1, object.getInstrumentLibelle());
+                preparedStatement1.setInt(2, object.getInstrumentId());
+                preparedStatement1.executeUpdate();
+            }
+            String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
+            for(Famille famille : object.getFamilles()){
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2)){
+                    preparedStatement2.setInt( 1, object.getInstrumentId());
+                    preparedStatement2.setInt(2, famille.getFamilleId());
+                    preparedStatement2.executeUpdate();
+                }
+            }
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
                 return false;
+            } catch (SQLException e2) {
+                e2.printStackTrace();
             }
         }
         return true;
@@ -149,28 +153,33 @@ public class InstrumentDAO extends DAO<Instrument> {
 
     @Override
     public boolean delete(Instrument object) {
-        String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement2 = connexion.prepareStatement(requete);){
-            preparedStatement2.setInt(1, object.getInstrumentId());
-            preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String requete2 = "DELETE FROM Instrument WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete2);){
-            preparedStatement.setInt(1, object.getInstrumentId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
+        try{
+            String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete)){
+                connection.setAutoCommit(false);
+                preparedStatement2.setInt(1, object.getInstrumentId());
+                preparedStatement2.executeUpdate();
+            }
+            String requete2 = "DELETE FROM Instrument WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete2)){
+                preparedStatement.setInt(1, object.getInstrumentId());
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+        } catch(SQLException e) {
+                try {
+                    connection.rollback();
+                    return false;
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
         return true;
     }
 
     private void giveFamillesToInstrument(int id, Instrument instrument) {
         String requete = "select id_famille from Instrument_Famille where id_instrument = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
             preparedStatement.setInt(1, id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) instrument.addFamille(DAOFactory.getFamilleDAO().getByID(rs.getInt(1)));

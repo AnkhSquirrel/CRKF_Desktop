@@ -8,14 +8,14 @@ import java.util.List;
 
 public class FamilleDAO extends DAO<Famille> {
 
-    protected FamilleDAO(Connection connexion) {
-        super(connexion);
+    protected FamilleDAO(Connection connection) {
+        super(connection);
     }
 
     @Override
     public Famille getByID(int id) {
         String requete = "SELECT id_famille, famille, id_classification from Famille where id_famille = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete);){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete);){
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) return new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3));
@@ -28,7 +28,7 @@ public class FamilleDAO extends DAO<Famille> {
     public List<Famille> getByClassification(int id) {
         List<Famille> list = new ArrayList<>();
         String requete = "SELECT id_famille, famille, id_classification from Famille where id_classification = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
@@ -43,7 +43,7 @@ public class FamilleDAO extends DAO<Famille> {
         StringBuilder requete = new StringBuilder("SELECT id_famille, famille, id_classification from Famille");
         requeteParClassificationEtParNom(searchableFamille, requete);
         requete.append(" order by famille OFFSET 25 * (").append(page).append(" - 1)  ROWS FETCH NEXT 25 ROWS ONLY");
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete.toString())){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) list.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
         } catch (Exception e) {
@@ -55,7 +55,7 @@ public class FamilleDAO extends DAO<Famille> {
     public int getNumberOfFamilles(SearchableFamille searchableFamille) {
         StringBuilder requete = new StringBuilder("SELECT COUNT(id_famille) from Famille");
         requeteParClassificationEtParNom(searchableFamille, requete);
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete.toString())){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) return rs.getInt(1);
         }
@@ -69,7 +69,7 @@ public class FamilleDAO extends DAO<Famille> {
     public ArrayList<Famille> getAll(int page) {
         ArrayList<Famille> liste = new ArrayList<>();
         String requete = "SELECT id_famille, famille, id_classification from Famille order by famille";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) liste.add(new Famille(rs.getInt(1),rs.getString(2),rs.getInt(3)));
         } catch (Exception e) {
@@ -81,14 +81,20 @@ public class FamilleDAO extends DAO<Famille> {
     @Override
     public int insert(Famille objet) {
         String requete = "INSERT INTO Famille (famille,id_classification) VALUES (?,?)";
-        try (PreparedStatement  preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+        try (PreparedStatement  preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getfamille());
             preparedStatement.setInt(2, objet.getclassification().getClassificationId());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return 0;
     }
@@ -96,14 +102,20 @@ public class FamilleDAO extends DAO<Famille> {
     @Override
     public boolean update(Famille object) {
         String requete = "UPDATE Famille SET famille = ?, id_classification = ? WHERE id_famille = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, object.getfamille());
             preparedStatement.setInt(2, object.getclassification().getClassificationId());
             preparedStatement.setInt(3, object.getFamilleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -111,12 +123,18 @@ public class FamilleDAO extends DAO<Famille> {
     @Override
     public boolean delete(Famille object) {
         String requete = "DELETE FROM Famille WHERE id_famille=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, object.getFamilleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }

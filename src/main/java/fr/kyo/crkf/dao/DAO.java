@@ -5,14 +5,14 @@ import java.util.List;
 
 abstract class DAO<T> {
 
-    protected Connection connexion;
+    protected Connection connection;
 
-    protected DAO(Connection connexion) {
-        this.connexion = connexion;
+    protected DAO(Connection connection) {
+        this.connection = connection;
     }
 
-    protected Connection connexion(){
-        return connexion;
+    protected Connection connection(){
+        return connection;
     }
 
     public abstract T getByID(int id);
