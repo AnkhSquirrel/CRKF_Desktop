@@ -20,6 +20,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.layout.VBox;
 import org.controlsfx.control.SearchableComboBox;
 import java.io.IOException;
+import java.util.Objects;
 
 public class EcoleController {
 
@@ -207,6 +208,13 @@ public class EcoleController {
                 drawer.open();
                 listeEcole.setEffect(new GaussianBlur());
                 listeEcole.setDisable(true);
+
+                if (applicationCRKF.getLightMode()){
+                        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
+                }
+                else{
+                        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/darkMode.css").toExternalForm()));
+                }
         }
 
 }

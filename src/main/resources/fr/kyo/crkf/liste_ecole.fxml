@@ -15,7 +15,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-<AnchorPane prefHeight="490.0" prefWidth="740.0" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.EcoleController">
+<AnchorPane prefHeight="490.0" prefWidth="740.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ecole.EcoleController">
    <children>
       <GridPane fx:id="listeEcole" layoutX="10.0" layoutY="10.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="480.0" prefWidth="720.0">
          <columnConstraints>
@@ -96,6 +96,6 @@
             </HBox>
          </children>
       </GridPane>
-      <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" disable="true" layoutY="58.0" miniDrawerSize="0.0" overLayVisible="false" prefHeight="400.0" prefWidth="529.0" stylesheets="@style.css" />
+      <JFXDrawer fx:id="drawer" defaultDrawerSize="500.0" disable="true" layoutY="58.0" miniDrawerSize="0.0" overLayVisible="false" prefHeight="400.0" prefWidth="529.0" stylesheets="@darkMode.css" />
    </children>
 </AnchorPane>

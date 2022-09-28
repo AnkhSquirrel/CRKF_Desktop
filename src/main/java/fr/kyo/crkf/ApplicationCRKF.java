@@ -38,17 +38,18 @@ import java.util.Optional;
 
 public class ApplicationCRKF extends javafx.application.Application {
 
-    NavbarController navbarController;
-    AccueilController accueilController;
-    BorderPane mainWindow = new BorderPane();
-    Stage stage;
-
+    private NavbarController navbarController;
+    private AccueilController accueilController;
+    private BorderPane mainWindow = new BorderPane();
+    private Stage stage;
+    private Boolean lightMode;
     public static void main(String[] args) {
         launch();
     }
 
     @Override
     public void start(Stage stage) {
+        lightMode = true;
         this.stage = stage;
         try {
             FXMLLoader fxmlLoaderNavbar = new FXMLLoader();
@@ -61,7 +62,8 @@ public class ApplicationCRKF extends javafx.application.Application {
             mainWindow.setTop(navbar);
 
             Scene scene = new Scene(mainWindow);
-            scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("style.css")).toExternalForm());
+            scene.getStylesheets().add(getStylesheets());
+            accueilController.initialize(scene);
 
             stage.setMinWidth(760);
             stage.setMinHeight(620);
@@ -81,6 +83,11 @@ public class ApplicationCRKF extends javafx.application.Application {
             VBox accueil = fxmlLoaderAccueil.load();
             accueilController = fxmlLoaderAccueil.getController();
             accueilController.setMainApp(this);
+
+            accueilController.setPositionToggleSwitch();
+            if(stage.getScene() != null)
+                accueilController.initialize(stage.getScene());
+
             mainWindow.setCenter(accueil);
             setTitle("CRKF - Accueil");
         } catch (IOException e) {
@@ -156,6 +163,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajouter un instrument");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -178,6 +188,10 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajout d'une école");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
 
             modal.show();
         }catch (IOException e){
@@ -203,6 +217,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modification d'une école");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -226,6 +243,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un instrument");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -287,6 +307,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajouter une famille");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -309,6 +332,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier une famille");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -349,6 +375,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un département");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -370,6 +399,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Créer un département");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -394,6 +426,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Créer une ville");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -417,6 +452,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier une ville");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -456,6 +494,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajouter une Classification");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -480,6 +521,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier une Classification");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -502,6 +546,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajouter un Professeur");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -527,6 +574,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un Professeur");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         } catch (IOException e) {
             e.printStackTrace();
@@ -551,6 +601,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajout d'un diplome");
 
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
+
             modal.show();
         }catch (IOException e) {
             e.printStackTrace();
@@ -572,6 +625,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Ajouter un cycle");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -595,6 +651,9 @@ public class ApplicationCRKF extends javafx.application.Application {
             modal.initModality(Modality.WINDOW_MODAL);
             modal.initOwner(mainWindow.getScene().getWindow());
             modal.setTitle("Modifier un cycle");
+
+            if(modal.getScene() != null)
+                modal.getScene().getStylesheets().add(getStylesheets());
 
             modal.show();
         } catch (IOException e) {
@@ -620,4 +679,20 @@ public class ApplicationCRKF extends javafx.application.Application {
         stage.setTitle(title);
     }
 
+    public Boolean getLightMode() {
+        return lightMode;
+    }
+
+    public void setLightMode(Boolean lightMode) {
+        this.lightMode = lightMode;
+    }
+
+    public String getStylesheets(){
+        if(lightMode){
+            return getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm();
+        }
+        else{
+            return getClass().getResource("/fr/kyo/crkf/darkMode.css").toExternalForm();
+        }
+    }
 }

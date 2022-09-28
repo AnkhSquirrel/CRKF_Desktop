@@ -12,8 +12,7 @@
 <?import javafx.scene.text.Font?>
 <?import org.controlsfx.control.SearchableComboBox?>
 
-
-<VBox alignment="CENTER" stylesheets="@style.css" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ville.VilleModalController">
+<VBox alignment="CENTER" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ville.VilleModalController">
    <children>
       <Label fx:id="nomModal" alignment="CENTER" text="Création d'une nouvelle ville">
          <VBox.margin>
