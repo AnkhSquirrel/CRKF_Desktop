@@ -11,13 +11,8 @@
     -fx-red: #FF0000;
     -fx-color-1:#1976D2;
 }
-#logo{
-    -fx-image: url("logo_light_mode.png");
-}
 
-#luneIcon{
-    -fx-image: url("lune_noire.png");
-}
+
 
 .root{
     -fx-background-color: -fx-primary;
@@ -49,6 +44,17 @@
     -fx-font-size : 8pt;
     -jfx-focus-color: -fx-primary;
     -fx-text-fill: derive(-fx-primarytext, 20%);
+}
+/* Image */
+#logo{
+    -fx-image: url("logo_light_mode.png");
+}
+
+#luneIcon{
+    -fx-image: url("lune_noire.png");
+}
+#soleilIcon{
+    -fx-image: url("soleil.png");
 }
 
 /*Login Screen Specific*/
