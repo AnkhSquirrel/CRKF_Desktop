@@ -86,29 +86,31 @@ public class InstrumentDAO extends DAO<Instrument> {
         return liste;
     }
 
-
     @Override
     public int insert(Instrument objet) {
         int id = 0;
         String requete = "INSERT INTO Instrument (Nom) VALUES (?)";
         try (PreparedStatement  preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)) {
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getInstrumentLibelle());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) id = rs.getInt(1);
-        } catch (SQLException e) {
-           e.printStackTrace();
-            return 0;
-        }
-        for(Famille famille : objet.getFamilles()){
-            String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
-            try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS)){
-                preparedStatement2.setInt( 1, id);
-                preparedStatement2.setInt(2, famille.getFamilleId());
-                preparedStatement2.executeUpdate();
-            } catch (SQLException e){
-                e.printStackTrace();
-                return 0;
+
+            for(Famille famille : objet.getFamilles()){
+                String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS)) {
+                    preparedStatement2.setInt(1, id);
+                    preparedStatement2.setInt(2, famille.getFamilleId());
+                    preparedStatement2.executeUpdate();
+                }
+            }
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
             }
         }
         return id;
@@ -116,32 +118,34 @@ public class InstrumentDAO extends DAO<Instrument> {
 
     @Override
     public boolean update(Instrument object) {
-        String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
-            preparedStatement.setInt(1, object.getInstrumentId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
-        try (PreparedStatement preparedStatement1 = connection.prepareStatement(requete1)){
-            preparedStatement1.setString(1, object.getInstrumentLibelle());
-            preparedStatement1.setInt(2, object.getInstrumentId());
-            preparedStatement1.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
-        String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
-        for(Famille famille : object.getFamilles()){
-            try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2)){
-                preparedStatement2.setInt( 1, object.getInstrumentId());
-                preparedStatement2.setInt(2, famille.getFamilleId());
-                preparedStatement2.executeUpdate();
-            } catch (SQLException e){
-                e.printStackTrace();
+        try {
+            String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+                connection.setAutoCommit(false);
+                preparedStatement.setInt(1, object.getInstrumentId());
+                preparedStatement.executeUpdate();
+            }
+            String requete1 = "UPDATE Instrument SET Nom = ? WHERE id_instrument = ?";
+            try (PreparedStatement preparedStatement1 = connection.prepareStatement(requete1)){
+                preparedStatement1.setString(1, object.getInstrumentLibelle());
+                preparedStatement1.setInt(2, object.getInstrumentId());
+                preparedStatement1.executeUpdate();
+            }
+            String requete2 = "INSERT INTO Instrument_Famille (id_instrument,id_famille) VALUES (?,?)";
+            for(Famille famille : object.getFamilles()){
+                try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2)){
+                    preparedStatement2.setInt( 1, object.getInstrumentId());
+                    preparedStatement2.setInt(2, famille.getFamilleId());
+                    preparedStatement2.executeUpdate();
+                }
+            }
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
                 return false;
+            } catch (SQLException e2) {
+                e2.printStackTrace();
             }
         }
         return true;
@@ -149,22 +153,27 @@ public class InstrumentDAO extends DAO<Instrument> {
 
     @Override
     public boolean delete(Instrument object) {
-        String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete);){
-            preparedStatement2.setInt(1, object.getInstrumentId());
-            preparedStatement2.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String requete2 = "DELETE FROM Instrument WHERE id_instrument=?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete2);){
-            preparedStatement.setInt(1, object.getInstrumentId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-            return false;
-        }
+        try{
+            String requete = "DELETE FROM Instrument_Famille WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete)){
+                connection.setAutoCommit(false);
+                preparedStatement2.setInt(1, object.getInstrumentId());
+                preparedStatement2.executeUpdate();
+            }
+            String requete2 = "DELETE FROM Instrument WHERE id_instrument=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete2)){
+                preparedStatement.setInt(1, object.getInstrumentId());
+                preparedStatement.executeUpdate();
+            }
+            connection.commit();
+        } catch(SQLException e) {
+                try {
+                    connection.rollback();
+                    return false;
+                } catch (SQLException e2) {
+                    e2.printStackTrace();
+                }
+            }
         return true;
     }
 

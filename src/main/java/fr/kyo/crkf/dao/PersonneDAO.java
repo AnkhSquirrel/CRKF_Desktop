@@ -105,29 +105,18 @@ public class PersonneDAO extends DAO<Personne> {
         int id = 0;
         String requete = "INSERT INTO Personne (Nom,Prenom,VehiculeCV,id_adresse,id_ecole) VALUES (?,?,?,?,?)";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
-            preparedStatement.setString( 1 , objet.getPersonneNom());
-            preparedStatement.setString(2,objet.getPersonnePrenom());
-            preparedStatement.setInt(3,objet.getVehiculeCv());
-            preparedStatement.setInt(4,objet.getAdresseId().getAdresseId());
-            preparedStatement.setInt(5,objet.getEcoleID().getEcoleId());
+            connection.setAutoCommit(false);
+            fillStatementWithPersonne(objet, preparedStatement);
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) id = rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return 0;
-        }
-
-        String requete2 = "INSERT INTO Personne_Diplome (id_cycle,id_personne,id_instrument) VALUES (?,?,?)";
-        for(Diplome diplome : objet.getDiplomes()){
-            try(PreparedStatement preparedStatement2 = connection.prepareStatement(requete2, Statement.RETURN_GENERATED_KEYS)){
-                preparedStatement2.setInt( 1, id);
-                preparedStatement2.setInt(2, diplome.getCycle().getCycleId());
-                preparedStatement2.setInt(3, diplome.getInstrument().getInstrumentId());
-                preparedStatement2.executeUpdate();
-            } catch (SQLException e){
-                e.printStackTrace();
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
                 return 0;
+            } catch (SQLException e2) {
+                e2.printStackTrace();
             }
         }
         return id;
@@ -137,37 +126,46 @@ public class PersonneDAO extends DAO<Personne> {
     public boolean update(Personne object) {
         String requete = "UPDATE Personne SET Nom = ?, Prenom = ?, VehiculeCV = ?, id_adresse = ?, id_ecole = ? WHERE id_personne = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
-            preparedStatement.setString(1, object.getPersonneNom());
-            preparedStatement.setString(2, object.getPersonnePrenom());
-            preparedStatement.setInt(3, object.getVehiculeCv());
-            preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
-            preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
+            connection.setAutoCommit(false);
+            fillStatementWithPersonne(object, preparedStatement);
             preparedStatement.setInt(6, object.getPersonneId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+                return false;
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
 
     @Override
     public boolean delete(Personne object) {
-        String requete = "DELETE FROM Personne WHERE id_personne=?";
-        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
-            preparedStatement.setInt(1, object.getPersonneId());
-            preparedStatement.executeUpdate();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
-        String requete2 = "DELETE FROM Personne_Diplome WHERE id_personne=?";
-        try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2)){
-            preparedStatement2.setInt(1, object.getPersonneId());
-            preparedStatement2.executeUpdate();
-        } catch (SQLException e){
-            e.printStackTrace();
-            return false;
+        try {
+            String requete = "DELETE FROM Personne WHERE id_personne=?";
+            try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+                connection.setAutoCommit(false);
+                preparedStatement.setInt(1, object.getPersonneId());
+                preparedStatement.executeUpdate();
+            }
+            String requete2 = "DELETE FROM Personne_Diplome WHERE id_personne=?";
+            try (PreparedStatement preparedStatement2 = connection.prepareStatement(requete2)){
+                preparedStatement2.setInt(1, object.getPersonneId());
+                preparedStatement2.executeUpdate();
+            }
+            connection.commit();
+            return true;
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+                return false;
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return true;
     }
@@ -196,6 +194,14 @@ public class PersonneDAO extends DAO<Personne> {
             getDiplomesOfPersonne(id, personne);
             liste.add(personne);
         }
+    }
+
+    private void fillStatementWithPersonne(Personne object, PreparedStatement preparedStatement) throws SQLException {
+        preparedStatement.setString(1, object.getPersonneNom());
+        preparedStatement.setString(2, object.getPersonnePrenom());
+        preparedStatement.setInt(3, object.getVehiculeCv());
+        preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
+        preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
     }
 
 }
