@@ -183,10 +183,12 @@ public class InstrumentController {
         listeInstrument.setEffect(new GaussianBlur());
         listeInstrument.setDisable(true);
 
-        if(accueilController.isLightMode() == true)
-        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
-        else
-        drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
+        if(applicationCRKF.getLightMode()){
+            drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm()));
+        }
+        else{
+            drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/darkMode.css").toExternalForm()));
+        }
     }
 
 }

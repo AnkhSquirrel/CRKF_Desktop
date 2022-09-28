@@ -15,17 +15,19 @@ public class AccueilController {
     private ToggleSwitch themeMode;
     @FXML
     private ApplicationCRKF application;
-    private boolean lightMode;
     @FXML
     public void initialize(Scene scene){
         themeMode.selectedProperty().addListener(new ChangeListener<Boolean>() {
             @Override
         public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
             if(themeMode.isSelected()){
+                application.setLightMode(false);
+                scene.getStylesheets().clear();
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/darkMode.css")).toExternalForm());
             }
             else
             {
+                application.setLightMode(true);
                 scene.getStylesheets().clear();
                 scene.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/lightMode.css")).toExternalForm());
             }
@@ -33,20 +35,8 @@ public class AccueilController {
         });
     }
 
-    public boolean isLightMode(){
-        themeMode.selectedProperty().addListener(new ChangeListener<Boolean>() {
-            @Override
-            public void changed(ObservableValue<? extends Boolean> observableValue, Boolean aBoolean, Boolean t1) {
-                if(themeMode.isSelected()){
-                    lightMode = true;
-                }
-                else
-                {
-                   lightMode = false;
-                }
-            }
-        });
-        return lightMode;
+    public void setPositionToggleSwitch(){
+        themeMode.setSelected(!Boolean.TRUE.equals(application.getLightMode()));
     }
 
     public void setMainApp(ApplicationCRKF application) {

@@ -7,6 +7,7 @@ import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
@@ -14,6 +15,8 @@ import java.util.List;
 
 public class ProfesseurModalController {
 
+    @FXML
+    private Label nomModal;
     @FXML
     private TextField nom;
     @FXML
@@ -168,6 +171,8 @@ public class ProfesseurModalController {
 
     public void setCreate(boolean bool) {
         this.create = bool;
+        if(!create)
+            nomModal.setText("Modifier ce professeur");
     }
 
     public void setProfesseur(Personne personne){

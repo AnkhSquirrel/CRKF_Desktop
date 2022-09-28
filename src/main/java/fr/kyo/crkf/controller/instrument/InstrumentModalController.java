@@ -203,7 +203,7 @@ public class InstrumentModalController {
     public void setCreate(boolean bool){
         create = bool;
         if(!create)
-            nomModal.setText("Modifier un instrument");
+            nomModal.setText("Modifier cet instrument");
     }
 
     public void setInstrumentUpdate(Instrument instrument){

@@ -12,6 +12,30 @@
 
 <VBox alignment="CENTER" minWidth="500.0" prefHeight="600.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.AccueilController">
    <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="65.0" prefWidth="589.0">
+         <VBox.margin>
+            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
+         </VBox.margin>
+         <children>
+            <ImageView fitHeight="20.0" fitWidth="20.0">
+               <image>
+                  <Image url="@../../../../../../../../../Users/yoann/Downloads/soleil.png" />
+               </image>
+            </ImageView>
+            <ToggleSwitch fx:id="themeMode" prefHeight="7.0" prefWidth="32.0" textAlignment="CENTER">
+               <HBox.margin>
+                  <Insets left="4.0" right="6.0" />
+               </HBox.margin></ToggleSwitch>
+            <ImageView fx:id="luneIcon" fitHeight="16.0" fitWidth="16.0">
+               <image>
+                  <Image url="@lune_noire.png" />
+               </image>
+               <HBox.margin>
+                  <Insets right="25.0" />
+               </HBox.margin>
+            </ImageView>
+         </children>
+      </HBox>
       <ImageView fx:id="logo" fitHeight="228.0" fitWidth="398.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@logo_light_mode.png" />
@@ -91,14 +115,6 @@
          <VBox.margin>
             <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
          </VBox.margin>
-      </HBox>
-      <HBox alignment="CENTER" prefHeight="100.0" prefWidth="200.0">
-         <VBox.margin>
-            <Insets bottom="5.0" left="5.0" right="5.0" top="5.0" />
-         </VBox.margin>
-         <children>
-            <ToggleSwitch fx:id="themeMode" />
-         </children>
       </HBox>
    </children>
 </VBox>

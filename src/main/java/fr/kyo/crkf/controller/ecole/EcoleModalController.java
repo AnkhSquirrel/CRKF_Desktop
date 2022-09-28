@@ -1,5 +1,6 @@
 package fr.kyo.crkf.controller.ecole;
 
+import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Adresse;
 import fr.kyo.crkf.entity.Departement;
 import fr.kyo.crkf.entity.Ecole;
@@ -11,6 +12,8 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.stage.Stage;
 import org.controlsfx.control.SearchableComboBox;
+
+import java.util.Objects;
 
 public class EcoleModalController {
 
@@ -30,6 +33,7 @@ public class EcoleModalController {
     private boolean create;
     private Filter filter;
     private EcoleController ecoleController;
+    private ApplicationCRKF applicationCRKF;
 
     @FXML
     private void initialize(){
@@ -137,7 +141,7 @@ public class EcoleModalController {
 
     public void setCreate(boolean create){
         if(!create)
-            nomModal.setText("Modifier école");
+            nomModal.setText("Modifier cette école");
     }
 
     public void setModal(Stage modal) {

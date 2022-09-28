@@ -15,6 +15,10 @@
     -fx-image: url("logo_light_mode.png");
 }
 
+#luneIcon{
+    -fx-image: url("lune_noire.png");
+}
+
 .root{
     -fx-background-color: -fx-primary;
 }
