@@ -94,7 +94,7 @@ public class DepartementDAO extends DAO<Departement> {
     @Override
     public int insert(Departement objet) {
         String requete = "INSERT INTO Departement (numero_departement, departement) VALUES (?,?)";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);){
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
             preparedStatement.setString( 1 , objet.getDepartementNumero());
             preparedStatement.setString( 2 , objet.getDepartementLibelle());
             preparedStatement.executeUpdate();
@@ -124,7 +124,7 @@ public class DepartementDAO extends DAO<Departement> {
     @Override
     public boolean delete(Departement object) {
         String requete = "DELETE FROM Departement WHERE id_departement=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete);){
+        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
             preparedStatement.setInt(1, object.getDepartementId());
             preparedStatement.executeUpdate();
             return true;

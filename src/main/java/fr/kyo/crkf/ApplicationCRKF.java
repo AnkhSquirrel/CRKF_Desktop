@@ -15,7 +15,6 @@ import fr.kyo.crkf.controller.ecole.EcoleModalController;
 import fr.kyo.crkf.controller.famille.FamilleModalController;
 import fr.kyo.crkf.controller.famille.GestionFamilleController;
 import fr.kyo.crkf.controller.instrument.InstrumentModalController;
-import fr.kyo.crkf.controller.instrument.DetailInstrumentController;
 import fr.kyo.crkf.controller.instrument.InstrumentController;
 import fr.kyo.crkf.controller.professeur.ProfesseurController;
 import fr.kyo.crkf.controller.professeur.ProfesseurModalController;
@@ -221,7 +220,6 @@ public class ApplicationCRKF extends javafx.application.Application {
             instrumentModalController.setModal(modal);
             instrumentModalController.setCreate(false);
             instrumentModalController.setInstrumentUpdate(instrument);
-            instrumentModalController.setApplicationCRKF(this);
             instrumentModalController.setInstrumentController(instrumentController);
 
             modal.setScene(new Scene(modalPane));

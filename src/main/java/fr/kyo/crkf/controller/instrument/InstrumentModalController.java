@@ -33,7 +33,6 @@ public class InstrumentModalController {
     private InstrumentController instrumentController;
     private boolean create;
     private Instrument instrumentUpdate;
-    private ApplicationCRKF applicationCRKF;
     private double height;
 
     @FXML
@@ -143,7 +142,7 @@ public class InstrumentModalController {
 
     private void updateInstrument() {
         ArrayList<Integer> list = new ArrayList<>();
-        instrumentUpdate.setFamilles((ArrayList<Integer>) list);
+        instrumentUpdate.setFamilles(list);
         boolean allFamilleSet = getAllFamille(instrumentUpdate);
         if(!nom.getText().equals(""))
             instrumentUpdate.setInstrumentLibelle(nom.getText());
@@ -216,10 +215,6 @@ public class InstrumentModalController {
         for(Famille famille : instrumentUpdate.getFamilles()){
             addFamilleChoice(famille);
         }
-    }
-
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
     }
 
 }
