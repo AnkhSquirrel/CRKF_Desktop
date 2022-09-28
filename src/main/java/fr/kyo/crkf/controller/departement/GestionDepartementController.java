@@ -1,25 +1,21 @@
 package fr.kyo.crkf.controller.departement;
 
 import fr.kyo.crkf.ApplicationCRKF;
-import fr.kyo.crkf.entity.Classification;
 import fr.kyo.crkf.entity.Departement;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import org.controlsfx.control.SearchableComboBox;
-
 import java.util.Optional;
 
 public class GestionDepartementController {
+
     @FXML
     private TableColumn<Departement,String> departementColumn;
     @FXML
     private TableColumn<Departement,Integer> nbreEcoleColumn;
     @FXML
     private TableColumn<Departement, String> numDepColumn;
-    @FXML
-    private SearchableComboBox<Classification> classification;
     @FXML
     private TextField libelle;
     @FXML
