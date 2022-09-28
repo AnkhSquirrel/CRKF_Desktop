@@ -12,14 +12,14 @@ public class EcoleDAO extends DAO<Ecole> {
 
     private static final int LG_PAGE = 25;
 
-    protected EcoleDAO(Connection connexion) {
-        super(connexion);
+    protected EcoleDAO(Connection connection) {
+        super(connection);
     }
 
     @Override
     public Ecole getByID(int id) {
         String requete = "SELECT id_ecole, Nom, id_adresse from Ecole where id_ecole = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             if (rs.next()) return new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3));
@@ -33,7 +33,7 @@ public class EcoleDAO extends DAO<Ecole> {
     public List<Ecole> getAll(int page) {
         List<Ecole> liste = new ArrayList<>();
         String requete = "SELECT id_ecole, Nom, id_adresse from Ecole order by Nom OFFSET " + LG_PAGE + " * (? -1)  ROWS FETCH NEXT " + LG_PAGE + " ROWS ONLY";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)) {
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)) {
             preparedStatement.setInt(1,page);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) liste.add(new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
@@ -46,7 +46,7 @@ public class EcoleDAO extends DAO<Ecole> {
     public List<Ecole> getLike(SearchableEcole searchableEcole, int page) {
         List<Ecole> liste = new ArrayList<>();
         String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25, @page = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(strCmd)){
             preparedStatement.setString(1,searchableEcole.getNom());
             preparedStatement.setInt(2,searchableEcole.getIdVille());
             preparedStatement.setInt(3, searchableEcole.getIdDepartement());
@@ -62,7 +62,7 @@ public class EcoleDAO extends DAO<Ecole> {
     public List<Ecole> getLikeAllEcole(SearchableEcole searchableEcole) {
         List<Ecole> liste = new ArrayList<>();
         String requete = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setString(1,searchableEcole.getNom());
             preparedStatement.setInt(2,searchableEcole.getIdVille());
             preparedStatement.setInt(3, searchableEcole.getIdDepartement());
@@ -77,7 +77,7 @@ public class EcoleDAO extends DAO<Ecole> {
     public List<Ecole> getByDepartement(int id) {
         List<Ecole> list = new ArrayList<>();
         String strCmd = "SELECT id_ecole, Nom, id_adresse from ecole where id_adresse in (select id_adresse from Adresse where id_ville in (select id_ville from Ville where id_departement = ? ))";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(strCmd)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(strCmd)){
             preparedStatement.setInt(1,id);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) list.add(new Ecole(rs.getInt(1), rs.getString(2), rs.getInt(3)));
@@ -90,7 +90,7 @@ public class EcoleDAO extends DAO<Ecole> {
     public List<Pair<Ecole, Double>> getByDistance(float latitudePointA, float longitudePointA) {
         List<Pair<Ecole, Double>> ecolesEtDistances = new ArrayList<>();
         String requete = "SELECT id_ecole, Nom, id_adresse from Ecole";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
                 float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
@@ -111,14 +111,20 @@ public class EcoleDAO extends DAO<Ecole> {
     @Override
     public int insert(Ecole objet) {
         String requete = "INSERT INTO Ecole (Nom,id_adresse) VALUES (?,?)";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS);){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete, Statement.RETURN_GENERATED_KEYS)){
+            connection.setAutoCommit(false);
             preparedStatement.setString( 1 , objet.getEcoleNom());
             preparedStatement.setInt(2, objet.getIdAdresse());
             preparedStatement.executeUpdate();
             ResultSet rs = preparedStatement.getGeneratedKeys();
             if(rs.next()) return rs.getInt(1);
-        } catch (SQLException e) {
-            e.printStackTrace();
+            connection.commit();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return 0;
     }
@@ -126,14 +132,20 @@ public class EcoleDAO extends DAO<Ecole> {
     @Override
     public boolean update(Ecole object) {
         String requete = "UPDATE Ecole SET Nom = ?, id_adresse = ? WHERE id_ecole = ?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setString(1, object.getEcoleNom());
             preparedStatement.setInt(2, object.getEcoleAdresse().getAdresseId());
             preparedStatement.setInt(3, object.getEcoleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
@@ -141,12 +153,18 @@ public class EcoleDAO extends DAO<Ecole> {
     @Override
     public boolean delete(Ecole object) {
         String requete = "DELETE FROM Ecole WHERE id_ecole=?";
-        try (PreparedStatement preparedStatement = connexion.prepareStatement(requete)){
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            connection.setAutoCommit(false);
             preparedStatement.setInt(1, object.getEcoleId());
             preparedStatement.executeUpdate();
+            connection.commit();
             return true;
-        } catch (SQLException e) {
-            e.printStackTrace();
+        } catch(SQLException e) {
+            try {
+                connection.rollback();
+            } catch (SQLException e2) {
+                e2.printStackTrace();
+            }
         }
         return false;
     }
