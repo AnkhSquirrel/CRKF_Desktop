@@ -3,7 +3,6 @@ package fr.kyo.crkf.controller.departement;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Classification;
 import fr.kyo.crkf.entity.Departement;
-import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -38,7 +37,6 @@ public class GestionDepartementController {
     private void initialize(){
         departement="";
         page = 1;
-        Filter filter = new Filter();
         // initialize tableview
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
         numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
@@ -67,7 +65,7 @@ public class GestionDepartementController {
         pageTotale = DAOFactory.getDepartementDAO().getNumberOfDepartements(departement) / 25;
         if (pageTotale == 0)
             pageTotale ++;
-        numberOfPage.setText(" / " + String.valueOf(pageTotale));
+        numberOfPage.setText(" / " + pageTotale);
 
         pageNumber.setText("Page " + page);
     }
@@ -83,7 +81,7 @@ public class GestionDepartementController {
     @FXML
     private void update(){
         if (departementTable.getSelectionModel().getSelectedItem() != null)
-        applicationCRKF.openModalUpdateDepartement(this, departementTable.getSelectionModel().getSelectedItem());
+            applicationCRKF.openModalUpdateDepartement(this, departementTable.getSelectionModel().getSelectedItem());
     }
     @FXML
     private void openCreateModal(){
@@ -93,24 +91,7 @@ public class GestionDepartementController {
     @FXML
     private void remove(){
         if (departementTable.getSelectionModel().getSelectedItem() != null){
-            if (DAOFactory.getDepartementDAO().getVilleByDepartement(departementTable.getSelectionModel().getSelectedItem().getDepartementId()) == null){
-                Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-                alert.setTitle("Supprimer");
-                alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.isPresent() && result.get() == ButtonType.OK)
-                    DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
-                filter();
-            }else {
-                Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
-                alertErrorInsert.setTitle("Erreur");
-                alertErrorInsert.setHeaderText("Le département ne peut pas être supprimé car il contient des villes");
-                alertErrorInsert.showAndWait().ifPresent(btnTypeError -> {
-                    if (btnTypeError == ButtonType.OK) {
-                        alertErrorInsert.close();
-                    }
-                });
-            }
+            delete();
         } else {
             Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
             alertErrorInsert.setTitle("Erreur");
@@ -122,6 +103,24 @@ public class GestionDepartementController {
             });
         }
     }
+
+    private void delete() {
+        if (DAOFactory.getDepartementDAO().getVilleByDepartement(departementTable.getSelectionModel().getSelectedItem().getDepartementId()).isEmpty()){
+            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+            alert.setTitle("Supprimer");
+            alert.setHeaderText("Voulez-vous vraiment supprimer cet element?");
+            Optional<ButtonType> result = alert.showAndWait();
+            if(result.isPresent() && result.get() == ButtonType.OK)
+                DAOFactory.getDepartementDAO().delete(departementTable.getSelectionModel().getSelectedItem());
+            filter();
+        }else {
+            Alert alertErrorInsert = new Alert(Alert.AlertType.ERROR);
+            alertErrorInsert.setTitle("Erreur");
+            alertErrorInsert.setHeaderText("Le département ne peut pas être supprimé car il contient des villes");
+            alertErrorInsert.showAndWait();
+        }
+    }
+
     @FXML
     private void reset(){
         libelle.setText("");

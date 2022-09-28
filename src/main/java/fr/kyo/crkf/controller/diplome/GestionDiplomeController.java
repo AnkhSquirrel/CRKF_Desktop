@@ -82,23 +82,31 @@ public class GestionDiplomeController {
     @FXML
     void remove() {
         if(diplomeTable.getSelectionModel().getSelectedItem() != null){
-            List<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId());
-            if(!diplomesSuperior.isEmpty()){
-                Alert alert = new Alert(Alert.AlertType.ERROR);
-                alert.setTitle("Attention");
-                alert.setHeaderText("Les diplomes de niveau supérieur du même instrument seront supprimer, êtes vous sur de vouloir continuer?");
-                Optional<ButtonType> result = alert.showAndWait();
-                if(result.isPresent() && result.get() == ButtonType.OK){
-                    for (Diplome diplome : diplomesSuperior){
-                        DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId() , diplome.getCycle().getCycleId(), diplome.getInstrument().getInstrumentId());
-                    }
-                    DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
-                    filter();
-                }
-            } else if (applicationCRKF.deleteModal()){
-                DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
-                filter();
+            delete();
+        }
+    }
+
+    private void delete() {
+        List<Diplome> diplomesSuperior = DAOFactory.getDiplomeDAO().getDiplomeSupriorOf(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId());
+        if(!diplomesSuperior.isEmpty()){
+            deleteSuperiorDiplome(diplomesSuperior);
+        } else if (applicationCRKF.deleteModal()){
+            DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
+            filter();
+        }
+    }
+
+    private void deleteSuperiorDiplome(List<Diplome> diplomesSuperior) {
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle("Attention");
+        alert.setHeaderText("Les diplomes de niveau supérieur du même instrument seront supprimer, êtes vous sur de vouloir continuer?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            for (Diplome diplome : diplomesSuperior){
+                DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId() , diplome.getCycle().getCycleId(), diplome.getInstrument().getInstrumentId());
             }
+            DAOFactory.getDiplomeDAO().deleteDiplome(personne.getPersonneId(), diplomeTable.getSelectionModel().getSelectedItem().getCycle().getCycleId(), diplomeTable.getSelectionModel().getSelectedItem().getInstrument().getInstrumentId());
+            filter();
         }
     }
 

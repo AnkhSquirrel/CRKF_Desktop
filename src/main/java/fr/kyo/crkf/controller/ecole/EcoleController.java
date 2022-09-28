@@ -109,7 +109,7 @@ public class EcoleController {
 
         @FXML
         public void filter(){
-                if(!nomEcole.getText().equals(searchableEcole.getNom()) && !nomEcole.getText().isEmpty()) {
+                if(!nomEcole.getText().equals(searchableEcole.getNom())) {
                         searchableEcole.setNom(nomEcole.getText());
                         page = 1;
                 }

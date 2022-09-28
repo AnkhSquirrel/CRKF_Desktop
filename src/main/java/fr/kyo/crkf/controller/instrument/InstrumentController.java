@@ -106,13 +106,13 @@ public class InstrumentController {
     }
 
     public void filter(){
-        if(!libelle.getText().isEmpty() || !libelle.getText().equals(searchableInstrument.getNom()))
+        if(isNomSet())
             searchableInstrument.setNom(libelle.getText());
-        if(classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getClassificationId() != searchableInstrument.getClassificationId()){
+        if(isClassificationSelected()){
             searchableInstrument.setClassification(classification.getSelectionModel().getSelectedItem());
             famille.getSelectionModel().select(0);
         }
-        if(famille.getSelectionModel().getSelectedItem() != null && famille.getSelectionModel().getSelectedItem().getFamilleId() != searchableInstrument.getFamilleId()){
+        if(isFamilleSelected()){
             searchableInstrument.setFamille(famille.getSelectionModel().getSelectedItem());
             if(searchableInstrument.getFamilleId() != 0){
                 searchableInstrument.setClassificationId(famille.getSelectionModel().getSelectedItem().getClassificationId());
@@ -127,6 +127,19 @@ public class InstrumentController {
         numberOfPage.setText(String.valueOf(pageTotale));
         pageNumber.setText("Page " + page + " / ");
     }
+
+    private boolean isNomSet() {
+        return !libelle.getText().isEmpty() || !libelle.getText().equals(searchableInstrument.getNom());
+    }
+
+    private boolean isFamilleSelected() {
+        return famille.getSelectionModel().getSelectedItem() != null && famille.getSelectionModel().getSelectedItem().getFamilleId() != searchableInstrument.getFamilleId();
+    }
+
+    private boolean isClassificationSelected() {
+        return classification.getSelectionModel().getSelectedItem() != null && classification.getSelectionModel().getSelectedItem().getClassificationId() != searchableInstrument.getClassificationId();
+    }
+
     @FXML
     private void reset(){
         libelle.setText("");

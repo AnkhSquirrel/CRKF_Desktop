@@ -1,6 +1,5 @@
 package fr.kyo.crkf.controller.instrument;
 
-import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Famille;
 import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.searchable.Filter;
@@ -33,7 +32,6 @@ public class InstrumentModalController {
     private InstrumentController instrumentController;
     private boolean create;
     private Instrument instrumentUpdate;
-    private ApplicationCRKF applicationCRKF;
     private double height;
 
     @FXML
@@ -116,21 +114,29 @@ public class InstrumentModalController {
         for(int i = 0; i < grid.getChildren().size(); i++){
             Node node = grid.getChildren().get(i);
             HBox hBox = (HBox) node;
-            if((node != grid.getChildren().get(0) && node.getId().equals(String.valueOf(row))) || (node == grid.getChildren().get(0) && rowsCount == 1)){
-                grid.getChildren().remove(hBox);
-                rowsCount--;
-                height -= 80;
-                modal.setHeight(height);
-                if(rowsCount == 1){
-                    HBox temp = (HBox) grid.getChildren().get(0);
-                    ComboBox<Famille> comboBox = (ComboBox<Famille>) temp.getChildren().get(1);
-                    comboBox.setDisable(false);
-                }
-                if (rowsCount == 4){
-                    grid.addRow(rowsId + 1,add);
-                }
+            if(isSelectedRow(row, node)){
+                deleteRow(hBox);
             }
         }
+    }
+
+    private void deleteRow(HBox hBox) {
+        grid.getChildren().remove(hBox);
+        rowsCount--;
+        height -= 80;
+        modal.setHeight(height);
+        if(rowsCount == 1){
+            HBox temp = (HBox) grid.getChildren().get(0);
+            ComboBox<Famille> comboBox = (ComboBox<Famille>) temp.getChildren().get(1);
+            comboBox.setDisable(false);
+        }
+        if (rowsCount == 4){
+            grid.addRow(rowsId + 1,add);
+        }
+    }
+
+    private boolean isSelectedRow(int row, Node node) {
+        return (node != grid.getChildren().get(0) && node.getId().equals(String.valueOf(row))) || (node == grid.getChildren().get(0) && rowsCount == 1);
     }
 
     @FXML
@@ -143,7 +149,7 @@ public class InstrumentModalController {
 
     private void updateInstrument() {
         ArrayList<Integer> list = new ArrayList<>();
-        instrumentUpdate.setFamilles((ArrayList<Integer>) list);
+        instrumentUpdate.setFamilles(list);
         boolean allFamilleSet = getAllFamille(instrumentUpdate);
         if(!nom.getText().equals(""))
             instrumentUpdate.setInstrumentLibelle(nom.getText());
@@ -180,15 +186,20 @@ public class InstrumentModalController {
     private boolean getAllFamille(Instrument instrument) {
         for(Node node : grid.getChildren()){
             HBox hBox = (HBox) node;
-            if(!hBox.getId().equals("add")){
-                ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
-                if(comboBox.getSelectionModel().getSelectedItem().getFamilleId() != 0)
-                    instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
-                else
-                    return false;
+            if(!hBox.getId().equals("add") && addFamille(instrument, hBox)){
+                return false;
             }
         }
         return true;
+    }
+
+    private static boolean addFamille(Instrument instrument, HBox hBox) {
+        ComboBox<Famille> comboBox = (ComboBox<Famille>) hBox.getChildren().get(1);
+        if(comboBox.getSelectionModel().getSelectedItem().getFamilleId() != 0)
+            instrument.addFamille(comboBox.getSelectionModel().getSelectedItem());
+        else
+            return true;
+        return false;
     }
 
     @FXML
@@ -216,10 +227,6 @@ public class InstrumentModalController {
         for(Famille famille : instrumentUpdate.getFamilles()){
             addFamilleChoice(famille);
         }
-    }
-
-    public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
-        this.applicationCRKF = applicationCRKF;
     }
 
 }
