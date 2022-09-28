@@ -98,17 +98,20 @@ public class ProfesseurModalController {
 
     @FXML
     private void validate() {
-        boolean adresseComplete = selectedVille != null &&
-                !adresse.getText().isEmpty();
-        boolean professeurComplete =!nom.getText().isEmpty() &&
+        if(isComplete()){
+            if (create) {
+                updatePersonne();
+            } else {
+                createPersonne();
+            }
+        }
+    }
+
+    private boolean isComplete() {
+        return selectedVille != null &&
+                !adresse.getText().isEmpty() && !nom.getText().isEmpty() &&
                 !prenom.getText().isEmpty() && !cv.getText().isEmpty() &&
                 selectedEcole != null;
-        if(adresseComplete && professeurComplete){
-            if(create){
-                createPersonne();
-            } else
-                updatePersonne();
-        }
     }
 
     private void updatePersonne() {

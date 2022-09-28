@@ -114,24 +114,29 @@ public class GestionClassificationController {
     @FXML
     private void remove(){
         if (classificationTable.getSelectionModel().getSelectedItem() != null){
-            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
-            alert.setTitle("Supprimer");
-            alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
-            Optional<ButtonType> result = alert.showAndWait();
-            if(result.isPresent() && result.get() == ButtonType.OK){
-                if(classificationTable.getSelectionModel().getSelectedItem().getNumberFamilles().getValue() > 0){
-                    alert.close();
-                    Alert alert1 = new Alert(Alert.AlertType.ERROR);
-                    alert1.setTitle("Erreur");
-                    alert1.setHeaderText("Il y a eu une erreur lors de la suppresion de la classification.\nIl est impossible de supprimer une classification qui a des familles associées");
-                    alert1.showAndWait();
-                }else{
-                    DAOFactory.getClassificationDAO().delete(classificationTable.getSelectionModel().getSelectedItem());
-                    filter();
-                }
+            delete();
+        }
+    }
+
+    private void delete() {
+        Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+        alert.setTitle("Supprimer");
+        alert.setHeaderText("Voulez vous vraiment supprimer cet element?");
+        Optional<ButtonType> result = alert.showAndWait();
+        if(result.isPresent() && result.get() == ButtonType.OK){
+            if(classificationTable.getSelectionModel().getSelectedItem().getNumberFamilles().getValue() > 0){
+                alert.close();
+                Alert alert1 = new Alert(Alert.AlertType.ERROR);
+                alert1.setTitle("Erreur");
+                alert1.setHeaderText("Il y a eu une erreur lors de la suppresion de la classification.\nIl est impossible de supprimer une classification qui a des familles associées");
+                alert1.showAndWait();
+            }else{
+                DAOFactory.getClassificationDAO().delete(classificationTable.getSelectionModel().getSelectedItem());
+                filter();
             }
         }
     }
+
     @FXML
     private void update(){
         if (classificationTable.getSelectionModel().getSelectedItem() != null)

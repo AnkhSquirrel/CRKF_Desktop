@@ -4,14 +4,11 @@ import fr.kyo.crkf.entity.Departement;
 import fr.kyo.crkf.dao.DAOFactory;
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
 public class DepartementModalController {
 
-    @FXML
-    private Label nomModal;
     @FXML
     private TextField nomDep;
     @FXML
@@ -20,6 +17,15 @@ public class DepartementModalController {
     private boolean create;
     private GestionDepartementController gestionDepartementController;
     private Departement departement;
+
+    @FXML
+    private void initialize(){
+        numDepartement.textProperty().addListener((observable, oldValue, newValue) -> {
+            if (!newValue.matches("\\d*")) {
+                numDepartement.setText(newValue.replaceAll("\\D", ""));
+            }
+        });
+    }
 
     @FXML
     private void validate(){
@@ -31,23 +37,33 @@ public class DepartementModalController {
     private void updateDepartement() {
         if(!nomDep.getText().isEmpty())
             departement.setDepartementLibelle(nomDep.getText());
-        if(!numDepartement.getText().isEmpty() && !DAOFactory.getDepartementDAO().getNumDepartement().contains(numDepartement.getText())) {
-            departement.setDepartementNumero(numDepartement.getText());
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Le numéro de département est déjà attribué");
-            alert.showAndWait();
+        if (testNumeroDepartement()){
+            if(DAOFactory.getDepartementDAO().update(departement)){
+                gestionDepartementController.filter();
+                modal.close();
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Il y a eu une erreur lors de la modification du département.\n Merci de vérifier que vous avez entré des informations valides");
+                alert.showAndWait();
+            }
         }
-        if(DAOFactory.getDepartementDAO().update(departement)){
-            gestionDepartementController.filter();
-            modal.close();
-        } else {
-            Alert alert = new Alert(Alert.AlertType.ERROR);
-            alert.setTitle("Erreur");
-            alert.setHeaderText("Il y a eu une erreur lors de la modification du département.\n Merci de vérifier que vous avez entré des informations valides");
-            alert.showAndWait();
-        }
+    }
+
+    private boolean testNumeroDepartement() {
+        if(!numDepartement.getText().equals(departement.getDepartementNumero())){
+            if(!numDepartement.getText().isEmpty() && !DAOFactory.getDepartementDAO().getNumDepartement().contains(numDepartement.getText())) {
+                departement.setDepartementNumero(numDepartement.getText());
+                return true;
+            } else {
+                Alert alert = new Alert(Alert.AlertType.ERROR);
+                alert.setTitle("Erreur");
+                alert.setHeaderText("Le numéro de département est déjà attribué");
+                alert.showAndWait();
+                return false;
+            }
+        }else
+            return true;
     }
 
     private void createDepartement() {
@@ -74,11 +90,7 @@ public class DepartementModalController {
     }
 
     public void setCreate(boolean create) {
-        if(create) {
-            nomModal.setText("Créer un département");
-        } else {
-            nomModal.setText("Modifier un département");
-        }
+        this.create = create;
     }
 
     public void setGestionDepartementController(GestionDepartementController gestionDepartementController) {

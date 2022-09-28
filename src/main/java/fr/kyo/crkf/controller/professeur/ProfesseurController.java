@@ -102,7 +102,7 @@ public class ProfesseurController {
             searchableProfesseur.setNomEtPrenom(nomEtPrenomFiltre.getText());
             page = 1;
         }
-        if (departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != searchableProfesseur.getDepartementId()){
+        if (isDepartementSelected()){
             searchableProfesseur.setDepartementId(departementFiltre.getSelectionModel().getSelectedItem().getDepartementId());
             villeFiltre.getSelectionModel().select(0);
             page = 1;
@@ -120,6 +120,11 @@ public class ProfesseurController {
         pageNumber.setText("Page " + page + " / ");
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur, page)));
     }
+
+    private boolean isDepartementSelected() {
+        return departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != searchableProfesseur.getDepartementId();
+    }
+
     @FXML
     private void pagePlus(){
         if(!professeurTable.getItems().isEmpty() && pageTotale > page ){
