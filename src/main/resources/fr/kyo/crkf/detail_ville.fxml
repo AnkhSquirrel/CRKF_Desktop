@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<VBox fx:id="detailVille" alignment="CENTER" maxHeight="500.0" maxWidth="500.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="500.0" prefWidth="500.0" xmlns="http://javafx.com/javafx/18" xmlns:fx="http://javafx.com/fxml/1" fx:controller="fr.kyo.crkf.controller.ville.DetailVilleController">
+   <children>
+      <HBox alignment="CENTER_RIGHT" prefHeight="50.0" prefWidth="500.0">
+         <children>
+            <Button alignment="CENTER" mnemonicParsing="false" onAction="#closeDetail" text="Fermer">
+               <HBox.margin>
+                  <Insets left="5.0" right="5.0" />
+               </HBox.margin></Button>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER">
+         <children>
+            <Label fx:id="labelVille" text="&lt;ville&gt;" textAlignment="CENTER">
+               <font>
+                  <Font size="24.0" />
+               </font>
+            </Label>
+            <Label fx:id="labelDepartement" text="&lt;departement&gt;">
+               <padding>
+                  <Insets left="15.0" />
+               </padding>
+               <font>
+                  <Font name="System Italic" size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </HBox>
+      <HBox alignment="CENTER" prefHeight="295.0" prefWidth="700.0">
+         <children>
+            <VBox alignment="TOP_CENTER" minWidth="200.0">
+               <children>
+                  <HBox alignment="CENTER">
+                     <children>
+                        <Label text="Écoles" textAlignment="CENTER">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </Label>
+                        <ComboBox fx:id="familleEnseignee" prefWidth="150.0" promptText="Famille enseignée">
+                           <HBox.margin>
+                              <Insets left="5.0" right="5.0" />
+                           </HBox.margin>
+                        </ComboBox>
+                     </children>
+                  </HBox>
+                  <TableView fx:id="listeEcole" prefHeight="203.0" prefWidth="480.0">
+                    <columns>
+                      <TableColumn fx:id="ecoleNom" prefWidth="150.0" text="Nom" />
+                      <TableColumn fx:id="ecoleAdresse" prefWidth="150.0" text="Adresse" />
+                        <TableColumn fx:id="villeColumn" prefWidth="130.0" text="Ville" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
+                  </TableView>
+               </children>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </VBox>
+         </children>
+      </HBox>
+   </children>
+</VBox>

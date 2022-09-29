@@ -96,7 +96,7 @@ public class EcoleDAO extends DAO<Ecole> {
                 float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
                 float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude();
                 double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
-                if (distance < 50){
+                if (distance <= 50){
                     Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
                     ecolesEtDistances.add(new Pair<>(ecole, ( Math.round(distance * 100.0) / 100.0 )));
                 }
@@ -106,6 +106,25 @@ public class EcoleDAO extends DAO<Ecole> {
         }
         ecolesEtDistances.sort(Comparator.comparingDouble(Pair<Ecole,Double>::getSecond));
         return ecolesEtDistances;
+    }
+
+    public List<Ecole> getByDistanceAndInstrument(float latitudePointA, float longitudePointA, int familleId) {
+        List<Ecole> ecoles = new ArrayList<>();
+        StringBuilder requete = new StringBuilder("SELECT id_ecole, Nom, id_adresse from Ecole as e");
+        if (familleId > 0)
+            requete.append(" where ").append(familleId).append(" in (select distinct id_famille from Instrument_Famille where id_instrument in (select distinct(id_instrument) from Personne_Diplome where id_personne in (select id_personne from personne where id_ecole = e.id_ecole)))");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
+                float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude();
+                double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
+                if (distance <= 50) ecoles.add(new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ecoles;
     }
 
     @Override
