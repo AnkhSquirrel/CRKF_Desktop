@@ -107,8 +107,8 @@ public class PersonneDAO extends DAO<Personne> {
     }
 
     public List<Pair<Personne, Double>> getByDistance(float latitudePointA, float longitudePointA) {
-        List<Pair<Personne, Double>> personsEtDistances = new ArrayList<>();
-        String requete = "SELECT Nom, Prenom, id_ecole ,id_adresse from Personne";
+        List<Pair<Personne, Double>> personnesEtDistances = new ArrayList<>();
+        String requete = "SELECT Nom, Prenom, id_ecole ,id_adresse, id_personne from Personne";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -120,15 +120,17 @@ public class PersonneDAO extends DAO<Personne> {
                     Personne personne = new Personne();
                     personne.setPersonneNom(rs.getString(1));
                     personne.setPersonnePrenom(rs.getString(2));
-                    personne.setPersonneEcoleId(rs.getInt(3));
+                    personne.setPersonneEcoleId((rs.getInt(3)));
                     personne.setAdresseId((DAOFactory.getAdresseDAO().getByID(rs.getInt(4))));
-                    personsEtDistances.add(new Pair<>(personne, ( Math.round(distance * 100.0) / 100.0 )));
+                    personne.setPersonneId(rs.getInt(5));
+                    personnesEtDistances.add(new Pair<>(personne, ( Math.round(distance * 100.0) / 100.0 )));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return personsEtDistances;
+        System.out.println(personnesEtDistances.get(0).getFirst().getEcoleID());
+        return personnesEtDistances;
     }
 
 
