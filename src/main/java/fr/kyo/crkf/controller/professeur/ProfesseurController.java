@@ -174,6 +174,7 @@ public class ProfesseurController {
         nomEtPrenomFiltre.setText("");
         villeFiltre.getSelectionModel().selectFirst();
         departementFiltre.getSelectionModel().selectFirst();
+        instrumentFiltre.getSelectionModel().select(0);
     }
 
     private void openDetailProfesseur() {

@@ -5,6 +5,7 @@ import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.Departement;
 import fr.kyo.crkf.entity.Ecole;
+import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.entity.Ville;
 import fr.kyo.crkf.searchable.Filter;
 import fr.kyo.crkf.searchable.SearchableEcole;
@@ -38,6 +39,8 @@ public class EcoleController {
         private ComboBox<Ville> ville;
         @FXML
         private SearchableComboBox<Departement> departement;
+        @FXML
+        private SearchableComboBox<Instrument> instrumentFilter;
         @FXML
         private TextField nomEcole;
         @FXML
@@ -75,6 +78,9 @@ public class EcoleController {
                 departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
                 departement.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
 
+                instrumentFilter.setItems(FXCollections.observableArrayList(filter.getInstrument()));
+                instrumentFilter.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+
                 nomEcole.textProperty().addListener(observable -> filter());
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
@@ -105,6 +111,7 @@ public class EcoleController {
                 nomEcole.setText("");
                 departement.getSelectionModel().selectFirst();
                 ville.getSelectionModel().selectFirst();
+                instrumentFilter.getSelectionModel().select(0);
                 filter();
         }
 
@@ -119,8 +126,13 @@ public class EcoleController {
                         page = 1;
                 }
 
-                if(departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getDepartementId() != searchableEcole.getIdDepartement() ){
+                if(isDepartementSelected()){
                         searchableEcole.setIdDepartement(departement.getSelectionModel().getSelectedItem().getDepartementId());
+                        page = 1;
+                }
+
+                if(isInstrumentSelected()){
+                        searchableEcole.setIdInstrument(instrumentFilter.getSelectionModel().getSelectedItem().getInstrumentId());
                         page = 1;
                 }
 
@@ -132,6 +144,14 @@ public class EcoleController {
                 numberOfPage.setText( " / " + pageTotale);
 
                 pageNumber.setText("Page " + page);
+        }
+
+        private boolean isDepartementSelected() {
+                return departement.getSelectionModel().getSelectedItem() != null && departement.getSelectionModel().getSelectedItem().getDepartementId() != searchableEcole.getIdDepartement();
+        }
+
+        private boolean isInstrumentSelected() {
+                return instrumentFilter.getSelectionModel().getSelectedItem() != null && instrumentFilter.getSelectionModel().getSelectedItem().getInstrumentId() != searchableEcole.getIdInstrument();
         }
 
         private void openDetailEcole(){
