@@ -5,8 +5,6 @@ a
 pom.xml,4\4\442292b8a7efeabbe4cc176709b833b1792140ec
 Y
 )src/main/java/fr/kyo/crkf/tools/Pair.java,9\8\98a567da722c08b437fff7691bb25183a7b72a5d
-n
->src/main/java/fr/kyo/crkf/searchable/SearchableProfesseur.java,4\7\4783bc25e68e71d256feaff2c89a5573bf654e24
 ]
 -src/main/java/fr/kyo/crkf/entity/Diplome.java,e\8\e897887107a8ff1a051a73584524235faf19b7e1
 [

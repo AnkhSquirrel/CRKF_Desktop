@@ -36,6 +36,7 @@
                         <Insets left="2.0" right="2.0" />
                      </HBox.margin>
                   </TextField>
+                  <SearchableComboBox fx:id="instrumentFiltre" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Instrument" />
                   <SearchableComboBox fx:id="departementFiltre" maxHeight="25.0" prefHeight="25.0" prefWidth="150.0" promptText="Département">
                      <HBox.margin>
                         <Insets left="2.0" right="2.0" />

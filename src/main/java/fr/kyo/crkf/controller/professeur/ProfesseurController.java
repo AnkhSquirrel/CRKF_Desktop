@@ -2,6 +2,7 @@ package fr.kyo.crkf.controller.professeur;
 
 import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.entity.Departement;
+import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.entity.Personne;
 import fr.kyo.crkf.entity.Ville;
 import fr.kyo.crkf.searchable.Filter;
@@ -40,6 +41,8 @@ public class ProfesseurController {
     @FXML
     private SearchableComboBox<Departement> departementFiltre;
     @FXML
+    private SearchableComboBox<Instrument> instrumentFiltre;
+    @FXML
     private Label pageNumber;
     @FXML
     private Label numberOfPage;
@@ -75,6 +78,9 @@ public class ProfesseurController {
         departementFiltre.setItems(FXCollections.observableArrayList(filter.getDepartements()));
         departementFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filterDepartement());
 
+        instrumentFiltre.setItems(FXCollections.observableArrayList(filter.getInstrument()));
+        instrumentFiltre.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
+
         professeurTable.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLike(searchableProfesseur,1)));
 
         pageTotale = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getLikeAllPersonne(searchableProfesseur)).size() / 25;
@@ -108,6 +114,10 @@ public class ProfesseurController {
             villeFiltre.getSelectionModel().select(0);
             page = 1;
         }
+        if(isInstrumentSelected()){
+            searchableProfesseur.setInstrument(instrumentFiltre.getSelectionModel().getSelectedItem().getInstrumentId());
+            page = 1;
+        }
         if (!villeFiltre.getSelectionModel().isEmpty() && villeFiltre.getSelectionModel().getSelectedItem() != null && villeFiltre.getSelectionModel().getSelectedItem().getVilleId() != searchableProfesseur.getVilleId()){
             searchableProfesseur.setVille(villeFiltre.getSelectionModel().getSelectedItem());
             page = 1;
@@ -124,6 +134,10 @@ public class ProfesseurController {
 
     private boolean isDepartementSelected() {
         return departementFiltre.getSelectionModel().getSelectedItem() != null && departementFiltre.getSelectionModel().getSelectedItem().getDepartementId() != searchableProfesseur.getDepartementId();
+    }
+
+    private boolean isInstrumentSelected() {
+        return instrumentFiltre.getSelectionModel().getSelectedItem() != null && instrumentFiltre.getSelectionModel().getSelectedItem().getInstrumentId() != searchableProfesseur.getInstrumentId();
     }
 
     @FXML

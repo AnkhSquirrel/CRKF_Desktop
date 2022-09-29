@@ -9,12 +9,14 @@ public class SearchableProfesseur {
     private final int vehiculeCV;
     private int ville;
     private int departement;
+    private int instrument;
 
     public SearchableProfesseur() {
         this.nomEtPrenom = "";
         this.vehiculeCV = 0;
         ville = 0;
         departement = 0;
+        instrument = 0;
     }
 
     public String getNomEtPrenom() {
@@ -46,5 +48,13 @@ public class SearchableProfesseur {
 
     public void setDepartementId(int departement) {
         this.departement = departement;
+    }
+
+    public int getInstrumentId() {
+        return instrument;
+    }
+
+    public void setInstrument(int instrumentId) {
+        instrument = instrumentId;
     }
 }
