@@ -11,6 +11,7 @@ import java.util.List;
 public class EcoleDAO extends DAO<Ecole> {
 
     private static final int LG_PAGE = 25;
+    private static final int DISTANCE_MAX = 50;
 
     protected EcoleDAO(Connection connection) {
         super(connection);
@@ -89,18 +90,18 @@ public class EcoleDAO extends DAO<Ecole> {
         return list;
     }
 
-    public List<Pair<Ecole, Double>> getByDistance(float latitudePointA, float longitudePointA) {
+    public List<Pair<Ecole, Double>> getBySmallestDistance(float latitudePointA, float longitudePointA, float latitudePointB, float longitudePointB) {
         List<Pair<Ecole, Double>> ecolesEtDistances = new ArrayList<>();
         String requete = "SELECT id_ecole, Nom, id_adresse from Ecole";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
-                float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude();
-                double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
-                if (distance <= 50){
+                double distanceA = getDistanceBetweentwoCoordinates(latitudePointA, longitudePointA, DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude(), DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude());
+                double distanceB = getDistanceBetweentwoCoordinates(latitudePointB, longitudePointB, DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude(), DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude());
+                double smallestDistance = Math.min(distanceA, distanceB);
+                if (smallestDistance <= DISTANCE_MAX){
                     Ecole ecole = (new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
-                    ecolesEtDistances.add(new Pair<>(ecole, ( Math.round(distance * 100.0) / 100.0 )));
+                    ecolesEtDistances.add(new Pair<>(ecole, ( Math.round(smallestDistance * 100.0) / 100.0 )));
                 }
             }
         } catch (Exception e) {
@@ -118,15 +119,17 @@ public class EcoleDAO extends DAO<Ecole> {
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
-                float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude();
-                float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude();
-                double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
-                if (distance <= 50) ecoles.add(new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
+                double distance = getDistanceBetweentwoCoordinates(latitudePointA, longitudePointA, DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude(), DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude());
+                if (distance <= DISTANCE_MAX) ecoles.add(new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3)));
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
         return ecoles;
+    }
+
+    private double getDistanceBetweentwoCoordinates(float latA, float longA, float latB, float longB) {
+        return 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latB - latA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longB - longA)) / 2), 2) * Math.cos((Math.toRadians(latA))) * Math.cos(Math.toRadians(latB)))) * 6371.009;
     }
 
     @Override

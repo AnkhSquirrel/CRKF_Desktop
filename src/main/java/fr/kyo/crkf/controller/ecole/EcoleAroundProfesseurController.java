@@ -47,7 +47,10 @@ public class EcoleAroundProfesseurController {
 
     public void fillInfos(){
         ville.setText(personne.getAdresseId().getVille().getVilleLibelle());
-        ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getByDistance(personne.getAdresseId().getVille().getLatitude(), personne.getAdresseId().getVille().getLongitude())));
+        ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getBySmallestDistance(personne.getAdresseId().getVille().getLatitude(),
+                                                                                                            personne.getAdresseId().getVille().getLongitude(),
+                                                                                                            DAOFactory.getEcoleDAO().getByID(personne.getEcoleID()).getEcoleAdresse().getVille().getLatitude(),
+                                                                                                            DAOFactory.getEcoleDAO().getByID(personne.getEcoleID()).getEcoleAdresse().getVille().getLongitude())));
     }
 
     @FXML
