@@ -3,6 +3,8 @@ package fr.kyo.crkf.controller.ecole;
 import fr.kyo.crkf.ApplicationCRKF;
 import fr.kyo.crkf.entity.*;
 import fr.kyo.crkf.dao.DAOFactory;
+import fr.kyo.crkf.tools.Pair;
+import javafx.beans.property.ReadOnlyObjectWrapper;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,18 +21,21 @@ public class DetailEcoleController {
     @FXML
     private ApplicationCRKF applicationCRKF;
     @FXML
-    private TableView<Personne> profEmbauche;
+    private TableView<Pair<Personne, Double>> prof;
     @FXML
-    private TableColumn<Personne, String> profEmbauchePrenom;
+    private TableColumn<Pair<Personne, Double>, String> profPrenom;
     @FXML
-    private TableColumn<Personne, String> profEmbaucheNom;
+    private TableColumn<Pair<Personne, Double>, String> profNom;
+    @FXML
+    private TableColumn<Pair<Personne, Double>, String> situation;
     private Ecole ecole;
     private EcoleController ecoleController;
 
     @FXML
     private void initialize(){
-        profEmbaucheNom.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
-        profEmbauchePrenom.setCellValueFactory(cellData -> cellData.getValue().getPrenomStringProperty());
+        profNom.setCellValueFactory(cellData -> cellData.getValue().getFirst().getNomStringProperty());
+        profPrenom.setCellValueFactory(cellData -> cellData.getValue().getFirst().getPrenomStringProperty());
+        situation.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(ecole.getEcoleId() == cellData.getValue().getFirst().getEcoleID() ? "employé" : "éligible"));
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {
@@ -43,7 +48,7 @@ public class DetailEcoleController {
         labelVille.setText(ecole.getEcoleAdresse().getVille().getVilleLibelle());
         labelDepartement.setText(ecole.getEcoleAdresse().getVille().getDepartement().toString());
         labelNomEcole.setText("Ecole : " + ecole.getEcoleNom());
-        profEmbauche.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())));
+        prof.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByDistance(ecole.getEcoleAdresse().getVille().getLatitude(), ecole.getEcoleAdresse().getVille().getLongitude())));
     }
 
     @FXML

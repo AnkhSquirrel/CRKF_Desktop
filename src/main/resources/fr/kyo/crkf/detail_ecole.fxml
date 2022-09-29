@@ -111,10 +111,11 @@
                         <Insets bottom="10.0" top="10.0" />
                      </VBox.margin>
                   </Label>
-                  <TableView fx:id="profEmbauche" prefHeight="235.0" prefWidth="200.0">
+                  <TableView fx:id="prof" prefHeight="235.0" prefWidth="200.0">
                     <columns>
-                      <TableColumn fx:id="profEmbaucheNom" prefWidth="97.0" text="Nom" />
-                      <TableColumn fx:id="profEmbauchePrenom" prefWidth="102.0" text="Prenom" />
+                      <TableColumn fx:id="profNom" prefWidth="62.6666259765625" text="Nom" />
+                      <TableColumn fx:id="profPrenom" minWidth="0.0" prefWidth="58.66668701171875" text="Prenom" />
+                        <TableColumn fx:id="situation" minWidth="0.0" prefWidth="78.00006103515625" text="Situation" />
                     </columns>
                      <VBox.margin>
                         <Insets />
