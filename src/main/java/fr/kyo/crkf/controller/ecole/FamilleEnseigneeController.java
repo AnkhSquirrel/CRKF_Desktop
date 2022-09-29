@@ -43,9 +43,9 @@ public class FamilleEnseigneeController {
     public void bouclePersonne (List<Personne> listPersonne){
         for (int i = 0; i < listPersonne.size(); i++) {
            List<Diplome> diplome = listPersonne.get(i).getDiplomes();
+           System.out.println("diplome -> " + "\n");
             System.out.println(diplome.size());
             System.out.println(diplome);
-            System.out.println(i);
         }
     }
     @FXML
