@@ -11,8 +11,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
 public class DetailVilleController {
-    @FXML
-    private Label labelDepartement;
+
     @FXML
     private Label labelVille;
     @FXML
@@ -38,7 +37,6 @@ public class DetailVilleController {
         familleEnseignee.setItems(FXCollections.observableArrayList(filter.getFamilles()));
         familleEnseignee.getSelectionModel().select(0);
         familleEnseignee.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
-
     }
 
     public void filter(){
@@ -50,7 +48,6 @@ public class DetailVilleController {
     public void setVille(Ville ville) {
         this.ville = ville;
         labelVille.setText(ville.getVilleLibelle());
-        labelDepartement.setText(ville.getDepartement().getDepartementLibelle());
         listeEcole.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getByDistanceAndInstrument(ville.getLatitude(), ville.getLongitude(), familleEnseignee.getSelectionModel().getSelectedItem().getFamilleId())));
     }
 
