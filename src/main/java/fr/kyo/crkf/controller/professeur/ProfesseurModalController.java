@@ -102,7 +102,7 @@ public class ProfesseurModalController {
     @FXML
     private void validate() {
         if(isComplete()){
-            if (create) {
+            if (!create) {
                 updatePersonne();
             } else {
                 createPersonne();
@@ -172,8 +172,8 @@ public class ProfesseurModalController {
         this.modal = modal;
     }
 
-    public void setCreate(boolean bool) {
-        this.create = bool;
+    public void setCreate(boolean create) {
+        this.create = create;
         if(!create)
             nomModal.setText("Modifier ce professeur");
     }
