@@ -186,9 +186,9 @@ public class ProfesseurModalController {
         adresse.setText(professeur.getAdresseId().getAdresseLibelle());
         departement.getSelectionModel().select(professeur.getAdresseId().getVille().getDepartement());
         ville.getSelectionModel().select(professeur.getAdresseId().getVille());
-        ecole.getSelectionModel().select(professeur.getEcoleById());
+        ecole.getSelectionModel().select(professeur.getEcoleID());
 
-        selectedEcole = professeur.getEcoleById();
+        selectedEcole = professeur.getEcoleID();
         selectedVille = professeur.getAdresseId().getVille();
     }
 

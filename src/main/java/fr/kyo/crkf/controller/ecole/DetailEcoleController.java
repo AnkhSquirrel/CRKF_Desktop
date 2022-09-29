@@ -43,8 +43,7 @@ public class DetailEcoleController {
     private void initialize(){
         profNom.setCellValueFactory(cellData -> cellData.getValue().getFirst().getNomStringProperty());
         profPrenom.setCellValueFactory(cellData -> cellData.getValue().getFirst().getPrenomStringProperty());
-        situation.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(ecole.getEcoleId() == cellData.getValue().getFirst().getEcoleID() ? "employé" : "éligible"));
-
+        situation.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(ecole.getEcoleId() == cellData.getValue().getFirst().getEcoleID().getEcoleId() ? "employé" : "éligible"));
     }
 
     public void setApplicationCRKF(ApplicationCRKF applicationCRKF) {

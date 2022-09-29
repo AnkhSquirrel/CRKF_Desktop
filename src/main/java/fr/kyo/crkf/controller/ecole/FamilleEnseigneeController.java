@@ -34,7 +34,7 @@ public class FamilleEnseigneeController {
 
     public void setEcole(Ecole ecole){
         this.ecole = ecole;
-        tabFamilleEnseignee.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())));
+        //tabFamilleEnseignee.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())));
     }
     @FXML
     private void closeFamilleEnseigneePage(){
