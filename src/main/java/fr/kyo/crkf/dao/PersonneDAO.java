@@ -68,12 +68,13 @@ public class PersonneDAO extends DAO<Personne> {
 
     public List<Personne> getLikeAllPersonne(SearchableProfesseur searchableProfesseur) {
         List<Personne> liste = new ArrayList<>();
-        String requete = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?";
+        String requete = "exec SP_PROFESSEUR_FILTER  @nometprenom = ?, @vehiculecv = ?, @idville = ?, @iddepartement = ?, @idinstrument = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete);){
             preparedStatement.setString(1,searchableProfesseur.getNomEtPrenom());
             preparedStatement.setInt(2,searchableProfesseur.getVehiculeCV());
             preparedStatement.setInt(3,searchableProfesseur.getVilleId());
             preparedStatement.setInt(4,searchableProfesseur.getDepartementId());
+            preparedStatement.setInt(5, searchableProfesseur.getInstrumentId());
             ResultSet rs = preparedStatement.executeQuery();
             createPersonneFromResultSet(liste, rs);
         }

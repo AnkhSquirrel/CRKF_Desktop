@@ -9,11 +9,13 @@ public class SearchableEcole {
     private String nom;
     private int ville;
     private int departement;
+    private int instrument;
 
     public SearchableEcole() {
         this.nom = "";
         ville = 0;
         departement = 0;
+        instrument = 0;
     }
     public String getNom() {
         return nom;
@@ -38,5 +40,12 @@ public class SearchableEcole {
     }
     public void setIdVille(int ville) {
         this.ville = ville;
+    }
+
+    public int getIdInstrument() {
+        return instrument;
+    }
+    public void setIdInstrument(int instrumentId){
+        instrument = instrumentId;
     }
 }

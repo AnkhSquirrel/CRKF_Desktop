@@ -45,12 +45,13 @@ public class EcoleDAO extends DAO<Ecole> {
 
     public List<Ecole> getLike(SearchableEcole searchableEcole, int page) {
         List<Ecole> liste = new ArrayList<>();
-        String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?, @lgpage = 25, @page = ?";
+        String strCmd = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?,@idinstrument = ?, @lgpage = 25, @page = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(strCmd)){
             preparedStatement.setString(1,searchableEcole.getNom());
             preparedStatement.setInt(2,searchableEcole.getIdVille());
             preparedStatement.setInt(3, searchableEcole.getIdDepartement());
-            preparedStatement.setInt(4, page);
+            preparedStatement.setInt(4, searchableEcole.getIdInstrument());
+            preparedStatement.setInt(5, page);
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next())liste.add(new Ecole(rs.getInt(1),rs.getString(2),rs.getInt(3)));
         } catch (Exception e) {
@@ -61,11 +62,12 @@ public class EcoleDAO extends DAO<Ecole> {
 
     public List<Ecole> getLikeAllEcole(SearchableEcole searchableEcole) {
         List<Ecole> liste = new ArrayList<>();
-        String requete = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?";
+        String requete = "exec SP_ECOLE_FILTER  @nom = ?, @ville = ?, @departement = ?,@idinstrument = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setString(1,searchableEcole.getNom());
             preparedStatement.setInt(2,searchableEcole.getIdVille());
             preparedStatement.setInt(3, searchableEcole.getIdDepartement());
+            preparedStatement.setInt(4, searchableEcole.getIdInstrument());
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) liste.add(new Ecole(rs.getInt(1),rs.getString(2),rs.getInt(3)));
         } catch (Exception e) {
