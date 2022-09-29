@@ -268,7 +268,7 @@ public class ApplicationCRKF extends javafx.application.Application {
         try{
             FXMLLoader fxmlLoader = new FXMLLoader();
             fxmlLoader.setLocation(ApplicationCRKF.class.getResource("gestion_ville.fxml"));
-            GridPane gestionVille = fxmlLoader.load();
+            AnchorPane gestionVille = fxmlLoader.load();
             GestionVilleController gestionVilleController = fxmlLoader.getController();
             gestionVilleController.setApplicationCRKF(this);
             mainWindow.setCenter(gestionVille);
