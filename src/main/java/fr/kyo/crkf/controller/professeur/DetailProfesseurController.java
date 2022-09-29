@@ -51,7 +51,7 @@ public class DetailProfesseurController {
         this.personne = personne;
         nom.setText(personne.getPersonnePrenom() + " " + personne.getPersonneNom());
         cv.setText(String.valueOf(personne.getVehiculeCv()));
-        ecole.setText(personne.getEcoleById().getEcoleNom());
+        ecole.setText(personne.getEcoleID().getEcoleNom());
 
         diplomeTable.setItems(FXCollections.observableArrayList(personne.getDiplomes()));
     }

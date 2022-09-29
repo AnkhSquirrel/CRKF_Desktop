@@ -688,7 +688,7 @@ public class ApplicationCRKF extends javafx.application.Application {
     }
 
     public String getStylesheets(){
-        if(lightMode){
+        if(Boolean.TRUE.equals(lightMode)){
             return getClass().getResource("/fr/kyo/crkf/lightMode.css").toExternalForm();
         }
         else{

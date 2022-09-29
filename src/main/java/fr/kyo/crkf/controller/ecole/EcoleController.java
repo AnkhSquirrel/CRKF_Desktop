@@ -164,6 +164,7 @@ public class EcoleController {
                                 detailEcoleController.setEcole(ecoleTable.getSelectionModel().getSelectedItem());
                                 detailEcoleController.setEcoleController(this);
                                 detailEcoleController.setApplicationCRKF(applicationCRKF);
+                                detailEcoleController.setDrawer(drawer);
                                 drawer.setSidePane(detailEcole);
                                 drawer.addEventFilter(MouseEvent.MOUSE_DRAGGED, Event::consume);
                                 openDetail();
@@ -235,6 +236,10 @@ public class EcoleController {
                 else{
                         drawer.getStylesheets().add(Objects.requireNonNull(getClass().getResource("/fr/kyo/crkf/darkMode.css").toExternalForm()));
                 }
+        }
+
+        public void closeEcoleAroundPage(){
+                openDetailEcole();
         }
 
 }

@@ -89,7 +89,7 @@ public class PersonneDAO extends DAO<Personne> {
 
     public List<Personne> getByEcole (int ecoleId) {
         List<Personne> liste = new ArrayList<>();
-        String requete = "SELECT nom, prenom, id_ecole from Personne where id_ecole = ?";
+        String requete = "SELECT nom, prenom from Personne where id_ecole = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1, ecoleId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -97,7 +97,6 @@ public class PersonneDAO extends DAO<Personne> {
                 Personne personne = new Personne();
                 personne.setPersonneNom(rs.getString(1));
                 personne.setPersonnePrenom(rs.getString(2));
-                personne.setPersonneEcoleId(rs.getInt(3));
                 liste.add(personne);
             }
         } catch (Exception e) {
@@ -107,8 +106,8 @@ public class PersonneDAO extends DAO<Personne> {
     }
 
     public List<Pair<Personne, Double>> getByDistance(float latitudePointA, float longitudePointA) {
-        List<Pair<Personne, Double>> personsEtDistances = new ArrayList<>();
-        String requete = "SELECT Nom, Prenom, id_ecole ,id_adresse from Personne";
+        List<Pair<Personne, Double>> personnesEtDistances = new ArrayList<>();
+        String requete = "SELECT Nom, Prenom, id_ecole ,id_adresse, id_personne from Personne";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             ResultSet rs = preparedStatement.executeQuery();
             while (rs.next()) {
@@ -120,15 +119,16 @@ public class PersonneDAO extends DAO<Personne> {
                     Personne personne = new Personne();
                     personne.setPersonneNom(rs.getString(1));
                     personne.setPersonnePrenom(rs.getString(2));
-                    personne.setPersonneEcoleId(rs.getInt(3));
+                    personne.setEcoleID(DAOFactory.getEcoleDAO().getByID(rs.getInt(3)));
                     personne.setAdresseId((DAOFactory.getAdresseDAO().getByID(rs.getInt(4))));
-                    personsEtDistances.add(new Pair<>(personne, ( Math.round(distance * 100.0) / 100.0 )));
+                    personne.setPersonneId(rs.getInt(5));
+                    personnesEtDistances.add(new Pair<>(personne, ( Math.round(distance * 100.0) / 100.0 )));
                 }
             }
         } catch (Exception e) {
             e.printStackTrace();
         }
-        return personsEtDistances;
+        return personnesEtDistances;
     }
 
 
@@ -233,7 +233,7 @@ public class PersonneDAO extends DAO<Personne> {
         preparedStatement.setString(2, object.getPersonnePrenom());
         preparedStatement.setInt(3, object.getVehiculeCv());
         preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
-        preparedStatement.setInt(5, object.getEcoleById().getEcoleId());
+        preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
     }
 
 }
