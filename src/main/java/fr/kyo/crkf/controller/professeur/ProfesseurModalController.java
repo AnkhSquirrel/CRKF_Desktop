@@ -102,7 +102,7 @@ public class ProfesseurModalController {
     @FXML
     private void validate() {
         if(isComplete()){
-            if (create) {
+            if (!create) {
                 updatePersonne();
             } else {
                 createPersonne();

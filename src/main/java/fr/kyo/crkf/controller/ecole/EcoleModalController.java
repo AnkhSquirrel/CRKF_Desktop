@@ -140,6 +140,7 @@ public class EcoleModalController {
     }
 
     public void setCreate(boolean create){
+        this.create = create;
         if(!create)
             nomModal.setText("Modifier cette école");
     }
