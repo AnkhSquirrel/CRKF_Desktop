@@ -55,7 +55,7 @@ public class Filter {
     public List<Ville> getVilleLike(String text, int departementId){
         List<Ville> villesLike = DAOFactory.getVilleDAO().getLike(text, departementId);
         villesLike.add(0, new Ville(0,"Ville", 0F, 0F, 0));
-        return villes;
+        return villesLike;
     }
 
     public List<Ecole> getEcolesLike(String nomEcole) {
