@@ -3,8 +3,11 @@ package fr.kyo.crkf.dao;
 import fr.kyo.crkf.entity.Diplome;
 import fr.kyo.crkf.entity.Personne;
 import fr.kyo.crkf.searchable.SearchableProfesseur;
+import fr.kyo.crkf.tools.Pair;
+
 import java.sql.*;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.List;
 
 public class PersonneDAO extends DAO<Personne> {
@@ -86,7 +89,7 @@ public class PersonneDAO extends DAO<Personne> {
 
     public List<Personne> getByEcole (int ecoleId) {
         List<Personne> liste = new ArrayList<>();
-        String requete = "SELECT nom, prenom from Personne where id_ecole = ?";
+        String requete = "SELECT nom, prenom, id_ecole from Personne where id_ecole = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1, ecoleId);
             ResultSet rs = preparedStatement.executeQuery();
@@ -94,6 +97,7 @@ public class PersonneDAO extends DAO<Personne> {
                 Personne personne = new Personne();
                 personne.setPersonneNom(rs.getString(1));
                 personne.setPersonnePrenom(rs.getString(2));
+                personne.setPersonneEcoleId(rs.getInt(3));
                 liste.add(personne);
             }
         } catch (Exception e) {
@@ -101,6 +105,32 @@ public class PersonneDAO extends DAO<Personne> {
         }
         return liste;
     }
+
+    public List<Pair<Personne, Double>> getByDistance(float latitudePointA, float longitudePointA) {
+        List<Pair<Personne, Double>> personsEtDistances = new ArrayList<>();
+        String requete = "SELECT Nom, Prenom, id_ecole ,id_adresse from Personne";
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                float latitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(4)).getVille().getLatitude();
+                float longitudePointB = DAOFactory.getAdresseDAO().getByID(rs.getInt(4)).getVille().getLongitude();
+
+                double distance = 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latitudePointB - latitudePointA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longitudePointB - longitudePointA)) / 2), 2) * Math.cos((Math.toRadians(latitudePointA))) * Math.cos(Math.toRadians(latitudePointB)))) * 6371.009;
+                if (distance < 50){
+                    Personne personne = new Personne();
+                    personne.setPersonneNom(rs.getString(1));
+                    personne.setPersonnePrenom(rs.getString(2));
+                    personne.setPersonneEcoleId(rs.getInt(3));
+                    personne.setAdresseId((DAOFactory.getAdresseDAO().getByID(rs.getInt(4))));
+                    personsEtDistances.add(new Pair<>(personne, ( Math.round(distance * 100.0) / 100.0 )));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return personsEtDistances;
+    }
+
 
     @Override
     public int insert(Personne objet) {
@@ -203,7 +233,7 @@ public class PersonneDAO extends DAO<Personne> {
         preparedStatement.setString(2, object.getPersonnePrenom());
         preparedStatement.setInt(3, object.getVehiculeCv());
         preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
-        preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
+        preparedStatement.setInt(5, object.getEcoleById().getEcoleId());
     }
 
 }

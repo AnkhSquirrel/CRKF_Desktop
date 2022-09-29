@@ -11,6 +11,7 @@ public class Personne {
     private int personneId;
     private String personneNom;
     private String personnePrenom;
+    private int personneEcoleId;
     private int vehiculeCv;
     private int adresseId;
     private int ecoleID;
@@ -20,6 +21,7 @@ public class Personne {
         this.personneId = 0;
         this.personneNom = "";
         this.personnePrenom = "";
+        this.personneEcoleId = 0;
         diplomes = new ArrayList<>();
     }
 
@@ -57,6 +59,9 @@ public class Personne {
         this.personnePrenom = personnePrenom;
     }
 
+    public void setPersonneEcoleId(int personneEcoleId){
+        this.personneEcoleId = personneEcoleId;
+    }
     public int getVehiculeCv() {
         return vehiculeCv;
     }
@@ -73,7 +78,7 @@ public class Personne {
         this.adresseId = adresseId.getAdresseId();
     }
 
-    public Ecole getEcoleID() {
+    public Ecole getEcoleById() {
         return DAOFactory.getEcoleDAO().getByID(ecoleID);
     }
 
@@ -99,5 +104,8 @@ public class Personne {
 
     public ObservableValue<String> getPrenomStringProperty(){
         return new SimpleStringProperty(personnePrenom);
+    }
+    public int getEcoleID() {
+        return ecoleID;
     }
 }
