@@ -35,7 +35,10 @@ public class GestionClassificationController {
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getClassificationStringProperty());
         famillesColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberFamilles());
 
-        libelle.textProperty().addListener(observable -> filter());
+        libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            filter();
+        });
 
         classificationTable.setItems(FXCollections.observableArrayList(DAOFactory.getClassificationDAO().getLike(classification,page)));
 

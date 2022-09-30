@@ -61,7 +61,10 @@ public class GestionVilleController {
         departement.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         departement.getSelectionModel().select(0);
 
-        libelle.textProperty().addListener(observable -> filter());
+        libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            filter();
+        });
 
         pageTotale = DAOFactory.getVilleDAO().getNumberOfVilles(ville, departementId) / 25;
         numberOfPage.setText(String.valueOf(pageTotale));

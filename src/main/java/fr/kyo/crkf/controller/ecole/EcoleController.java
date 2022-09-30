@@ -72,7 +72,10 @@ public class EcoleController {
                 villeFilter();
                 ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
                 ville.setEditable(true);
-                ville.getEditor().textProperty().addListener(observable -> villeFilter());
+                ville.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+                        ville.getEditor().setText(newValue.replaceAll("[\\d'], ""));
+                        villeFilter();
+                });
                 ville.getEditor().setText("Ville");
 
                 departement.setItems(FXCollections.observableArrayList(filter.getDepartements()));
@@ -81,7 +84,10 @@ public class EcoleController {
                 instrumentFilter.setItems(FXCollections.observableArrayList(filter.getInstrument()));
                 instrumentFilter.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
 
-                nomEcole.textProperty().addListener(observable -> filter());
+                nomEcole.textProperty().addListener((observable, oldValue, newValue) -> {
+                        nomEcole.setText(newValue.replaceAll("[\\d'], ""));
+                        filter();
+                });
 
                 ecoleTable.getSelectionModel().selectedItemProperty().addListener(observable -> openDetailEcole());
                 ecoleTable.setItems(FXCollections.observableArrayList(DAOFactory.getEcoleDAO().getLike(searchableEcole, page)));
