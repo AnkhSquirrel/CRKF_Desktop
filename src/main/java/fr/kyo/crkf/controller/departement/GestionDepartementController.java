@@ -33,12 +33,15 @@ public class GestionDepartementController {
     private void initialize(){
         departement="";
         page = 1;
-        // initialize tableview
+
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getDepartementStringProperty());
         numDepColumn.setCellValueFactory(cellData -> cellData.getValue().getNumDepartementString());
         nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartement());
 
-        libelle.textProperty().addListener(observable -> filter());
+        libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            filter();
+        });
 
         departementTable.setItems(FXCollections.observableArrayList(DAOFactory.getDepartementDAO().getLike(departement,0)));
 

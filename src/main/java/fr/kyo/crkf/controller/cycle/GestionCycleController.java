@@ -35,7 +35,10 @@ public class GestionCycleController {
         libelleColumn.setCellValueFactory(cellData -> cellData.getValue().getCycleStringProperty());
         cycleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCycleNumero()));
 
-        libelle.textProperty().addListener(observable -> filter());
+        libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            filter();
+        });
 
         cycleTable.setItems(FXCollections.observableArrayList(DAOFactory.getCycleDAO().getLike(cycle,page)));
 

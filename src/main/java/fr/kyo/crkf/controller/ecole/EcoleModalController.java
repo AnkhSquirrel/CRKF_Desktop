@@ -45,7 +45,10 @@ public class EcoleModalController {
         ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", 0)));
         ville.getSelectionModel().select(0);
         ville.getSelectionModel().selectedItemProperty().addListener(a -> selectVille());
-        ville.getEditor().textProperty().addListener(observable -> villeFilter());
+        ville.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
+            ville.getEditor().setText(newValue.replaceAll("[\\d'], ""));
+            villeFilter();
+        });
 
         selectedVille = ville.getItems().get(0);
     }

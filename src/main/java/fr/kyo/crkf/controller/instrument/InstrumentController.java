@@ -66,7 +66,10 @@ public class InstrumentController {
          famille.setItems(FXCollections.observableArrayList(filter.getFamilles()));
          famille.valueProperty().addListener(observable -> filter());
 
-         libelle.textProperty().addListener(observable -> filter());
+         libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+             libelle.setText(newValue.replaceAll("[\\d'], ""));
+             filter();
+         });
 
          pageTotale = DAOFactory.getInstrumentDAO().getLikeAllInstrument(searchableInstrument).size() / 25;
          if (pageTotale == 0)

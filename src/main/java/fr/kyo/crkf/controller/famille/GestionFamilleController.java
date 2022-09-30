@@ -46,7 +46,10 @@ public class GestionFamilleController {
         classification.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
         classification.getSelectionModel().select(0);
 
-        libelle.textProperty().addListener(observable -> filter());
+        libelle.textProperty().addListener((observable, oldValue, newValue) -> {
+            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            filter();
+        });
 
         familleTable.setItems(FXCollections.observableArrayList(DAOFactory.getFamilleDAO().getLike(searchableFamille,page)));
 
