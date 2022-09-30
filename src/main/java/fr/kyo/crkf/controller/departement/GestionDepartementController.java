@@ -39,7 +39,7 @@ public class GestionDepartementController {
         nbreEcoleColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberOfSchoolInDepartement());
 
         libelle.textProperty().addListener((observable, oldValue, newValue) -> {
-            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            libelle.setText(newValue.replaceAll("[\\d']", ""));
             filter();
         });
 

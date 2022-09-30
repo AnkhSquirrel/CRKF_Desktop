@@ -69,13 +69,13 @@ public class ProfesseurController {
         departementColumn.setCellValueFactory(cellData -> cellData.getValue().getAdresseId().getVille().getDepartement().getDepartementStringProperty());
 
         nomEtPrenomFiltre.textProperty().addListener((observable, oldValue, newValue) -> {
-            nomEtPrenomFiltre.setText(newValue.replaceAll("[\\d'], ""));
+            nomEtPrenomFiltre.setText(newValue.replaceAll("[\\d']", ""));
             filter();
         });
 
         villeFiltre.setEditable(true);
         villeFiltre.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            villeFiltre.getEditor().setText(newValue.replaceAll("[\\d'], ""));
+            villeFiltre.getEditor().setText(newValue.replaceAll("[\\d']", ""));
             villeFilter();
         });
         villeFiltre.getSelectionModel().select(0);

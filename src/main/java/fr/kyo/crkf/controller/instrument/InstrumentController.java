@@ -67,7 +67,7 @@ public class InstrumentController {
          famille.valueProperty().addListener(observable -> filter());
 
          libelle.textProperty().addListener((observable, oldValue, newValue) -> {
-             libelle.setText(newValue.replaceAll("[\\d'], ""));
+             libelle.setText(newValue.replaceAll("[\\d']", ""));
              filter();
          });
 

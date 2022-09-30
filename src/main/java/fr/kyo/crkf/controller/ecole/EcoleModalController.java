@@ -46,7 +46,7 @@ public class EcoleModalController {
         ville.getSelectionModel().select(0);
         ville.getSelectionModel().selectedItemProperty().addListener(a -> selectVille());
         ville.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-            ville.getEditor().setText(newValue.replaceAll("[\\d'], ""));
+            ville.getEditor().setText(newValue.replaceAll("[\\d']", ""));
             villeFilter();
         });
 

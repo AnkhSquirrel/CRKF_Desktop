@@ -73,7 +73,7 @@ public class EcoleController {
                 ville.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
                 ville.setEditable(true);
                 ville.getEditor().textProperty().addListener((observable, oldValue, newValue) -> {
-                        ville.getEditor().setText(newValue.replaceAll("[\\d'], ""));
+                        ville.getEditor().setText(newValue.replaceAll("[\\d']", ""));
                         villeFilter();
                 });
                 ville.getEditor().setText("Ville");
@@ -85,7 +85,7 @@ public class EcoleController {
                 instrumentFilter.getSelectionModel().selectedItemProperty().addListener(observable -> filter());
 
                 nomEcole.textProperty().addListener((observable, oldValue, newValue) -> {
-                        nomEcole.setText(newValue.replaceAll("[\\d'], ""));
+                        nomEcole.setText(newValue.replaceAll("[\\d']", ""));
                         filter();
                 });
 

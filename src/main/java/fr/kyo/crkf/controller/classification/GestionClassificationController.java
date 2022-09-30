@@ -36,7 +36,7 @@ public class GestionClassificationController {
         famillesColumn.setCellValueFactory(cellData -> cellData.getValue().getNumberFamilles());
 
         libelle.textProperty().addListener((observable, oldValue, newValue) -> {
-            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            libelle.setText(newValue.replaceAll("[\\d']", ""));
             filter();
         });
 

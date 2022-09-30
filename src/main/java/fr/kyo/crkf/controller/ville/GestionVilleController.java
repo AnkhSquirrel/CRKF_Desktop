@@ -62,7 +62,7 @@ public class GestionVilleController {
         departement.getSelectionModel().select(0);
 
         libelle.textProperty().addListener((observable, oldValue, newValue) -> {
-            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            libelle.setText(newValue.replaceAll("[\\d']", ""));
             filter();
         });
 

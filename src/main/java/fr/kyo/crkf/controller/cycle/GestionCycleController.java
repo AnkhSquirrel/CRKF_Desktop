@@ -36,7 +36,7 @@ public class GestionCycleController {
         cycleColumn.setCellValueFactory(cellData -> new ReadOnlyObjectWrapper<>(cellData.getValue().getCycleNumero()));
 
         libelle.textProperty().addListener((observable, oldValue, newValue) -> {
-            libelle.setText(newValue.replaceAll("[\\d'], ""));
+            libelle.setText(newValue.replaceAll("[\\d']", ""));
             filter();
         });
 
