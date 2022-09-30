@@ -15,12 +15,13 @@ public class Personne {
     private int adresseId;
     private int ecoleID;
     private List<Diplome> diplomes;
-
+    private List<Famille> familles;
     public Personne() {
         this.personneId = 0;
         this.personneNom = "";
         this.personnePrenom = "";
         diplomes = new ArrayList<>();
+        familles = new ArrayList<>();
     }
 
     public Personne(int personneId, String nom, String prenom, int vehiculeCv, int adresse, int ecole) {
@@ -31,6 +32,7 @@ public class Personne {
         this.adresseId = adresse;
         this.ecoleID = ecole;
         diplomes = new ArrayList<>();
+        familles = new ArrayList<>();
     }
     public int getPersonneId() {
         return personneId;
@@ -83,6 +85,8 @@ public class Personne {
     public List<Diplome> getDiplomes() {
         return diplomes;
     }
+    public List<Famille> getFamilles() { return familles; }
+    public void setFamilles(List<Famille> familles ) { this.familles = familles; }
 
     public void setDiplomes(List<Diplome> diplomes) {
         this.diplomes = diplomes;

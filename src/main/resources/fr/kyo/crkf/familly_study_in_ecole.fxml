@@ -20,15 +20,21 @@
             </Button>
          </children>
       </HBox>
-      <Label text="Familles étudiée dans">
+      <Label text="Enseignement(s) disponible dans">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ville" text="*école*">
+      <Label fx:id="ecoleLabel" text="*école*">
          <font>
             <Font size="24.0" />
          </font>
+         <opaqueInsets>
+            <Insets />
+         </opaqueInsets>
+         <VBox.margin>
+            <Insets bottom="30.0" />
+         </VBox.margin>
       </Label>
       <TableView fx:id="tabFamilleEnseignee" maxWidth="480.0" minHeight="50.0" prefHeight="300.0" prefWidth="480.0">
          <columns>

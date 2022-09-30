@@ -89,16 +89,11 @@ public class PersonneDAO extends DAO<Personne> {
 
     public List<Personne> getByEcole (int ecoleId) {
         List<Personne> liste = new ArrayList<>();
-        String requete = "SELECT nom, prenom from Personne where id_ecole = ?";
+        String requete = "SELECT id_personne,Nom,Prenom,VehiculeCV,id_adresse,id_ecole from Personne where id_ecole = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1, ecoleId);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Personne personne = new Personne();
-                personne.setPersonneNom(rs.getString(1));
-                personne.setPersonnePrenom(rs.getString(2));
-                liste.add(personne);
-            }
+            createPersonneFromResultSet(liste,rs);
         } catch (Exception e) {
             e.printStackTrace();
         }
