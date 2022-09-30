@@ -31,7 +31,7 @@ public class ProfesseurModalController {
     @FXML
     private ComboBox<Ville> ville;
     @FXML
-    private ComboBox<Ecole> ecole;
+    private Label ecole;
     private Stage modal;
     private boolean create;
     private ProfesseurController professeurController;
@@ -44,12 +44,7 @@ public class ProfesseurModalController {
     private void initialize(){
         filter = new Filter();
 
-        ecole.setEditable(true);
-        ecole.getEditor().textProperty().addListener(observable -> ecoleFilter());
-        ecole.getSelectionModel().selectedItemProperty().addListener(a -> selectEcole());
-        ecole.setItems(FXCollections.observableArrayList(filter.getEcolesLike("")));
-
-        selectedEcole = ecole.getItems().get(0);
+        ecole.setDisable(true);
 
         cv.textProperty().addListener((observable, oldValue, newValue) -> {
             if (!newValue.matches("\\d*")) {
@@ -70,14 +65,13 @@ public class ProfesseurModalController {
         departement.getSelectionModel().select(0);
     }
 
-    private void selectEcole() {
-        if(ecole.getSelectionModel().getSelectedIndex() >= 1 && ecole.getSelectionModel().getSelectedItem() != null)
-            selectedEcole = ecole.getSelectionModel().getSelectedItem();
-    }
-
     private void selectVille() {
-        if(ville.getSelectionModel().getSelectedIndex() >= 1 && ville.getSelectionModel().getSelectedItem() != null)
+        if(ville.getSelectionModel().getSelectedIndex() >= 1 && ville.getSelectionModel().getSelectedItem() != null){
             selectedVille = ville.getSelectionModel().getSelectedItem();
+            selectedEcole = DAOFactory.getEcoleDAO().getClosestEcole(ville.getSelectionModel().getSelectedItem().getLatitude(), ville.getSelectionModel().getSelectedItem().getLongitude());
+            ecole.setText(selectedEcole.getEcoleNom());
+        }
+
     }
 
     private void villeFilter() {
@@ -90,12 +84,6 @@ public class ProfesseurModalController {
         if(departement.getSelectionModel().getSelectedItem() != null){
             ville.setItems(FXCollections.observableArrayList(filter.getVilleLike("", departement.getSelectionModel().getSelectedItem().getDepartementId())));
             ville.getSelectionModel().select(0);
-        }
-    }
-
-    private void ecoleFilter() {
-        if(ecole.getSelectionModel().getSelectedItem() == null || !ecole.getEditor().getText().equals(selectedEcole.getEcoleNom())){
-            ecole.setItems(FXCollections.observableArrayList(filter.getEcolesLike(ecole.getEditor().getText())));
         }
     }
 
@@ -186,7 +174,7 @@ public class ProfesseurModalController {
         adresse.setText(professeur.getAdresseId().getAdresseLibelle());
         departement.getSelectionModel().select(professeur.getAdresseId().getVille().getDepartement());
         ville.getSelectionModel().select(professeur.getAdresseId().getVille());
-        ecole.getSelectionModel().select(professeur.getEcoleID());
+        ecole.setText(professeur.getEcoleID().getEcoleNom());
 
         selectedEcole = professeur.getEcoleID();
         selectedVille = professeur.getAdresseId().getVille();

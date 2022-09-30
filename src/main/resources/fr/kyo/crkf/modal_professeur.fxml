@@ -80,14 +80,6 @@
                   <Font name="System Italic" size="14.0" />
                </font>
             </Label>
-            <ComboBox fx:id="ecole" prefHeight="25.0" prefWidth="460.0" promptText="École" GridPane.columnIndex="1" GridPane.rowIndex="4">
-               <opaqueInsets>
-                  <Insets />
-               </opaqueInsets>
-               <GridPane.margin>
-                  <Insets left="10.0" right="10.0" />
-               </GridPane.margin>
-            </ComboBox>
             <Label alignment="CENTER_RIGHT" contentDisplay="RIGHT" prefHeight="125.0" prefWidth="150.0" text="Adresse : " textAlignment="RIGHT" GridPane.rowIndex="3">
                <font>
                   <Font name="System Italic" size="14.0" />
@@ -112,6 +104,11 @@
                   </ComboBox>
                </children>
             </HBox>
+            <Label fx:id="ecole" prefHeight="77.0" prefWidth="480.0" text="Ecole" GridPane.columnIndex="1" GridPane.rowIndex="4">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
          </children>
       </GridPane>
       <HBox alignment="CENTER">

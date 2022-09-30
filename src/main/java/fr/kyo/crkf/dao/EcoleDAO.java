@@ -128,6 +128,25 @@ public class EcoleDAO extends DAO<Ecole> {
         return ecoles;
     }
 
+    public Ecole getClosestEcole(float latitudePointA, float longitudePointA) {
+        double closest = 0;
+        Ecole ecole = new Ecole(0,"Ecole", 0);
+        StringBuilder requete = new StringBuilder("SELECT id_ecole, Nom, id_adresse from Ecole as e");
+        try (PreparedStatement preparedStatement = connection.prepareStatement(requete.toString())){
+            ResultSet rs = preparedStatement.executeQuery();
+            while (rs.next()) {
+                double distance = getDistanceBetweentwoCoordinates(latitudePointA, longitudePointA, DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLatitude(), DAOFactory.getAdresseDAO().getByID(rs.getInt(3)).getVille().getLongitude());
+                if (closest == 0 || distance <= closest){
+                    closest = distance;
+                    ecole = new Ecole(rs.getInt(1), rs.getString(2),rs.getInt(3));
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ecole;
+    }
+
     private double getDistanceBetweentwoCoordinates(float latA, float longA, float latB, float longB) {
         return 2 * Math.asin(Math.sqrt(Math.pow(Math.sin((Math.toRadians(latB - latA)) / 2), 2) + Math.pow(Math.sin((Math.toRadians(longB - longA)) / 2), 2) * Math.cos((Math.toRadians(latA))) * Math.cos(Math.toRadians(latB)))) * 6371.009;
     }
