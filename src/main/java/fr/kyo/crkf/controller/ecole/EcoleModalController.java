@@ -91,6 +91,7 @@ public class EcoleModalController {
             ecoleUpdate = new Ecole(ecoleUpdate.getEcoleId(), nomEcole.getText(), temp.getAdresseId());
             if (DAOFactory.getEcoleDAO().update(ecoleUpdate)){
                 ecoleController.filter();
+                ecoleController.openDetailEcole(ecoleUpdate);
                 closeModal();
             } else {
                 Alert alert = new Alert(Alert.AlertType.ERROR);

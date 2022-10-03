@@ -180,6 +180,11 @@ public class EcoleController {
                 }
         }
 
+        public void openDetailEcole(Ecole ecole){
+                ecoleTable.getSelectionModel().select(ecole);
+                openDetailEcole();
+        }
+
         public void setApplicationCRKF (ApplicationCRKF applicationCRKF) {
                 this.applicationCRKF = applicationCRKF;
         }
