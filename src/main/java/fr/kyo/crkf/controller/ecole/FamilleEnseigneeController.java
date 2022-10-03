@@ -31,6 +31,7 @@ public class FamilleEnseigneeController {
         nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
         instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().getDiplomes().get(0).getInstrument().getNomStringProperty());
         familleColumn.setCellValueFactory(cellData -> cellData.getValue().getDiplomes().get(0).getInstrument().getFamilles().get(0).getFamilleStringProperty());
+
     }
 
     public void setEcoleController(EcoleController ecoleController) {
