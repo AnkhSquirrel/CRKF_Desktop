@@ -1,6 +1,7 @@
 package fr.kyo.crkf.dao;
 
 import fr.kyo.crkf.entity.Diplome;
+import fr.kyo.crkf.entity.Instrument;
 import fr.kyo.crkf.entity.Personne;
 import fr.kyo.crkf.searchable.SearchableProfesseur;
 import fr.kyo.crkf.tools.Pair;
@@ -89,16 +90,11 @@ public class PersonneDAO extends DAO<Personne> {
 
     public List<Personne> getByEcole (int ecoleId) {
         List<Personne> liste = new ArrayList<>();
-        String requete = "SELECT nom, prenom from Personne where id_ecole = ?";
+        String requete = "SELECT id_personne,Nom,Prenom,VehiculeCV,id_adresse,id_ecole from Personne where id_ecole = ?";
         try (PreparedStatement preparedStatement = connection.prepareStatement(requete)){
             preparedStatement.setInt(1, ecoleId);
             ResultSet rs = preparedStatement.executeQuery();
-            while (rs.next()) {
-                Personne personne = new Personne();
-                personne.setPersonneNom(rs.getString(1));
-                personne.setPersonnePrenom(rs.getString(2));
-                liste.add(personne);
-            }
+            createPersonneFromResultSet(liste,rs);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -129,6 +125,23 @@ public class PersonneDAO extends DAO<Personne> {
             e.printStackTrace();
         }
         return personnesEtDistances;
+    }
+
+    public List<Pair<Personne, Instrument>> getInstrumentEnseignerByPersonnes(List<Personne> personneList) {
+        List<Pair<Personne, Instrument>> personnesEtInstrument = new ArrayList<>();
+        try{
+            for(Personne personne : personneList){
+                String requete = "SELECT DISTINCT(id_instrument) from Personne_Diplome where id_personne = ?";
+                PreparedStatement preparedStatement = connection.prepareStatement(requete);
+                preparedStatement.setInt(1, personne.getPersonneId());
+                ResultSet rs = preparedStatement.executeQuery();
+                while(rs.next())
+                    personnesEtInstrument.add(new Pair<>(personne, DAOFactory.getInstrumentDAO().getByID(rs.getInt(1))));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return personnesEtInstrument;
     }
 
 
@@ -235,5 +248,4 @@ public class PersonneDAO extends DAO<Personne> {
         preparedStatement.setInt(4, object.getAdresseId().getAdresseId());
         preparedStatement.setInt(5, object.getEcoleID().getEcoleId());
     }
-
 }
