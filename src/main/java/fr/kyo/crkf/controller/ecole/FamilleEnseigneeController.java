@@ -1,8 +1,9 @@
 package fr.kyo.crkf.controller.ecole;
 
-import com.jfoenix.controls.JFXDrawer;
 import fr.kyo.crkf.dao.DAOFactory;
 import fr.kyo.crkf.entity.*;
+import fr.kyo.crkf.tools.Pair;
+import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.fxml.FXML;
@@ -14,24 +15,33 @@ import java.util.List;
 
 public class FamilleEnseigneeController {
     @FXML
-    private TableView<Personne> tabFamilleEnseignee;
+    private TableView<Pair<Personne,Instrument>> tabFamilleEnseignee;
     @FXML
-    private TableColumn<Personne, String> familleColumn;
+    private TableColumn<Pair<Personne,Instrument>, String> familleColumn;
     @FXML
-    private TableColumn<Personne, String> nomColumn;
+    private TableColumn<Pair<Personne,Instrument>, String> nomColumn;
     @FXML
-    private TableColumn<Personne, String> instrumentColumn;
+    private TableColumn<Pair<Personne,Instrument>, String> instrumentColumn;
     @FXML
     private Label ecoleLabel;
     private EcoleController ecoleController;
-    private Ecole ecole;
 
     @FXML
     private void initialize() {
-        nomColumn.setCellValueFactory(cellData -> cellData.getValue().getNomStringProperty());
-        instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().getDiplomes().get(0).getInstrument().getNomStringProperty());
-        familleColumn.setCellValueFactory(cellData -> cellData.getValue().getDiplomes().get(0).getInstrument().getFamilles().get(0).getFamilleStringProperty());
-
+        nomColumn.setCellValueFactory(cellData -> cellData.getValue().getFirst().getNomStringProperty());
+        instrumentColumn.setCellValueFactory(cellData -> cellData.getValue().getSecond().getNomStringProperty());
+        familleColumn.setCellValueFactory(cellData -> {
+            ObservableValue<String> text = new SimpleStringProperty();
+            String temp = "";
+            for(Famille famille : cellData.getValue().getSecond().getFamilles()){
+                if(famille.getFamilleId() == cellData.getValue().getSecond().getFamilles().get(0).getFamilleId())
+                    temp = famille.getfamille();
+                else
+                    temp += ", " + famille.getfamille();
+                text = new SimpleStringProperty(temp);
+            }
+            return text;
+        });
     }
 
     public void setEcoleController(EcoleController ecoleController) {
@@ -39,22 +49,9 @@ public class FamilleEnseigneeController {
     }
 
     public void setEcole(Ecole ecole) {
-        this.ecole = ecole;
         ecoleLabel.setText("l' école : " + ecole.getEcoleNom());
-        tabFamilleEnseignee.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())));
-        for (int j = 0; j < FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())).size(); j++) {
-            Personne personne = FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId())).get(1);
-            System.out.println("Personne : " + j);
-            if (!personne.getDiplomes().isEmpty()) {
-                for (int i = 0; i < personne.getDiplomes().size(); i++) {
-                        Instrument instrument = personne.getDiplomes().get(i).getInstrument();
-                        String famille = personne.getDiplomes().get(i).getInstrument().getFamilles().get(0).getfamille();
-                        System.out.println(instrument);
-                        System.out.println(famille);
-                }
-            }
-        }
-        
+        List<Personne> personneList = DAOFactory.getPersonneDAO().getByEcole(ecole.getEcoleId());
+        tabFamilleEnseignee.setItems(FXCollections.observableArrayList(DAOFactory.getPersonneDAO().getInstrumentEnseignerByPersonnes(personneList)));
     }
 
     @FXML
